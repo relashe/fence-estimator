@@ -40,13 +40,10 @@ module.exports = (env, isMvc = true) => {
             {
               loader: "postcss-loader",
               options: {
-                sourceMap: true
-              }
-            },
-            {
-              loader: "resolve-url-loader",
-              options: {
-                sourceMap: true
+                sourceMap: true,
+                plugins: function() {
+                  return [require("autoprefixer")];
+                }
               }
             },
             {
