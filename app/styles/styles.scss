@@ -1,2 +1,30 @@
 // vendors
 @import "~bootstrap/scss/bootstrap";
+
+#fence-estimator-app {
+  height: 100%;
+}
+
+.fence-estimator {
+  height: 100%;
+}
+
+.fence-estimator__container {
+  height: 100%;
+}
+
+// * MAP
+.fence-estimator__map-container {
+  height: 100%;
+}
+
+.fence-estimator__map {
+  height: 100%;
+}
+
+// FORM
+.map-search-results__address {
+  span {
+    display: block;
+  }
+}

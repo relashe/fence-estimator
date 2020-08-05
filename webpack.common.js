@@ -8,9 +8,7 @@ module.exports = (env, isMvc = true) => {
   return {
     resolve: {
       alias: {
-        app: path.resolve(__dirname, "app/"),
-        components: path.resolve(__dirname, "app/components/"),
-        miniJourneys: path.resolve(__dirname, "app/pages/MiniJourneys/")
+        app: path.resolve(__dirname, "app/")
       }
     },
     module: {
