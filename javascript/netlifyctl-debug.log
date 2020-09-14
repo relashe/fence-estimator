@@ -1,0 +1,12 @@
+[37mDEBU[0m[06 Aug 20 23:09 +0100] PreRun                                        [37marguments[0m=[] [37mcommand[0m=deploy
+[37mDEBU[0m[06 Aug 20 23:09 +0100] configure debug middleware                   
+[37mDEBU[0m[06 Aug 20 23:09 +0100] configure logging middleware                 
+[37mDEBU[0m[06 Aug 20 23:09 +0100] setup logger middleware: panic               
+[37mDEBU[0m[06 Aug 20 23:09 +0100] configure auth middleware                    
+[37mDEBU[0m[06 Aug 20 23:09 +0100] setup credentials                             [37mcredentials[0m=0x146b000
+[37mDEBU[0m[06 Aug 20 23:09 +0100] configure client middleware                  
+[37mDEBU[0m[06 Aug 20 23:09 +0100] setup API endpoint                            [37mendpoint[0m="https://api.netlify.com"
+[37mDEBU[0m[06 Aug 20 23:09 +0100] configure site middleware                    
+[37mDEBU[0m[06 Aug 20 23:09 +0100] Parsed configuration: {Settings:{ID:26345031-e571-4940-b8ad-9d53347ba32c Path:} Build:{Publish:javascript/dist Functions:} Redirects:[] root:/Users/pczcanda1/Documents/Relashe/Work/GIT/freelancing/fence.estimator/fence-estimator/javascript filePath:netlify.toml} 
+[37mDEBU[0m[06 Aug 20 23:09 +0100] Relative path detected, going to deploy: '/Users/pczcanda1/Documents/Relashe/Work/GIT/freelancing/fence.estimator/fence-estimator/javascript/javascript/dist' 
+[31mERRO[0m[06 Aug 20 23:09 +0100] command failed                                [31merror[0m="Error copying netlify.toml to the publish directory: /Users/pczcanda1/Documents/Relashe/Work/GIT/freelancing/fence.estimator/fence-estimator/javascript/javascript/dist: open /Users/pczcanda1/Documents/Relashe/Work/GIT/freelancing/fence.estimator/fence-estimator/javascript/javascript/dist/netlify.toml: no such file or directory"
