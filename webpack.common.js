@@ -6,11 +6,6 @@ const publicFolder = path.resolve(__dirname, "./public");
 
 module.exports = (env, isMvc = true) => {
   return {
-    resolve: {
-      alias: {
-        app: path.resolve(__dirname, "app/")
-      }
-    },
     module: {
       rules: [
         {
@@ -57,7 +52,7 @@ module.exports = (env, isMvc = true) => {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        title: "Fence Estimator",
+        title: "Fence Estimator - JS",
         template: path.join(publicFolder, "/index.html")
       })
     ]

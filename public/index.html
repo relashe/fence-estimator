@@ -2,10 +2,301 @@
   <head>
     <meta charset="UTF-8" />
     <title>Fence Estimator</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,700&display=swap" rel="stylesheet" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
   </head>
   <body>
-    <div id="fence-estimator-app"></div>
+    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="fence-estimator container-fluid p-0">
+              <div class="fence-estimator__container row no-gutters">
+                <div class="col-md-5 px-4 py-4">
+                  <div class="d-md-flex flex-column justify-content-center">
+                    <h2 class="mb-auto">Land Area Estimator</h2>
+
+                    <div class="map-search-controller py-5">
+                      <h4>Search Address</h4>
+                      <form class="form-inline">
+                        <div class="form-group mb-2">
+                          <input
+                            type="text"
+                            class="search-address__field form-control-plaintext border"
+                            id="staticEmail2"
+                          />
+                        </div>
+                      </form>
+                    </div>
+                    <div class="map-search-results-controller py-5" aria-hidden="true">
+                      <h4 class="map-search-results__address mb-4"></h4>
+                      <div class="map-search-results__step-1" aria-hidden="true">
+                        <button type="button" class="plotting__start-button elementor-button mr-4">
+                          Start New Plot
+                        </button>
+                        <button type="button" class="search-address__new-search-button elementor-button">
+                          Search New Address
+                        </button>
+                      </div>
+                      <div class="map-search-results__step-2" aria-hidden="true">
+                        <button type="button" class="plotting__undo-button btn btn-secondary mr-4">
+                          Undo
+                        </button>
+                        <button type="button" class="reset-button elementor-button">
+                          Reset and Start Again
+                        </button>
+                      </div>
+                    </div>
+                    <div class="map-plotting-results-controller mt-auto" aria-hidden="true">
+                      <h4>
+                        Estimated Perimiter
+                        <span class="map-plotting-results__perimiter ml-3"></span>
+                      </h4>
+                      <button type="button" class="plotting__accept-button elementor-button btn-block">
+                        Continue with Estimated Land Area
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="fence-estimator__map col-md-7">
+                  <div id="fence-estimator-map"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer"></div>
+        </div>
+      </div>
+    </div> -->
+
+    <input class="qty" type="text" />
+
+    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+      Launch estimator
+    </button> -->
+
+    <div class="fence-estimator container-fluid p-0">
+      <div class="fence-estimator__container no-gutters">
+        <div class="d-md-flex flex-column justify-content-center">
+          <h2>Map my Fence</h2>
+          <div
+            class="fence-estimator__instructions alert alert-secondary"
+            role="alert"
+          >
+            <h4>Instructions</h4>
+            <ul>
+              <li>Step 1 - Search for your address</li>
+              <li>Step 2 - Zoom in to the correct area on the map</li>
+              <li>Step 3 - Click 'Start New Fence'</li>
+              <li>Step 4 - On the map, click on each corner of your paddock</li>
+              <li>
+                Step 5 - Once you have connected the pins to the start point a
+                perimeter will be calculated
+              </li>
+              <li>
+                Step 6 - You can edit the pins of the paddock, delete a paddock
+                or create a new paddock
+              </li>
+              <li>
+                Step 7 - Accept and confirm the total paddock perimeter to be
+                used in the estimate
+              </li>
+            </ul>
+          </div>
+          <div class="map-search-controllers">
+            <div class="map-search-controller py-5 px-4">
+              <h4>Search Address</h4>
+              <form class="form-inline">
+                <div class="form-group mb-2">
+                  <input
+                    type="text"
+                    class="search-address__field form-control-plaintext border"
+                    id="staticEmail2"
+                  />
+                </div>
+              </form>
+              <div class="alert alert-secondary" role="alert">
+                <strong>Tip:</strong> Start typying out your address and our
+                auto finder will finish the job.
+              </div>
+            </div>
+            <div class="map-search-results-controller py-5" aria-hidden="true">
+              <h5>Map Tools</h5>
+              <button type="button" class="map-tool-drag elementor-button mr-4">
+                Drag map
+              </button>
+              <button type="button" class="map-tool-line elementor-button mr-4">
+                Draw line
+              </button>
+              <button
+                type="button"
+                class="map-tool-shape elementor-button mr-4"
+              >
+                Draw shape
+              </button>
+              <h4 class="map-search-results__address mb-4"></h4>
+              <div class="map-search-results__step-1" aria-hidden="true">
+                <button
+                  type="button"
+                  class="plotting__start-button elementor-button mr-4"
+                >
+                  Start Mapping <i class="fa fa-map-pin ml-2"></i>
+                </button>
+                <button
+                  type="button"
+                  class="search-address__new-search-button d-none"
+                >
+                  New Search
+                  <i class="fa fa-search ml-2"></i>
+                </button>
+                <div class="alert alert-secondary mt-4" role="alert">
+                  <strong>Instructions:</strong> <br />
+                  1. Zoom into you property <br />
+                  2. Click 'Start Mapping' and then move over to the map on the
+                  right to start mapping your fence.<br />
+                </div>
+              </div>
+              <div class="map-search-results__step-2" aria-hidden="true">
+                <!-- <button
+                  type="button"
+                  class="plotting__add-button btn btn-secondary mr-4"
+                >
+                  Add new Paddock
+                </button> -->
+                <button
+                  type="button"
+                  class="plotting__undo-button btn btn-secondary mr-4 d-none"
+                >
+                  Remove Last Paddock
+                </button>
+                <button type="button" class="reset-button d-none">
+                  <!-- remove -->
+                  New Search <i class="fa fa-search ml-2"></i>
+                </button>
+                <div class="alert alert-secondary mt-1" role="alert">
+                  <strong>Instructions:</strong> <br />
+                  1. Click on the first corner if your paddock.<br />
+                  2. Continue clicking on all corners of your paddock until the
+                  paddock has been highlighted gold.<br />
+                  3. Once a paddock has a gold fill you can add another paddock,
+                  and so on.<br />
+
+                  <br />
+                  <strong>Hot Tips:</strong> <br />
+                  1. Click on 'Save paddock and add another' if creating an open
+                  paddock<br />
+                  2. Click on any paddock to edit. Drag the corners to make
+                  changes<br />
+                  3. After editing, click 'Add another paddock' to continue
+                  mapping out your paddocks<br />
+                </div>
+
+                <div class="map-search-results__shapes mt-5">
+                  <table class="table table-sm paddock-list">
+                    <thead>
+                      <tr>
+                        <th scope="col">Paddock #</th>
+                        <th scope="col">Estimated Meterage</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody class="map-search-results__shapes-table"></tbody>
+                    <tfoot>
+                      <tr>
+                        <th scope="row"><strong>Total</strong></th>
+                        <th
+                          scope="col"
+                          class="map-plotting-results__perimiter"
+                        ></th>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <div class="mt-5">
+                  <div class="row no-gutters justify-content-between mt-4">
+                    <h5 class="mb-0"></h5>
+                    <div class="ml-4">
+                      <button
+                        type="button"
+                        class="plotting__add-button btn btn-secondary mr-4"
+                      >
+                        Add another paddock
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="map-plotting-results-controller mt-auto"
+              aria-hidden="true"
+            >
+              <button type="button" class="plotting__accept-button btn-block">
+                Continue with Estimate
+                <i class="fa fa-check ml-2"></i>
+              </button>
+              <button type="button" class="reset-button btn-block">
+                Reset and start again
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="fence-estimator__map">
+          <div id="fence-estimator-map"></div>
+          <button
+            type="button"
+            class="plotting__save-paddock-button btn btn-primary mr-4"
+            aria-hidden="true"
+          >
+            Save paddock and add another
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.addEventListener("fence-estimator-results", function (e) {
+        if (!e.detail.perimiter) {
+          return false;
+        }
+
+        // This is for when the input is present in the page
+        var amountInput = document.querySelectorAll(".qty")
+          ? document.querySelectorAll(".qty")[0]
+          : null;
+
+        if (amountInput) {
+          amountInput.value = e.detail.perimiter;
+
+          jQuery &&
+            jQuery(".qty").trigger("wc-measurement-price-calculator-update");
+        }
+
+        console.log(e.detail.perimiter);
+
+        // $("#exampleModal").modal("hide");
+      });
+    </script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

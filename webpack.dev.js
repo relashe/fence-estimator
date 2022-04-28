@@ -14,8 +14,8 @@ module.exports = env => {
     },
     output: {
       path: distFolder,
-      filename: "[name].[hash].bundle.js",
-      chunkFilename: "[name].[hash].bundle.js",
+      filename: "[name].bundle.js",
+      chunkFilename: "[name].bundle.js",
       publicPath: "/"
     },
     devtool: "source-map",
@@ -24,7 +24,7 @@ module.exports = env => {
       compress: true,
       hot: true,
       overlay: true,
-      port: 2020,
+      port: 2030,
       publicPath: "/",
       historyApiFallback: true
     },

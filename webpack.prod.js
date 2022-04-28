@@ -8,9 +8,9 @@ const distFolder = path.resolve(__dirname, "./dist");
 
 module.exports = env => {
   return merge(common(env, true), {
-    mode: "production",
+    mode: "development",
     entry: {
-      main: [path.join(appPath, "/index.js")]
+      main: [path.join(appPath, "/index.build.js")]
     },
     optimization: {
       splitChunks: {
@@ -26,7 +26,8 @@ module.exports = env => {
     output: {
       path: distFolder,
       filename: "[name].bundle.js",
-      chunkFilename: "[name].bundle.js"
+      chunkFilename: "[name].bundle.js",
+      publicPath: "/"
     },
     plugins: [
       ...common(env).plugins,
