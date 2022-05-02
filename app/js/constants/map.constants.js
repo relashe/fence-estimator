@@ -49,4 +49,5 @@ export const SHAPES_CONTROLS = {
   EDIT: "edit",
   DELETE: "delete",
   CONFIRM_DELETE: "confirm-delete",
+  EDIT_NAME: "edit-name",
 };

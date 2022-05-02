@@ -78,35 +78,35 @@
     </button> -->
 
     <div class="fence-estimator container-fluid p-0">
-      <div class="fence-estimator__container row no-gutters">
-        <div class="col-md-5 px-4 py-4">
-          <div class="d-md-flex flex-column justify-content-center">
-            <h2>Map my Fence</h2>
-            <div class="alert alert-secondary" role="alert">
-              <h4>Instructions</h4>
-              <ul>
-                <li>Step 1 - Search for your address</li>
-                <li>Step 2 - Zoom in to the correct area on the map</li>
-                <li>Step 3 - Click 'Start New Fence'</li>
-                <li>
-                  Step 4 - On the map, click on each corner of your paddock
-                </li>
-                <li>
-                  Step 5 - Once you have connected the pins to the start point a
-                  perimeter will be calculated
-                </li>
-                <li>
-                  Step 6 - You can edit the pins of the paddock, delete a
-                  paddock or create a new paddock
-                </li>
-                <li>
-                  Step 7 - Accept and confirm the total paddock perimeter to be
-                  used in the estimate
-                </li>
-              </ul>
-            </div>
-
-            <div class="map-search-controller py-5">
+      <div class="fence-estimator__container no-gutters">
+        <div class="d-md-flex flex-column justify-content-center">
+          <h2>Map my Fence</h2>
+          <div
+            class="fence-estimator__instructions alert alert-secondary"
+            role="alert"
+          >
+            <h4>Instructions</h4>
+            <ul>
+              <li>Step 1 - Search for your address</li>
+              <li>Step 2 - Zoom in to the correct area on the map</li>
+              <li>Step 3 - Click 'Start New Fence'</li>
+              <li>Step 4 - On the map, click on each corner of your paddock</li>
+              <li>
+                Step 5 - Once you have connected the pins to the start point a
+                perimeter will be calculated
+              </li>
+              <li>
+                Step 6 - You can edit the pins of the paddock, delete a paddock
+                or create a new paddock
+              </li>
+              <li>
+                Step 7 - Accept and confirm the total paddock perimeter to be
+                used in the estimate
+              </li>
+            </ul>
+          </div>
+          <div class="map-search-controllers">
+            <div class="map-search-controller py-5 px-4">
               <h4>Search Address</h4>
               <form class="form-inline">
                 <div class="form-group mb-2">
@@ -123,14 +123,27 @@
               </div>
             </div>
             <div class="map-search-results-controller py-5" aria-hidden="true">
+              <h5>Map Tools</h5>
+              <button type="button" class="map-tool-drag elementor-button mr-4">
+                Drag map
+              </button>
+              <button type="button" class="map-tool-line elementor-button mr-4">
+                Draw line
+              </button>
+              <button
+                type="button"
+                class="map-tool-shape elementor-button mr-4"
+              >
+                Draw shape
+              </button>
               <h4 class="map-search-results__address mb-4"></h4>
               <div class="map-search-results__step-1" aria-hidden="true">
-                <button
+                <!-- <button
                   type="button"
                   class="plotting__start-button elementor-button mr-4"
                 >
                   Start Mapping <i class="fa fa-map-pin ml-2"></i>
-                </button>
+                </button> TO BE REMOVED -->
                 <button
                   type="button"
                   class="search-address__new-search-button d-none"
@@ -233,7 +246,7 @@
             </div>
           </div>
         </div>
-        <div class="fence-estimator__map col-md-7">
+        <div class="fence-estimator__map">
           <div id="fence-estimator-map"></div>
           <button
             type="button"
