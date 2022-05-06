@@ -1,6 +1,4 @@
-import { Loader } from "google-maps";
 import {
-  MAP_SETTINGS,
   MAP_OPTIONS,
   SHAPE_SETTINGS,
   DEFAULT_ZOOM,
@@ -8,15 +6,13 @@ import {
   SHAPES_CONTROLS,
 } from "../constants";
 import * as HELPERS from "../helpers";
-
-const mapLoader = new Loader(MAP_SETTINGS.key, MAP_SETTINGS.options);
+import { drawShapeRow } from "../helpers";
 
 // Elements
 let google,
   map,
   drawingManager,
   mapElements = [],
-  currentPaddock,
   selectedShape = null,
   mapContainer,
   addressSearchContainer,
@@ -26,7 +22,6 @@ let google,
   plottingStep2,
   plottingShapes,
   searchField,
-  // startPlotBtn,
   newSearchBtn,
   addPlottingBtn,
   savePaddockBtn,
@@ -41,13 +36,23 @@ let google,
   plottingPerimiterTrigger,
   hasConfirmedTotal = false;
 
+// tools
+let mapStorage = "fence-estimator";
+
 // Values
 let addressMarker,
   plotPerimiter = 0;
 
 // UI
-const calculatePlot = () => {
+const calculatePlot = (storePlot = true) => {
   let totalPerimeter = 0;
+
+  // re-draw table and recalculate
+  // go through each shape/line and:
+  // 1. add length to toal
+  // 2. create row (button handlers have been assigned to table wrapper)
+  // 3. display total
+  // 4. update caching
 
   plottingShapes.innerHTML = "";
 
@@ -56,46 +61,26 @@ const calculatePlot = () => {
       shape.getPath().getArray()
     );
 
+    // 1.
     totalPerimeter += shapeLength;
-    plottingShapes.innerHTML += `
-    <tr>
-      <th scope="row"><p data-action="${
-        SHAPES_CONTROLS.HIGHLIGHT
-      }" data-shape="${index}">
-      <input id="paddock-name-${index}" value="${
-      shape.paddockName
-    }" type="test" data-action="${
-      SHAPES_CONTROLS.EDIT_NAME
-    }" data-shape="${index}" /></p></th>
-      <th scope="col">${shapeLength.toFixed(0)}m </th>
-      <td>
-        <button type="button" data-action="${
-          SHAPES_CONTROLS.EDIT
-        }" data-shape="${index}" class="btn-control-icons">
-          <i class="fa fa-edit">e</i>
-        </button>
-      </td>
-      <td>
-        <button type="button" data-action="${
-          SHAPES_CONTROLS.DELETE
-        }" data-shape="${index}" class="btn-control-icons d-block">
-          <i class="fa fa-trash">d</i>
-        </button>
-        <button type="button" data-action="${
-          SHAPES_CONTROLS.CONFIRM_DELETE
-        }" data-shape="${index}" class="btn-control-icons d-none">
-          <i class="fa fa-times"></i> Click to confirm
-        </button>
-      </td>
-    </tr>
-    `;
+    // 2.
+    plottingShapes.innerHTML += drawShapeRow(
+      shape.paddockName,
+      shapeLength,
+      index
+    );
   });
 
+  // 3.
   plotPerimiter = totalPerimeter.toFixed(0);
   plottingPerimiterLabel.innerHTML = `${plotPerimiter}m`;
   plottingResultsContainer.setAttribute("aria-hidden", false);
 
+  // 4.
+  storePlot && storePaddocks();
+
   if (hasConfirmedTotal) {
+    // if the user wants to use the list of shapes/lines created, use it.
     handleUsePlotting();
   }
 };
@@ -111,11 +96,12 @@ const clearPlotShape = (idx) => {
   calculatePlot();
 
   if (!mapElements.length) {
-    backToStartDrawing();
+    resetMapTools();
   }
 };
 
-const clearPlotShapes = () => {
+const resetPlot = () => {
+  // go through all shapes and remove them from the map before clearing the array
   if (mapElements.length) {
     mapElements.forEach((shape) => {
       shape.setMap(null);
@@ -127,23 +113,22 @@ const clearPlotShapes = () => {
   plotPerimiter = 0;
 };
 
-const backToStartDrawing = () => {
-  plottingStep1.setAttribute("aria-hidden", false);
-  plottingStep2.setAttribute("aria-hidden", true);
-  plottingResultsContainer.setAttribute("aria-hidden", true);
-  savePaddockBtn.setAttribute("aria-hidden", false);
-  plottingShapes.innerHTML = "";
+const resetMapTools = () => {
+  // plottingStep1.setAttribute("aria-hidden", false);
+  // plottingStep2.setAttribute("aria-hidden", true);
+  // plottingResultsContainer.setAttribute("aria-hidden", true);
+  // savePaddockBtn.setAttribute("aria-hidden", false);
   drawingManager.setDrawingMode(null);
-};
 
-const resetPlot = () => {
-  clearPlotShapes();
+  plottingShapes.innerHTML = "";
+  plottingPerimiterLabel.innerHTML = "";
 };
 
 const resetEstimator = () => {
-  addressMarker.setVisible(false);
-
   resetPlot();
+  resetMapTools();
+
+  addressMarker.setVisible(false);
 
   map.setZoom(DEFAULT_ZOOM);
   map.setCenter({
@@ -151,20 +136,15 @@ const resetEstimator = () => {
     lng: DEFAULT_COORDINATES.lng,
   });
 
-  drawingManager.setDrawingMode(null);
+  // plottingStep1.setAttribute("aria-hidden", true);
+  // plottingStep2.setAttribute("aria-hidden", true);
+  // addressResultsContainer.setAttribute("aria-hidden", true);
+  // plottingResultsContainer.setAttribute("aria-hidden", true);
+  // savePaddockBtn.setAttribute("aria-hidden", true);
 
-  plottingStep1.setAttribute("aria-hidden", true);
-  plottingStep2.setAttribute("aria-hidden", true);
-  addressResultsContainer.setAttribute("aria-hidden", true);
-  plottingResultsContainer.setAttribute("aria-hidden", true);
-  savePaddockBtn.setAttribute("aria-hidden", true);
-
-  addressSearchContainer.setAttribute("aria-hidden", false);
+  // addressSearchContainer.setAttribute("aria-hidden", false);
 
   currentAddressLabel.innerHTML = "";
-  plottingPerimiterLabel.innerHTML = "";
-  plottingShapes.innerHTML = "";
-
   searchField.value = "";
 };
 
@@ -175,14 +155,14 @@ const handleResetSearch = (e) => {
 };
 
 const handleStartPlotting = () => {
-  resetPlot();
+  // resetPlot();
 
   drawingManager.setMap(map);
   drawingManager.setDrawingMode(null);
 
-  plottingStep1.setAttribute("aria-hidden", true);
-  plottingStep2.setAttribute("aria-hidden", false);
-  savePaddockBtn.setAttribute("aria-hidden", false);
+  // plottingStep1.setAttribute("aria-hidden", true);
+  // plottingStep2.setAttribute("aria-hidden", false);
+  // savePaddockBtn.setAttribute("aria-hidden", false);
 };
 
 const handleDragTool = (e) => {
@@ -203,7 +183,7 @@ const handleShapeTool = (e) => {
   drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
 };
 
-const handleShapes = (e) => {
+const handleShapesTable = (e) => {
   const element =
     e.target.tagName.toLowerCase() === "button"
       ? e.target
@@ -268,6 +248,9 @@ const handleEditPaddockName = (e) => {
   }
 
   shape.paddockName = element.value;
+
+  // update local storage
+  storePaddocks();
 };
 
 const handleAddPlotting = (e) => {
@@ -285,7 +268,7 @@ const handleUndoPlotting = (e) => {
   clearPlotShape(mapElements.length - 1);
 
   if (!mapElements.length) {
-    backToStartDrawing();
+    resetMapTools();
   }
 };
 
@@ -306,7 +289,7 @@ const handleUsePlotting = (e) => {
 };
 
 // paddocks
-const setupNewPaddock = (paddock) => {
+const bindPaddockShapeEvents = (paddock) => {
   google.maps.event.addListener(paddock, "mouseup", () => {
     calculatePlot();
   });
@@ -333,9 +316,43 @@ const setupNewPaddock = (paddock) => {
   });
 };
 
+const createPaddockMapShape = (paddockIdx, paddockName, type, paths) => {
+  let currentShape;
+  const shapeDetails = {
+    ...SHAPE_SETTINGS.DEFAULT,
+    paddockIdx,
+    paddockName,
+    type,
+    // map,
+    // paths,
+  };
+
+  if (type === google.maps.drawing.OverlayType.POLYLINE) {
+    currentShape = new google.maps.Polyline(shapeDetails);
+  }
+  if (type === google.maps.drawing.OverlayType.POLYGON) {
+    currentShape = new google.maps.Polygon(shapeDetails);
+  }
+
+  currentShape.setPath(paths);
+  currentShape.setMap(map);
+
+  // set up paddock with listening events
+  bindPaddockShapeEvents(currentShape, type);
+
+  mapElements.push(currentShape);
+
+  return currentShape;
+};
+
 // map
-const createMap = () => {
+export const createMap = () => {
   map = new google.maps.Map(mapContainer, MAP_OPTIONS);
+
+  google.maps.event.addListenerOnce(map, "tilesloaded", function () {
+    // get elements from cache
+    getStoredPaddocks();
+  });
 
   // Marker
   addressMarker = new google.maps.Marker({
@@ -410,29 +427,17 @@ const createMap = () => {
     drawingManager,
     "polylinecomplete",
     function (e) {
-      // if no paddock created, create polyline and add it to array of elements
+      // create polyline and add it to array of elements
       // to display totals in table as lines are added
-      if (!currentPaddock) {
-        currentPaddock = new google.maps.Polyline({
-          ...SHAPE_SETTINGS.DEFAULT,
-          paddockIdx: mapElements.length, // current length = new index
-          paddockName: `New Paddock ${mapElements.length + 1}`,
-          map,
-        });
-      }
-
-      // replace current paddock created object with new connected path
-      currentPaddock.setPath(e.getPath().getArray());
-      mapElements.push(currentPaddock);
-
-      const paddock = mapElements[mapElements.length - 1];
-
-      // set up paddock with listening events
-      setupNewPaddock(paddock, google.maps.drawing.OverlayType.POLYLINE);
+      createPaddockMapShape(
+        mapElements.length,
+        `Open paddock ${mapElements.length + 1}`,
+        google.maps.drawing.OverlayType.POLYLINE,
+        e.getPath().getArray()
+      );
 
       e.setMap(null);
-      currentPaddock = undefined;
-
+      // currentPaddock = undefined;
       calculatePlot();
     }
   );
@@ -441,35 +446,68 @@ const createMap = () => {
     drawingManager,
     "polygoncomplete",
     function (e) {
-      // if no paddock created, create polyline and add it to array of elements
+      // create polygon and add it to array of elements
       // to display totals in table as lines are added
-      if (!currentPaddock) {
-        currentPaddock = new google.maps.Polygon({
-          ...SHAPE_SETTINGS.DEFAULT,
-          paddockIdx: mapElements.length, // current length = new index
-          paddockName: `Paddock ${mapElements.length + 1}`,
-          map,
-        });
-      }
-
-      // replace current paddock created object with new connected path
-      currentPaddock.setPath(e.getPath().getArray());
-      mapElements.push(currentPaddock);
-
-      const paddock = mapElements[mapElements.length - 1];
-
-      // set up paddock with listening events
-      setupNewPaddock(paddock, google.maps.drawing.OverlayType.POLYLIGON);
+      createPaddockMapShape(
+        mapElements.length,
+        `Closed paddock ${mapElements.length + 1}`,
+        google.maps.drawing.OverlayType.POLYGON,
+        e.getPath().getArray()
+      );
 
       e.setMap(null);
-      currentPaddock = undefined;
+      // currentPaddock = undefined;
 
       calculatePlot();
     }
   );
 };
 
-const setup = () => {
+// caching
+const storePaddocks = () => {
+  let fences = [];
+  mapElements.forEach((element) => {
+    const shape = {
+      paths: element.getPath().getArray(),
+      paddockIdx: element.paddockIdx,
+      paddockName: element.paddockName,
+      type: element.type,
+    };
+
+    fences.push(shape);
+  });
+
+  localStorage.setItem(`${mapStorage}`, JSON.stringify(fences));
+};
+
+const getStoredPaddocks = () => {
+  const currentPaddocks = localStorage.getItem(mapStorage);
+
+  if (currentPaddocks) {
+    JSON.parse(currentPaddocks).forEach((shape) => {
+      const { type, paddockIdx, paddockName, paths } = shape;
+
+      // setup paddock and add it to map
+      const mappedPaddock = createPaddockMapShape(
+        paddockIdx,
+        paddockName,
+        type,
+        paths
+      );
+
+      mappedPaddock.setMap(map);
+    });
+
+    calculatePlot(false);
+    addressResultsContainer.setAttribute("aria-hidden", false);
+    handleStartPlotting();
+  }
+};
+
+export const setup = (googleAPI) => {
+  mapContainer = document.getElementById("fence-estimator-map");
+  google = googleAPI;
+
   addressSearchContainer = document.querySelectorAll(
     ".map-search-controller"
   )[0];
@@ -494,7 +532,6 @@ const setup = () => {
     ".map-search-results__address"
   )[0];
 
-  // startPlotBtn = document.querySelectorAll(".plotting__start-button")[0]; TO BE REMOVED
   addPlottingBtn = document.querySelectorAll(".plotting__add-button")[0];
   savePaddockBtn = document.querySelectorAll(
     ".plotting__save-paddock-button"
@@ -517,10 +554,8 @@ const setup = () => {
     }
   };
   searchField.addEventListener("keypress", ignoreKeyPress);
-  // startPlotBtn.addEventListener("keypress", ignoreKeyPress); TO BE REMOVED
 
-  // startPlotBtn.addEventListener("click", handleStartPlotting); TO BE REMOVED
-  plottingShapes.addEventListener("click", handleShapes);
+  plottingShapes.addEventListener("click", handleShapesTable);
   plottingShapes.addEventListener("focusout", handleEditPaddockName);
   newSearchBtn.addEventListener("click", handleResetSearch);
   addPlottingBtn.addEventListener("click", handleAddPlotting);
@@ -535,28 +570,4 @@ const setup = () => {
   dragMapTool.addEventListener("click", handleDragTool);
   lineMapTool.addEventListener("click", handleLineTool);
   shapeMapTool.addEventListener("click", handleShapeTool);
-};
-
-const start = () => {
-  setup();
-
-  createMap();
-};
-
-export const init = () => {
-  mapContainer = document.getElementById("fence-estimator-map");
-
-  if (!mapContainer) {
-    return false;
-  }
-
-  if (!google) {
-    mapLoader.load().then((googleAPI) => {
-      google = googleAPI;
-
-      start();
-    });
-  } else {
-    start();
-  }
 };

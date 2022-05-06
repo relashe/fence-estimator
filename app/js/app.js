@@ -1,4 +1,4 @@
-import { init as loadedMapModule } from "./modules/loadedMapModule";
+import { init as loadedMapModule } from "./modules/starter.module";
 
 document.addEventListener("DOMContentLoaded", () => {
   loadedMapModule();
