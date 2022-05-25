@@ -61,13 +61,13 @@ export const clearEdits = (mapShapes) => {
 export const drawShapeRow = (paddockName, shapeLength, index) => {
   return `
   <tr>
-    <th scope="row"><p data-action="${
+    <td scope="row"><p data-action="${
       SHAPES_CONTROLS.HIGHLIGHT
     }" data-shape="${index}">
     <input id="paddock-name-${index}" value="${paddockName}" type="test" data-action="${
     SHAPES_CONTROLS.EDIT_NAME
-  }" data-shape="${index}" /></p></th>
-    <th scope="col">${shapeLength.toFixed(0)}m </th>
+  }" data-shape="${index}" /></p></td>
+    <td scope="col">${shapeLength.toFixed(0)}m </td>
     <td>
       <button type="button" data-action="${
         SHAPES_CONTROLS.EDIT

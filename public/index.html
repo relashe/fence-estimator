@@ -91,8 +91,8 @@
             S
           </button>
         </div>
-        <div class="map-search-sidebar">
-          <div
+        <div class="map-search-sidebar p-4">
+          <!-- <div
             class="fence-estimator__instructions alert alert-secondary"
             role="alert"
           >
@@ -115,10 +115,10 @@
                 used in the estimate
               </li>
             </ul>
-          </div>
+          </div> -->
 
           <div class="map-search-controllers">
-            <div class="map-search-controller px-4">
+            <div class="map-search-controller">
               <h4>Search Address</h4>
               <form class="form-inline">
                 <div class="form-group mb-2">
@@ -144,12 +144,12 @@
                   New Search
                   <i class="fa fa-search ml-2"></i>
                 </button>
-                <div class="alert alert-secondary mt-4" role="alert">
+                <!-- <div class="alert alert-secondary mt-4" role="alert">
                   <strong>Instructions:</strong> <br />
                   1. Zoom into you property <br />
                   2. Click 'Start Mapping' and then move over to the map on the
                   right to start mapping your fence.<br />
-                </div>
+                </div> -->
               </div>
               <div class="map-search-results__step-2" aria-hidden="false">
                 <!-- <button
@@ -168,7 +168,7 @@
                   <!-- remove -->
                   New Search <i class="fa fa-search ml-2"></i>
                 </button>
-                <div class="alert alert-secondary mt-1" role="alert">
+                <!-- <div class="alert alert-secondary mt-1" role="alert">
                   <strong>Instructions:</strong> <br />
                   1. Click on the first corner if your paddock.<br />
                   2. Continue clicking on all corners of your paddock until the
@@ -184,7 +184,7 @@
                   changes<br />
                   3. After editing, click 'Add another paddock' to continue
                   mapping out your paddocks<br />
-                </div>
+                </div> -->
 
                 <div class="map-search-results__shapes mt-5">
                   <table class="table table-sm paddock-list">
@@ -216,9 +216,9 @@
                     <div class="ml-4">
                       <button
                         type="button"
-                        class="plotting__add-button btn btn-secondary mr-4"
+                        class="reset-button btn btn-secondary mr-4"
                       >
-                        Add another paddock
+                        Delete all
                       </button>
                     </div>
                   </div>
@@ -230,11 +230,8 @@
               aria-hidden="true"
             >
               <button type="button" class="plotting__accept-button btn-block">
-                Continue with Estimate
+                Next
                 <i class="fa fa-check ml-2"></i>
-              </button>
-              <button type="button" class="reset-button btn-block">
-                Reset and start again
               </button>
             </div>
           </div>

@@ -18,12 +18,9 @@ let google,
   addressSearchContainer,
   addressResultsContainer,
   plottingResultsContainer,
-  plottingStep1,
-  plottingStep2,
   plottingShapes,
   searchField,
   newSearchBtn,
-  addPlottingBtn,
   savePaddockBtn,
   undoPlottingBtn,
   setPlottingBtn,
@@ -115,7 +112,7 @@ const resetPlot = () => {
 
 const resetMapTools = () => {
   // plottingStep1.setAttribute("aria-hidden", false);
-  // plottingStep2.setAttribute("aria-hidden", true);
+  // .setAttribute("aria-hidden", true);
   // plottingResultsContainer.setAttribute("aria-hidden", true);
   // savePaddockBtn.setAttribute("aria-hidden", false);
   drawingManager.setDrawingMode(null);
@@ -137,7 +134,7 @@ const resetEstimator = () => {
   });
 
   // plottingStep1.setAttribute("aria-hidden", true);
-  // plottingStep2.setAttribute("aria-hidden", true);
+  // .setAttribute("aria-hidden", true);
   // addressResultsContainer.setAttribute("aria-hidden", true);
   // plottingResultsContainer.setAttribute("aria-hidden", true);
   // savePaddockBtn.setAttribute("aria-hidden", true);
@@ -160,7 +157,7 @@ export const handleStartPlotting = () => {
   drawingManager.setDrawingMode(null);
 
   // plottingStep1.setAttribute("aria-hidden", true);
-  // plottingStep2.setAttribute("aria-hidden", false);
+  // .setAttribute("aria-hidden", false);
   // savePaddockBtn.setAttribute("aria-hidden", false);
 };
 
@@ -542,8 +539,6 @@ export const setup = (googleAPI) => {
     ".map-plotting-results-controller"
   )[0];
 
-  plottingStep1 = document.querySelectorAll(".map-search-results__step-1")[0];
-  plottingStep2 = document.querySelectorAll(".map-search-results__step-2")[0];
   plottingShapes = document.querySelectorAll(
     ".map-search-results__shapes-table"
   )[0];
@@ -556,7 +551,6 @@ export const setup = (googleAPI) => {
     ".map-search-results__address"
   )[0];
 
-  addPlottingBtn = document.querySelectorAll(".plotting__add-button")[0];
   savePaddockBtn = document.querySelectorAll(
     ".plotting__save-paddock-button"
   )[0];
@@ -582,7 +576,6 @@ export const setup = (googleAPI) => {
   plottingShapes.addEventListener("click", handleShapesTable);
   plottingShapes.addEventListener("focusout", handleEditPaddockName);
   newSearchBtn.addEventListener("click", handleResetSearch);
-  addPlottingBtn.addEventListener("click", handleAddPlotting);
   savePaddockBtn.addEventListener("click", handleAddPlotting);
   undoPlottingBtn.addEventListener("click", handleUndoPlotting);
   setPlottingBtn.addEventListener("click", handleUsePlotting);
