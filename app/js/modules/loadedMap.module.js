@@ -154,9 +154,8 @@ const handleResetSearch = (e) => {
   resetEstimator();
 };
 
-const handleStartPlotting = () => {
-  // resetPlot();
-
+export const handleStartPlotting = () => {
+  // initialise the drawing manager by assigning it to the map
   drawingManager.setMap(map);
   drawingManager.setDrawingMode(null);
 
@@ -290,10 +289,13 @@ const handleUsePlotting = (e) => {
 
 // paddocks
 const bindPaddockShapeEvents = (paddock) => {
+  // when the shape is left
+  // (re)calculate the measurements
   google.maps.event.addListener(paddock, "mouseup", () => {
     calculatePlot();
   });
 
+  // when hovering over the shape
   google.maps.event.addListener(paddock, "mouseover", () => {
     if (
       drawingManager.getDrawingMode() ===
@@ -307,6 +309,7 @@ const bindPaddockShapeEvents = (paddock) => {
     }
   });
 
+  // when clicking on a shape
   google.maps.event.addListener(paddock, "click", () => {
     if (drawingManager.getDrawingMode() === null) {
       HELPERS.clearEdits(mapElements);
@@ -314,6 +317,35 @@ const bindPaddockShapeEvents = (paddock) => {
       savePaddockBtn.setAttribute("aria-hidden", true);
     }
   });
+
+  // when dragging a shape
+  google.maps.event.addListener(paddock, "drag", () => {
+    const shapeLength = google.maps.geometry.spherical.computeLength(
+      paddock.getPath().getArray()
+    );
+    console.log(shapeLength);
+  });
+
+  // paddock.addListener("drag", () => {
+  //   const shapeLength = google.maps.geometry.spherical.computeLength(
+  //     paddock.getPath().getArray()
+  //   );
+  //   console.log(shapeLength);
+  // });
+
+  // google.maps.event.addListener(paddock, "dragstart", () => {
+  //   const shapeLength = google.maps.geometry.spherical.computeLength(
+  //     paddock.getPath().getArray()
+  //   );
+  //   console.log(shapeLength);
+  // });
+
+  // google.maps.event.addListener(paddock, "dragend", () => {
+  //   const shapeLength = google.maps.geometry.spherical.computeLength(
+  //     paddock.getPath().getArray()
+  //   );
+  //   console.log(shapeLength);
+  // });
 };
 
 const createPaddockMapShape = (paddockIdx, paddockName, type, paths) => {
@@ -323,8 +355,6 @@ const createPaddockMapShape = (paddockIdx, paddockName, type, paths) => {
     paddockIdx,
     paddockName,
     type,
-    // map,
-    // paths,
   };
 
   if (type === google.maps.drawing.OverlayType.POLYLINE) {
@@ -335,14 +365,13 @@ const createPaddockMapShape = (paddockIdx, paddockName, type, paths) => {
   }
 
   currentShape.setPath(paths);
-  currentShape.setMap(map);
 
   // set up paddock with listening events
-  bindPaddockShapeEvents(currentShape, type);
+  bindPaddockShapeEvents(currentShape);
+
+  currentShape.setMap(map);
 
   mapElements.push(currentShape);
-
-  return currentShape;
 };
 
 // map
@@ -418,9 +447,12 @@ export const createMap = () => {
         google.maps.drawing.OverlayType.POLYGON,
       ],
     },
-    polygonOptions: {
-      ...SHAPE_SETTINGS.DEFAULT,
-    },
+    // polylineOptions: {
+    //   ...SHAPE_SETTINGS.DEFAULT,
+    // },
+    // polygonOptions: {
+    //   ...SHAPE_SETTINGS.DEFAULT,
+    // },
   });
 
   google.maps.event.addListener(
@@ -437,7 +469,7 @@ export const createMap = () => {
       );
 
       e.setMap(null);
-      // currentPaddock = undefined;
+
       calculatePlot();
     }
   );
@@ -456,7 +488,6 @@ export const createMap = () => {
       );
 
       e.setMap(null);
-      // currentPaddock = undefined;
 
       calculatePlot();
     }
@@ -488,14 +519,7 @@ const getStoredPaddocks = () => {
       const { type, paddockIdx, paddockName, paths } = shape;
 
       // setup paddock and add it to map
-      const mappedPaddock = createPaddockMapShape(
-        paddockIdx,
-        paddockName,
-        type,
-        paths
-      );
-
-      mappedPaddock.setMap(map);
+      createPaddockMapShape(paddockIdx, paddockName, type, paths);
     });
 
     calculatePlot(false);

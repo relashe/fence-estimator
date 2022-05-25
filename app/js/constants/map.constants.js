@@ -31,6 +31,7 @@ export const SHAPE_SETTINGS = {
     strokeColor: COLORS.STROKE,
     strokeWeight: 3,
     editable: true,
+    draggable: true,
   },
   EDIT: {
     fillOpacity: OPACITY.EDIT,

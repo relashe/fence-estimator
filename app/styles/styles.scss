@@ -12,22 +12,19 @@
 
 .fence-estimator__container {
   height: 100%;
+  position: relative;
 }
 
-// * INSTRUCTIONS
-.fence-estimator__instructions {
+// * SIDEBAR
+.map-search-sidebar {
+  background: #ffffff;
   position: absolute;
   top: 40px;
   right: 40px;
+  width: 400px;
+  height: 90vh;
   z-index: 20;
-}
-
-.map-search-controllers {
-  background: #ffffff;
-  position: absolute;
-  top: 280px;
-  right: 40px;
-  z-index: 20;
+  overflow-y: auto;
 }
 
 // * MAP
@@ -70,4 +67,30 @@
 
 .modal-content {
   height: 90vh;
+}
+
+// * TOOLS
+.map-search-tools-controller {
+  background-color: #ffffff;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-flow: column nowrap;
+  z-index: 10;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.map-tool {
+  border: 1px solid black;
+  border-radius: 4px;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+
+  & + & {
+    margin-top: 20px;
+  }
 }

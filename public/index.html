@@ -71,16 +71,27 @@
       </div>
     </div> -->
 
-    <input class="qty" type="text" />
-
     <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
       Launch estimator
     </button> -->
 
     <div class="fence-estimator container-fluid p-0">
       <div class="fence-estimator__container no-gutters">
-        <div class="d-md-flex flex-column justify-content-center">
-          <h2>Map my Fence</h2>
+        <div class="map-search-tools-controller p-2" aria-hidden="false">
+          <button type="button" class="map-tool map-tool-drag elementor-button">
+            D
+          </button>
+          <button type="button" class="map-tool map-tool-line elementor-button">
+            L
+          </button>
+          <button
+            type="button"
+            class="map-tool map-tool-shape elementor-button"
+          >
+            S
+          </button>
+        </div>
+        <div class="map-search-sidebar">
           <div
             class="fence-estimator__instructions alert alert-secondary"
             role="alert"
@@ -105,8 +116,9 @@
               </li>
             </ul>
           </div>
+
           <div class="map-search-controllers">
-            <div class="map-search-controller py-5 px-4">
+            <div class="map-search-controller px-4">
               <h4>Search Address</h4>
               <form class="form-inline">
                 <div class="form-group mb-2">
@@ -122,20 +134,7 @@
                 auto finder will finish the job.
               </div>
             </div>
-            <div class="map-search-results-controller py-5" aria-hidden="false">
-              <h5>Map Tools</h5>
-              <button type="button" class="map-tool-drag elementor-button mr-4">
-                Drag map
-              </button>
-              <button type="button" class="map-tool-line elementor-button mr-4">
-                Draw line
-              </button>
-              <button
-                type="button"
-                class="map-tool-shape elementor-button mr-4"
-              >
-                Draw shape
-              </button>
+            <div class="map-search-results-controller" aria-hidden="false">
               <h4 class="map-search-results__address mb-4"></h4>
               <div class="map-search-results__step-1" aria-hidden="false">
                 <button
@@ -227,7 +226,7 @@
               </div>
             </div>
             <div
-              class="map-plotting-results-controller mt-auto"
+              class="map-plotting-results-controller mt-auto py-5"
               aria-hidden="true"
             >
               <button type="button" class="plotting__accept-button btn-block">
@@ -239,6 +238,7 @@
               </button>
             </div>
           </div>
+          <input class="qty" type="text" />
         </div>
         <div class="fence-estimator__map">
           <div id="fence-estimator-map"></div>
