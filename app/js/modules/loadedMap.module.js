@@ -24,6 +24,7 @@ let google,
   savePaddockBtn,
   undoPlottingBtn,
   setPlottingBtn,
+  deletePlottingBtn,
   resetBtn,
   dragMapTool,
   lineMapTool,
@@ -108,6 +109,8 @@ const resetPlot = () => {
   }
 
   plotPerimiter = 0;
+
+  removeStoredPaddocks();
 };
 
 const resetMapTools = () => {
@@ -282,6 +285,13 @@ const handleUsePlotting = (e) => {
   if (typeof elementorProFrontend !== "undefined") {
     elementorProFrontend.modules.popup.closePopup({}, e);
   }
+};
+
+const handleDeleteAllPlotting = (e) => {
+  e.preventDefault();
+
+  resetPlot();
+  resetMapTools();
 };
 
 // paddocks
@@ -525,6 +535,10 @@ const getStoredPaddocks = () => {
   }
 };
 
+const removeStoredPaddocks = () => {
+  localStorage.removeItem(mapStorage);
+};
+
 export const setup = (googleAPI) => {
   mapContainer = document.getElementById("fence-estimator-map");
   google = googleAPI;
@@ -556,6 +570,7 @@ export const setup = (googleAPI) => {
   )[0];
   undoPlottingBtn = document.querySelectorAll(".plotting__undo-button")[0];
   setPlottingBtn = document.querySelectorAll(".plotting__accept-button")[0];
+  deletePlottingBtn = document.querySelectorAll(".plotting__delete-button")[0];
   plottingPerimiterLabel = document.querySelectorAll(
     ".map-plotting-results__perimiter"
   )[0];
@@ -579,6 +594,7 @@ export const setup = (googleAPI) => {
   savePaddockBtn.addEventListener("click", handleAddPlotting);
   undoPlottingBtn.addEventListener("click", handleUndoPlotting);
   setPlottingBtn.addEventListener("click", handleUsePlotting);
+  deletePlottingBtn.addEventListener("click", handleDeleteAllPlotting);
 
   resetBtn.forEach((button) => {
     button.addEventListener("click", handleResetSearch);
