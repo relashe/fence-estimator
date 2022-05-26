@@ -7,6 +7,7 @@ import {
 } from "../constants";
 import * as HELPERS from "../helpers";
 import { drawShapeRow } from "../helpers";
+import interact from "interactjs";
 
 // Elements
 let google,
@@ -26,6 +27,7 @@ let google,
   setPlottingBtn,
   deletePlottingBtn,
   resetBtn,
+  mapTools,
   dragMapTool,
   lineMapTool,
   shapeMapTool,
@@ -603,4 +605,32 @@ export const setup = (googleAPI) => {
   dragMapTool.addEventListener("click", handleDragTool);
   lineMapTool.addEventListener("click", handleLineTool);
   shapeMapTool.addEventListener("click", handleShapeTool);
+
+  // UI
+  mapTools = document.querySelectorAll(".map-search-tools-controller")[0];
+  let x = 0;
+  let y = 0;
+
+  interact(mapTools)
+    .draggable({
+      modifiers: [
+        interact.modifiers.snap({
+          targets: [interact.snappers.grid({ x: 30, y: 30 })],
+          range: Infinity,
+          relativePoints: [{ x: 0, y: 0 }],
+        }),
+        interact.modifiers.restrict({
+          restriction: mapTools.parentNode,
+          elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
+          endOnly: true,
+        }),
+      ],
+      inertia: true,
+    })
+    .on("dragmove", function (event) {
+      x += event.dx;
+      y += event.dy;
+
+      event.target.style.transform = "translate(" + x + "px, " + y + "px)";
+    });
 };
