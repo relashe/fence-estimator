@@ -27,6 +27,7 @@ let google,
   setPlottingBtn,
   deletePlottingBtn,
   resetBtn,
+  printBtn,
   mapTools,
   dragMapTool,
   lineMapTool,
@@ -541,6 +542,58 @@ const removeStoredPaddocks = () => {
   localStorage.removeItem(mapStorage);
 };
 
+// print
+const printMap = () => {
+  // 1. remove controls
+  map.setOptions({
+    zoomControl: false,
+  });
+
+  const popUpAndPrint = function () {
+    let dataUrl = [];
+
+    const mapCanvas = mapContainer.getElementsByTagName("canvas");
+
+    if (mapCanvas) {
+      Array.from(mapCanvas).forEach((item) => {
+        dataUrl.push(item.toDataURL("image/png"));
+      });
+
+      const clone = mapContainer.cloneNode(true);
+
+      const width = mapContainer.clientWidth;
+      const height = mapContainer.clientHeight;
+
+      Array.from(clone.getElementsByTagName("canvas")).forEach(
+        (clonedCanvas) => {
+          clonedCanvas.innerHTML = `
+        <img src"${dataUrl}" style="position:absolute; left: 0; top: 0; width: ${width}px; height: ${height}px;"
+        `;
+        }
+      );
+
+      const printWindow = window.open(
+        "",
+        "PrintMap",
+        "width=" + width + ",height=" + height
+      );
+      printWindow.document.writeln(clone.innerHTML);
+      printWindow.document.close();
+      printWindow.focus();
+      printWindow.print();
+      printWindow.close();
+    }
+
+    map.setOptions({
+      zoomControl: true,
+    });
+  };
+
+  // 2. trigger print function
+  setTimeout(popUpAndPrint, 500);
+};
+
+// SETUP
 export const setup = (googleAPI) => {
   mapContainer = document.getElementById("fence-estimator-map");
   google = googleAPI;
@@ -578,6 +631,7 @@ export const setup = (googleAPI) => {
   )[0];
 
   resetBtn = document.querySelectorAll(".reset-button");
+  printBtn = document.querySelectorAll(".plotting__print-button")[0];
 
   dragMapTool = document.querySelectorAll(".map-tool-drag")[0];
   lineMapTool = document.querySelectorAll(".map-tool-line")[0];
@@ -633,4 +687,7 @@ export const setup = (googleAPI) => {
 
       event.target.style.transform = "translate(" + x + "px, " + y + "px)";
     });
+
+  // PRINT
+  printBtn.addEventListener("click", printMap);
 };
