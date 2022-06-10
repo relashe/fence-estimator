@@ -94,3 +94,25 @@
     margin-top: 20px;
   }
 }
+
+// PRINT
+@media print {
+  .map-search-tools-controller,
+  .map-search-controller,
+  .map-plotting-results-controller,
+  .qty,
+  .plotting__delete-button,
+  .col-edit,
+  .col-delete,
+  [data-action="edit"],
+  [data-action="delete"],
+  .btn-control-icons--edit,
+  .btn-control-icons--delete {
+    display: none;
+  }
+
+  .fence-estimator__map {
+    height: 100vh;
+    width: 80vw;
+  }
+}

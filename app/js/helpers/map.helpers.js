@@ -71,14 +71,14 @@ export const drawShapeRow = (paddockName, shapeLength, index) => {
     <td>
       <button type="button" data-action="${
         SHAPES_CONTROLS.EDIT
-      }" data-shape="${index}" class="btn-control-icons">
+      }" data-shape="${index}" class="btn-control-icons btn-control-icons--edit">
         <i class="fa fa-edit">e</i>
       </button>
     </td>
     <td>
       <button type="button" data-action="${
         SHAPES_CONTROLS.DELETE
-      }" data-shape="${index}" class="btn-control-icons d-block">
+      }" data-shape="${index}" class="btn-control-icons btn-control-icons--delete d-block">
         <i class="fa fa-trash">d</i>
       </button>
       <button type="button" data-action="${

@@ -22,6 +22,7 @@ export const MAP_OPTIONS = {
   mapTypeId: "satellite",
   streetViewControl: false,
   tilt: 0,
+  zoomControl: false,
 };
 
 export const SHAPE_SETTINGS = {
@@ -32,6 +33,8 @@ export const SHAPE_SETTINGS = {
     strokeWeight: 3,
     editable: true,
     draggable: true,
+    clickable: true,
+    visible: true,
   },
   EDIT: {
     fillOpacity: OPACITY.EDIT,

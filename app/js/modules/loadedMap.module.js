@@ -32,6 +32,8 @@ let google,
   dragMapTool,
   lineMapTool,
   shapeMapTool,
+  zoomInTool,
+  zoomOutTool,
   currentAddressLabel,
   plottingPerimiterLabel,
   plottingPerimiterTrigger,
@@ -185,6 +187,18 @@ const handleShapeTool = (e) => {
   drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
 };
 
+const handleZoomInTool = (e) => {
+  e.preventDefault();
+
+  map.setZoom(map.getZoom() + 1);
+};
+
+const handleZoomOutTool = (e) => {
+  e.preventDefault();
+
+  map.setZoom(map.getZoom() - 1);
+};
+
 const handleShapesTable = (e) => {
   const element =
     e.target.tagName.toLowerCase() === "button"
@@ -328,29 +342,7 @@ const bindPaddockShapeEvents = (paddock) => {
     }
   });
 
-  // when dragging a shape
-  google.maps.event.addListener(paddock, "drag", () => {
-    const shapeLength = google.maps.geometry.spherical.computeLength(
-      paddock.getPath().getArray()
-    );
-    console.log(shapeLength);
-  });
-
   // paddock.addListener("drag", () => {
-  //   const shapeLength = google.maps.geometry.spherical.computeLength(
-  //     paddock.getPath().getArray()
-  //   );
-  //   console.log(shapeLength);
-  // });
-
-  // google.maps.event.addListener(paddock, "dragstart", () => {
-  //   const shapeLength = google.maps.geometry.spherical.computeLength(
-  //     paddock.getPath().getArray()
-  //   );
-  //   console.log(shapeLength);
-  // });
-
-  // google.maps.event.addListener(paddock, "dragend", () => {
   //   const shapeLength = google.maps.geometry.spherical.computeLength(
   //     paddock.getPath().getArray()
   //   );
@@ -358,13 +350,41 @@ const bindPaddockShapeEvents = (paddock) => {
   // });
 };
 
-const createPaddockMapShape = (paddockIdx, paddockName, type, paths) => {
+const createPaddockMapShape = (
+  paddockIdx,
+  paddockName,
+  type,
+  pathCoordinates
+) => {
   let currentShape;
+
+  // let path = new google.maps.MVCArray();
+
+  // pathCoordinates.forEach((segment) => {
+  //   const segmentCoordinates = new google.maps.LatLng(segment.lat, segment.lng);
+  //   path.push(segmentCoordinates);
+  // });
+
+  // google.maps.event.addListener(path, "insert_at", function (vertex) {
+  //   console.log("Vertex " + vertex + " inserted to path.");
+  // });
+
+  // google.maps.event.addListener(path, "set_at", function (vertex) {
+  //   console.log("Vertex " + vertex + " updated on path.");
+  // });
+
+  // google.maps.event.addListener(path, "mousedown", function (vertex) {
+  //   console.log("Vertex " + vertex + " updated on path. mouse");
+  // });
+
   const shapeDetails = {
     ...SHAPE_SETTINGS.DEFAULT,
     paddockIdx,
     paddockName,
     type,
+    map,
+    // path,
+    path: pathCoordinates,
   };
 
   if (type === google.maps.drawing.OverlayType.POLYLINE) {
@@ -374,12 +394,8 @@ const createPaddockMapShape = (paddockIdx, paddockName, type, paths) => {
     currentShape = new google.maps.Polygon(shapeDetails);
   }
 
-  currentShape.setPath(paths);
-
   // set up paddock with listening events
   bindPaddockShapeEvents(currentShape);
-
-  currentShape.setMap(map);
 
   mapElements.push(currentShape);
 };
@@ -457,12 +473,12 @@ export const createMap = () => {
         google.maps.drawing.OverlayType.POLYGON,
       ],
     },
-    // polylineOptions: {
-    //   ...SHAPE_SETTINGS.DEFAULT,
-    // },
-    // polygonOptions: {
-    //   ...SHAPE_SETTINGS.DEFAULT,
-    // },
+    polylineOptions: {
+      ...SHAPE_SETTINGS.DEFAULT,
+    },
+    polygonOptions: {
+      ...SHAPE_SETTINGS.DEFAULT,
+    },
   });
 
   google.maps.event.addListener(
@@ -546,51 +562,15 @@ const removeStoredPaddocks = () => {
 const printMap = () => {
   // 1. remove controls
   map.setOptions({
-    zoomControl: false,
+    zoom: DEFAULT_ZOOM,
   });
 
   const popUpAndPrint = function () {
-    let dataUrl = [];
-
-    const mapCanvas = mapContainer.getElementsByTagName("canvas");
-
-    if (mapCanvas) {
-      Array.from(mapCanvas).forEach((item) => {
-        dataUrl.push(item.toDataURL("image/png"));
-      });
-
-      const clone = mapContainer.cloneNode(true);
-
-      const width = mapContainer.clientWidth;
-      const height = mapContainer.clientHeight;
-
-      Array.from(clone.getElementsByTagName("canvas")).forEach(
-        (clonedCanvas) => {
-          clonedCanvas.innerHTML = `
-        <img src"${dataUrl}" style="position:absolute; left: 0; top: 0; width: ${width}px; height: ${height}px;"
-        `;
-        }
-      );
-
-      const printWindow = window.open(
-        "",
-        "PrintMap",
-        "width=" + width + ",height=" + height
-      );
-      printWindow.document.writeln(clone.innerHTML);
-      printWindow.document.close();
-      printWindow.focus();
-      printWindow.print();
-      printWindow.close();
-    }
-
-    map.setOptions({
-      zoomControl: true,
-    });
+    window.print();
   };
 
-  // 2. trigger print function
-  setTimeout(popUpAndPrint, 500);
+  // 2. trigger print function - timeout to give time to the zoom reset
+  setTimeout(popUpAndPrint, 1000);
 };
 
 // SETUP
@@ -636,6 +616,8 @@ export const setup = (googleAPI) => {
   dragMapTool = document.querySelectorAll(".map-tool-drag")[0];
   lineMapTool = document.querySelectorAll(".map-tool-line")[0];
   shapeMapTool = document.querySelectorAll(".map-tool-shape")[0];
+  zoomInTool = document.querySelectorAll(".map-tool-zoomin")[0];
+  zoomOutTool = document.querySelectorAll(".map-tool-zoomout")[0];
 
   const ignoreKeyPress = (e) => {
     if (e.keyCode === 13) {
@@ -659,6 +641,8 @@ export const setup = (googleAPI) => {
   dragMapTool.addEventListener("click", handleDragTool);
   lineMapTool.addEventListener("click", handleLineTool);
   shapeMapTool.addEventListener("click", handleShapeTool);
+  zoomInTool.addEventListener("click", handleZoomInTool);
+  zoomOutTool.addEventListener("click", handleZoomOutTool);
 
   // UI
   mapTools = document.querySelectorAll(".map-search-tools-controller")[0];
