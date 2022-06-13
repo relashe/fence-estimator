@@ -27,6 +27,10 @@
   overflow-y: auto;
 }
 
+.map-search-results__step-1 {
+  border-bottom: 1px solid #cccccc;
+}
+
 // * MAP
 .fence-estimator__map-container {
   height: 100%;
@@ -93,6 +97,60 @@
   & + & {
     margin-top: 20px;
   }
+}
+
+.created-fence {
+  background-color: #fafafa;
+  display: flex;
+  flex-flow: nowrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 5px;
+
+  & + & {
+    margin-top: 30px;
+  }
+}
+.created-fence__section {
+  width: calc(100% / 3);
+
+  & + & {
+    margin-left: 5px;
+  }
+}
+
+.created-fence__section-label {
+  font-size: 10px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.created-fence__name,
+.created-fence__length {
+  border: 1px solid #d2d2d2;
+  padding: 10px;
+  margin-bottom: 0;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.created-fence__section--actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.created-fence__edit {
+  background-color: #234535;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+.created-fence__delete {
+  width: 40px;
+  height: 40px;
 }
 
 // PRINT

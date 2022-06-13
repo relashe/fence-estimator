@@ -147,82 +147,20 @@
               </div>
             </div>
             <div class="map-search-results-controller" aria-hidden="false">
-              <h4 class="map-search-results__address mb-4"></h4>
               <div class="map-search-results__step-1" aria-hidden="false">
+                <h4 class="map-search-results__address mb-4"></h4>
                 <button
                   type="button"
-                  class="search-address__new-search-button d-none"
+                  class="search-address__new-search-button d-none mb-4"
                 >
-                  New Search
+                  Remove address
                   <i class="fa fa-search ml-2"></i>
                 </button>
-                <!-- <div class="alert alert-secondary mt-4" role="alert">
-                  <strong>Instructions:</strong> <br />
-                  1. Zoom into you property <br />
-                  2. Click 'Start Mapping' and then move over to the map on the
-                  right to start mapping your fence.<br />
-                </div> -->
               </div>
               <div class="map-search-results__step-2" aria-hidden="false">
-                <!-- <button
-                  type="button"
-                  class="plotting__add-button btn btn-secondary mr-4"
-                >
-                  Add new Paddock
-                </button> -->
-                <button
-                  type="button"
-                  class="plotting__undo-button btn btn-secondary mr-4 d-none"
-                >
-                  Remove Last Paddock
-                </button>
-                <button type="button" class="reset-button d-none">
-                  <!-- remove -->
-                  New Search <i class="fa fa-search ml-2"></i>
-                </button>
-                <!-- <div class="alert alert-secondary mt-1" role="alert">
-                  <strong>Instructions:</strong> <br />
-                  1. Click on the first corner if your paddock.<br />
-                  2. Continue clicking on all corners of your paddock until the
-                  paddock has been highlighted gold.<br />
-                  3. Once a paddock has a gold fill you can add another paddock,
-                  and so on.<br />
-
-                  <br />
-                  <strong>Hot Tips:</strong> <br />
-                  1. Click on 'Save paddock and add another' if creating an open
-                  paddock<br />
-                  2. Click on any paddock to edit. Drag the corners to make
-                  changes<br />
-                  3. After editing, click 'Add another paddock' to continue
-                  mapping out your paddocks<br />
-                </div> -->
-
-                <div class="map-search-results__shapes mt-5">
-                  <table class="table table-sm paddock-list">
-                    <thead>
-                      <tr>
-                        <th scope="col">Paddock #</th>
-                        <th scope="col">Estimated Meterage</th>
-                        <th scope="col" class="col-edit">Edit</th>
-                        <th scope="col" class="col-delete">Delete</th>
-                      </tr>
-                    </thead>
-                    <tbody class="map-search-results__shapes-table"></tbody>
-                    <tfoot>
-                      <tr>
-                        <th scope="row"><strong>Total</strong></th>
-                        <th
-                          scope="col"
-                          class="map-plotting-results__perimiter"
-                        ></th>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
-                <div class="mt-5">
+                <div class="map-search-results__shapes mt-3">
+                  <h4 class="mb-3">Fences</h4>
+                  <div class="map-search-results__shapes-table"></div>
                   <div class="row no-gutters justify-content-between mt-4">
                     <h5 class="mb-0"></h5>
                     <div class="ml-4">
@@ -233,6 +171,12 @@
                         Delete all
                       </button>
                     </div>
+                  </div>
+                </div>
+                <div class="mt-5">
+                  <div>
+                    <p scope="row"><strong>Total</strong></p>
+                    <p scope="col" class="map-plotting-results__perimiter"></p>
                   </div>
                 </div>
               </div>

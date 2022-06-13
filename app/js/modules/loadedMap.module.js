@@ -23,7 +23,6 @@ let google,
   searchField,
   newSearchBtn,
   savePaddockBtn,
-  undoPlottingBtn,
   setPlottingBtn,
   deletePlottingBtn,
   resetBtn,
@@ -157,6 +156,12 @@ const resetEstimator = () => {
 const handleResetSearch = (e) => {
   e.preventDefault();
   resetEstimator();
+
+  addressSearchContainer.setAttribute("aria-hidden", false);
+  addressResultsContainer.setAttribute("aria-hidden", true);
+
+  newSearchBtn.classList.remove("d-block");
+  newSearchBtn.classList.add("d-none");
 };
 
 export const handleStartPlotting = () => {
@@ -276,16 +281,6 @@ const handleAddPlotting = (e) => {
   HELPERS.clearEdits(mapElements);
 
   savePaddockBtn.setAttribute("aria-hidden", false);
-};
-
-const handleUndoPlotting = (e) => {
-  e.preventDefault();
-
-  clearPlotShape(mapElements.length - 1);
-
-  if (!mapElements.length) {
-    resetMapTools();
-  }
 };
 
 const handleUsePlotting = (e) => {
@@ -459,6 +454,8 @@ export const createMap = () => {
 
     addressSearchContainer.setAttribute("aria-hidden", true);
     addressResultsContainer.setAttribute("aria-hidden", false);
+    newSearchBtn.classList.remove("d-none");
+    newSearchBtn.classList.add("d-block");
 
     handleStartPlotting();
   });
@@ -603,7 +600,6 @@ export const setup = (googleAPI) => {
   savePaddockBtn = document.querySelectorAll(
     ".plotting__save-paddock-button"
   )[0];
-  undoPlottingBtn = document.querySelectorAll(".plotting__undo-button")[0];
   setPlottingBtn = document.querySelectorAll(".plotting__accept-button")[0];
   deletePlottingBtn = document.querySelectorAll(".plotting__delete-button")[0];
   plottingPerimiterLabel = document.querySelectorAll(
@@ -630,7 +626,6 @@ export const setup = (googleAPI) => {
   plottingShapes.addEventListener("focusout", handleEditPaddockName);
   newSearchBtn.addEventListener("click", handleResetSearch);
   savePaddockBtn.addEventListener("click", handleAddPlotting);
-  undoPlottingBtn.addEventListener("click", handleUndoPlotting);
   setPlottingBtn.addEventListener("click", handleUsePlotting);
   deletePlottingBtn.addEventListener("click", handleDeleteAllPlotting);
 

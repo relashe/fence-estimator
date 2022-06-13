@@ -60,33 +60,36 @@ export const clearEdits = (mapShapes) => {
 
 export const drawShapeRow = (paddockName, shapeLength, index) => {
   return `
-  <tr>
-    <td scope="row"><p data-action="${
+    <div class="created-fence" data-action="${
       SHAPES_CONTROLS.HIGHLIGHT
     }" data-shape="${index}">
-    <input id="paddock-name-${index}" value="${paddockName}" type="test" data-action="${
+      <div class="created-fence__section">
+        <p class="created-fence__section-label">Name</p>
+        <input id="paddock-name-${index}" value="${paddockName}" type="test" data-action="${
     SHAPES_CONTROLS.EDIT_NAME
-  }" data-shape="${index}" /></p></td>
-    <td scope="col">${shapeLength.toFixed(0)}m </td>
-    <td>
-      <button type="button" data-action="${
-        SHAPES_CONTROLS.EDIT
-      }" data-shape="${index}" class="btn-control-icons btn-control-icons--edit">
-        <i class="fa fa-edit">e</i>
-      </button>
-    </td>
-    <td>
-      <button type="button" data-action="${
-        SHAPES_CONTROLS.DELETE
-      }" data-shape="${index}" class="btn-control-icons btn-control-icons--delete d-block">
-        <i class="fa fa-trash">d</i>
-      </button>
-      <button type="button" data-action="${
-        SHAPES_CONTROLS.CONFIRM_DELETE
-      }" data-shape="${index}" class="btn-control-icons d-none">
-        <i class="fa fa-times"></i> Click to confirm
-      </button>
-    </td>
-  </tr>
+  }" data-shape="${index}"  class="created-fence__name"/>
+      </div>
+      <div class="created-fence__section">
+        <p class="created-fence__section-label">Length</p>
+        <p class="created-fence__length">${shapeLength.toFixed(0)}m </p>
+      </div>
+      <div class="created-fence__section created-fence__section--actions">
+        <button type="button" data-action="${
+          SHAPES_CONTROLS.EDIT
+        }" data-shape="${index}" class="btn-control-icons created-fence__edit">
+          Edit
+        </button>
+        <button type="button" data-action="${
+          SHAPES_CONTROLS.DELETE
+        }" data-shape="${index}" class="btn-control-icons btn-control-icons--delete d-block created-fence__delete">
+          <i class="fa fa-trash">d</i>
+        </button>
+        <button type="button" data-action="${
+          SHAPES_CONTROLS.CONFIRM_DELETE
+        }" data-shape="${index}" class="btn-control-icons d-none created-fence__delete created-fence__delete--confirm">
+          <i class="fa fa-times"></i> Click to confirm
+        </button>
+      </div>
+    </div>
   `;
 };
