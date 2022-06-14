@@ -103,7 +103,7 @@
             ZO
           </button>
         </div>
-        <div class="map-search-sidebar p-4">
+        <div class="map-search-sidebar">
           <!-- <div
             class="fence-estimator__instructions alert alert-secondary"
             role="alert"
@@ -130,35 +130,37 @@
           </div> -->
 
           <div class="map-search-controllers">
-            <div class="map-search-controller">
-              <h4>Search Address</h4>
-              <form class="form-inline">
-                <div class="form-group mb-2">
-                  <input
-                    type="text"
-                    class="search-address__field form-control-plaintext border"
-                    id="staticEmail2"
-                  />
+            <div class="map-search-controller p-4">
+              <div class="map-search-controller__searcher">
+                <h4>Search Address</h4>
+                <form class="form-inline">
+                  <div class="form-group mb-2">
+                    <input
+                      type="text"
+                      class="search-address__field form-control-plaintext border"
+                      id="staticEmail2"
+                    />
+                  </div>
+                </form>
+                <div class="alert alert-secondary" role="alert">
+                  <strong>Tip:</strong> Start typying out your address and our
+                  auto finder will finish the job.
                 </div>
-              </form>
-              <div class="alert alert-secondary" role="alert">
-                <strong>Tip:</strong> Start typying out your address and our
-                auto finder will finish the job.
               </div>
-            </div>
-            <div class="map-search-results-controller" aria-hidden="false">
-              <div class="map-search-results__step-1" aria-hidden="false">
+              <div class="map-search-results__step-1" aria-hidden="true">
                 <h4 class="map-search-results__address mb-4"></h4>
                 <button
                   type="button"
-                  class="search-address__new-search-button d-none mb-4"
+                  class="search-address__new-search-button btn btn-secondary d-none"
                 >
                   Remove address
                   <i class="fa fa-search ml-2"></i>
                 </button>
               </div>
+            </div>
+            <div class="map-search-results-controller p-4" aria-hidden="false">
               <div class="map-search-results__step-2" aria-hidden="false">
-                <div class="map-search-results__shapes mt-3">
+                <div class="map-search-results__shapes">
                   <h4 class="mb-3">Fences</h4>
                   <div class="map-search-results__shapes-table"></div>
                   <div class="row no-gutters justify-content-between mt-4">
@@ -166,34 +168,42 @@
                     <div class="ml-4">
                       <button
                         type="button"
-                        class="plotting__delete-button btn btn-secondary mr-4"
+                        class="plotting__delete-button btn btn-secondary"
                       >
                         Delete all
                       </button>
                     </div>
                   </div>
                 </div>
-                <div class="mt-5">
-                  <div>
-                    <p scope="row"><strong>Total</strong></p>
-                    <p scope="col" class="map-plotting-results__perimiter"></p>
-                  </div>
-                </div>
               </div>
             </div>
             <div
-              class="map-plotting-results-controller mt-auto py-5"
+              class="map-plotting-results-controller p-4 py-5"
               aria-hidden="true"
             >
-              <button type="button" class="plotting__print-button btn mr-4">
-                Print
-              </button>
-              <button type="button" class="plotting__accept-button btn">
-                Next
-              </button>
+              <div class="map-plotting-results-controller__total mb-4">
+                <p class="map-plotting-results-controller__total-label">
+                  Total length
+                </p>
+                <p class="map-plotting-results__perimiter"></p>
+              </div>
+              <div class="map-plotting-results-controller__actions">
+                <button
+                  type="button"
+                  class="plotting__print-button btn btn-secondary mr-3"
+                >
+                  Print
+                </button>
+                <button
+                  type="button"
+                  class="plotting__accept-button btn btn-primary"
+                >
+                  Next
+                </button>
+              </div>
+              <!-- <input class="qty" type="text" /> -->
             </div>
           </div>
-          <input class="qty" type="text" />
         </div>
         <div class="fence-estimator__map">
           <div id="fence-estimator-map"></div>

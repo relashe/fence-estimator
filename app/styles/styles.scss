@@ -21,14 +21,26 @@
   position: absolute;
   top: 40px;
   right: 40px;
-  width: 400px;
+  width: 420px;
   height: 90vh;
   z-index: 20;
   overflow-y: auto;
+
+  .alert {
+    font-size: 12px;
+  }
 }
 
-.map-search-results__step-1 {
+.map-search-controllers {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.map-search-results-controller {
+  border-top: 1px solid #cccccc;
   border-bottom: 1px solid #cccccc;
+  flex: 1 0 0;
 }
 
 // * MAP
@@ -105,12 +117,13 @@
   flex-flow: nowrap;
   align-items: flex-end;
   justify-content: space-between;
-  padding: 5px;
+  padding: 10px 5px;
 
   & + & {
     margin-top: 30px;
   }
 }
+
 .created-fence__section {
   width: calc(100% / 3);
 
@@ -132,6 +145,7 @@
   margin-bottom: 0;
   width: 100%;
   border-radius: 4px;
+  font-size: 12px;
 }
 
 .created-fence__section--actions {
@@ -151,6 +165,32 @@
 .created-fence__delete {
   width: 40px;
   height: 40px;
+}
+
+.plotting__delete-button {
+  font-size: 12px;
+}
+
+.map-plotting-results-controller__total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.map-plotting-results-controller__total-label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.map-plotting-results__perimiter {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.map-plotting-results-controller__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 // PRINT

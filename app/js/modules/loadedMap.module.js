@@ -17,6 +17,7 @@ let google,
   selectedShape = null,
   mapContainer,
   addressSearchContainer,
+  addressContainer,
   addressResultsContainer,
   plottingResultsContainer,
   plottingShapes,
@@ -158,6 +159,7 @@ const handleResetSearch = (e) => {
   resetEstimator();
 
   addressSearchContainer.setAttribute("aria-hidden", false);
+  addressContainer.setAttribute("aria-hidden", true);
   addressResultsContainer.setAttribute("aria-hidden", true);
 
   newSearchBtn.classList.remove("d-block");
@@ -453,6 +455,7 @@ export const createMap = () => {
     currentAddressLabel.innerHTML = place.adr_address.replace(/\,/g, "");
 
     addressSearchContainer.setAttribute("aria-hidden", true);
+    addressContainer.setAttribute("aria-hidden", false);
     addressResultsContainer.setAttribute("aria-hidden", false);
     newSearchBtn.classList.remove("d-none");
     newSearchBtn.classList.add("d-block");
@@ -546,6 +549,7 @@ const getStoredPaddocks = () => {
     });
 
     calculatePlot(false);
+    addressContainer.setAttribute("aria-hidden", false);
     addressResultsContainer.setAttribute("aria-hidden", false);
     handleStartPlotting();
   }
@@ -576,7 +580,10 @@ export const setup = (googleAPI) => {
   google = googleAPI;
 
   addressSearchContainer = document.querySelectorAll(
-    ".map-search-controller"
+    ".map-search-controller__searcher"
+  )[0];
+  addressContainer = document.querySelectorAll(
+    ".map-search-results__step-1"
   )[0];
   addressResultsContainer = document.querySelectorAll(
     ".map-search-results-controller"
