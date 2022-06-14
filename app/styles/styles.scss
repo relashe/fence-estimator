@@ -205,12 +205,21 @@
   [data-action="edit"],
   [data-action="delete"],
   .btn-control-icons--edit,
-  .btn-control-icons--delete {
-    display: none;
+  .btn-control-icons--delete,
+  .created-fence__section--actions {
+    display: none !important;
   }
 
   .fence-estimator__map {
     height: 100vh;
-    width: 80vw;
+    width: 100vw;
+  }
+
+  .map-search-sidebar {
+    position: initial;
+    width: 50vw;
+  }
+  .created-fence__section {
+    width: 50%;
   }
 }
