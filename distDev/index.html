@@ -71,17 +71,53 @@
       </div>
     </div> -->
 
-    <input class="qty" type="text" />
-
     <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
       Launch estimator
     </button> -->
 
     <div class="fence-estimator container-fluid p-0">
       <div class="fence-estimator__container no-gutters">
-        <div class="d-md-flex flex-column justify-content-center">
-          <h2>Map my Fence</h2>
-          <div
+        <div class="map-search-tools-controller p-2" aria-hidden="false">
+          <button type="button" class="map-tool map-tool-drag elementor-button">
+            D
+          </button>
+          <button type="button" class="map-tool map-tool-line elementor-button">
+            L
+          </button>
+          <button
+            type="button"
+            class="map-tool map-tool-shape elementor-button"
+          >
+            S
+          </button>
+          <button
+            type="button"
+            class="map-tool map-tool-zoomin elementor-button"
+          >
+            ZI
+          </button>
+          <button
+            type="button"
+            class="map-tool map-tool-zoomout elementor-button"
+          >
+            ZO
+          </button>
+        </div>
+
+        <div class="fence-estimator__map">
+          <div id="fence-estimator-map"></div>
+          <div class="paddock-menu-container" aria-hidden="true"></div>
+          <button
+            type="button"
+            class="plotting__save-paddock-button btn btn-primary mr-4"
+            aria-hidden="true"
+          >
+            Save paddock and add another
+          </button>
+        </div>
+
+        <div class="map-search-sidebar">
+          <!-- <div
             class="fence-estimator__instructions alert alert-secondary"
             role="alert"
           >
@@ -104,122 +140,50 @@
                 used in the estimate
               </li>
             </ul>
-          </div>
+          </div> -->
+
           <div class="map-search-controllers">
-            <div class="map-search-controller py-5 px-4">
-              <h4>Search Address</h4>
-              <form class="form-inline">
-                <div class="form-group mb-2">
-                  <input
-                    type="text"
-                    class="search-address__field form-control-plaintext border"
-                    id="staticEmail2"
-                  />
+            <div class="map-search-controller p-4">
+              <div class="map-search-controller__searcher">
+                <h4>Search Address</h4>
+                <form class="form-inline">
+                  <div class="form-group mb-2">
+                    <input
+                      type="text"
+                      class="search-address__field form-control-plaintext border"
+                      id="staticEmail2"
+                    />
+                  </div>
+                </form>
+                <div class="alert alert-secondary" role="alert">
+                  <strong>Tip:</strong> Start typying out your address and our
+                  auto finder will finish the job.
                 </div>
-              </form>
-              <div class="alert alert-secondary" role="alert">
-                <strong>Tip:</strong> Start typying out your address and our
-                auto finder will finish the job.
               </div>
-            </div>
-            <div class="map-search-results-controller py-5" aria-hidden="false">
-              <h5>Map Tools</h5>
-              <button type="button" class="map-tool-drag elementor-button mr-4">
-                Drag map
-              </button>
-              <button type="button" class="map-tool-line elementor-button mr-4">
-                Draw line
-              </button>
-              <button
-                type="button"
-                class="map-tool-shape elementor-button mr-4"
-              >
-                Draw shape
-              </button>
-              <h4 class="map-search-results__address mb-4"></h4>
-              <div class="map-search-results__step-1" aria-hidden="false">
+              <div class="map-search-results__step-1" aria-hidden="true">
+                <h4 class="map-search-results__address mb-4"></h4>
                 <button
                   type="button"
-                  class="search-address__new-search-button d-none"
+                  class="search-address__new-search-button btn btn-secondary d-none"
                 >
-                  New Search
+                  Remove address
                   <i class="fa fa-search ml-2"></i>
                 </button>
-                <div class="alert alert-secondary mt-4" role="alert">
-                  <strong>Instructions:</strong> <br />
-                  1. Zoom into you property <br />
-                  2. Click 'Start Mapping' and then move over to the map on the
-                  right to start mapping your fence.<br />
-                </div>
               </div>
+            </div>
+            <div class="map-search-results-controller p-4" aria-hidden="false">
               <div class="map-search-results__step-2" aria-hidden="false">
-                <!-- <button
-                  type="button"
-                  class="plotting__add-button btn btn-secondary mr-4"
-                >
-                  Add new Paddock
-                </button> -->
-                <button
-                  type="button"
-                  class="plotting__undo-button btn btn-secondary mr-4 d-none"
-                >
-                  Remove Last Paddock
-                </button>
-                <button type="button" class="reset-button d-none">
-                  <!-- remove -->
-                  New Search <i class="fa fa-search ml-2"></i>
-                </button>
-                <div class="alert alert-secondary mt-1" role="alert">
-                  <strong>Instructions:</strong> <br />
-                  1. Click on the first corner if your paddock.<br />
-                  2. Continue clicking on all corners of your paddock until the
-                  paddock has been highlighted gold.<br />
-                  3. Once a paddock has a gold fill you can add another paddock,
-                  and so on.<br />
-
-                  <br />
-                  <strong>Hot Tips:</strong> <br />
-                  1. Click on 'Save paddock and add another' if creating an open
-                  paddock<br />
-                  2. Click on any paddock to edit. Drag the corners to make
-                  changes<br />
-                  3. After editing, click 'Add another paddock' to continue
-                  mapping out your paddocks<br />
-                </div>
-
-                <div class="map-search-results__shapes mt-5">
-                  <table class="table table-sm paddock-list">
-                    <thead>
-                      <tr>
-                        <th scope="col">Paddock #</th>
-                        <th scope="col">Estimated Meterage</th>
-                        <th scope="col">Edit</th>
-                        <th scope="col">Delete</th>
-                      </tr>
-                    </thead>
-                    <tbody class="map-search-results__shapes-table"></tbody>
-                    <tfoot>
-                      <tr>
-                        <th scope="row"><strong>Total</strong></th>
-                        <th
-                          scope="col"
-                          class="map-plotting-results__perimiter"
-                        ></th>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
-                <div class="mt-5">
+                <div class="map-search-results__shapes">
+                  <h4 class="mb-3">Fences</h4>
+                  <div class="map-search-results__shapes-table"></div>
                   <div class="row no-gutters justify-content-between mt-4">
                     <h5 class="mb-0"></h5>
                     <div class="ml-4">
                       <button
                         type="button"
-                        class="plotting__add-button btn btn-secondary mr-4"
+                        class="plotting__delete-button btn btn-secondary"
                       >
-                        Add another paddock
+                        Delete all
                       </button>
                     </div>
                   </div>
@@ -227,28 +191,32 @@
               </div>
             </div>
             <div
-              class="map-plotting-results-controller mt-auto"
+              class="map-plotting-results-controller p-4 py-5"
               aria-hidden="true"
             >
-              <button type="button" class="plotting__accept-button btn-block">
-                Continue with Estimate
-                <i class="fa fa-check ml-2"></i>
-              </button>
-              <button type="button" class="reset-button btn-block">
-                Reset and start again
-              </button>
+              <div class="map-plotting-results-controller__total mb-4">
+                <p class="map-plotting-results-controller__total-label">
+                  Total length
+                </p>
+                <p class="map-plotting-results__perimiter"></p>
+              </div>
+              <div class="map-plotting-results-controller__actions">
+                <button
+                  type="button"
+                  class="plotting__print-button btn btn-secondary mr-3"
+                >
+                  Print
+                </button>
+                <button
+                  type="button"
+                  class="plotting__accept-button btn btn-primary"
+                >
+                  Next
+                </button>
+              </div>
+              <!-- <input class="qty" type="text" /> -->
             </div>
           </div>
-        </div>
-        <div class="fence-estimator__map">
-          <div id="fence-estimator-map"></div>
-          <button
-            type="button"
-            class="plotting__save-paddock-button btn btn-primary mr-4"
-            aria-hidden="true"
-          >
-            Save paddock and add another
-          </button>
         </div>
       </div>
     </div>
@@ -292,5 +260,5 @@
       integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
       crossorigin="anonymous"
     ></script>
-  <script type="text/javascript" src="/vendors.bundle.js"></script><script type="text/javascript" src="/main.bundle.js"></script></body>
+  <script src="/vendors.bundle.js"></script><script src="/main.bundle.js"></script></body>
 </html>
