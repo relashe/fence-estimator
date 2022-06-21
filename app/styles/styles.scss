@@ -18,6 +18,8 @@
 // * SIDEBAR
 .map-search-sidebar {
   background: #ffffff;
+  border: 1px solid #707070;
+  border-radius: 4px;
   position: absolute;
   top: 40px;
   right: 40px;
@@ -88,9 +90,12 @@
 // * TOOLS
 .map-search-tools-controller {
   background-color: #ffffff;
+  border: 1px solid #707070;
+  border-radius: 4px;
   position: absolute;
   top: 20px;
   left: 20px;
+  padding: 5px;
   display: flex;
   flex-flow: column nowrap;
   z-index: 10;
@@ -100,6 +105,7 @@
 }
 
 .map-tool {
+  background-color: #f5f5f5;
   border: 1px solid black;
   border-radius: 4px;
   text-align: center;
@@ -107,7 +113,14 @@
   height: 40px;
 
   & + & {
-    margin-top: 20px;
+    margin-top: 5px;
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: #e2e3e5;
+    outline: none;
   }
 }
 
@@ -237,7 +250,7 @@
   &:active,
   &:focus {
     outline: none;
-    background-color: #cccccc;
+    background-color: #e2e3e5;
   }
 }
 // PRINT
