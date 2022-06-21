@@ -37,7 +37,10 @@ let google,
   currentAddressLabel,
   plottingPerimiterLabel,
   plottingPerimiterTrigger,
-  hasConfirmedTotal = false;
+  hasConfirmedTotal = false,
+  shapeMenuOverlay,
+  shapeMenuContainer,
+  sidebar;
 
 // tools
 let mapStorage = "fence-estimator";
@@ -127,6 +130,8 @@ const resetMapTools = () => {
 
   plottingShapes.innerHTML = "";
   plottingPerimiterLabel.innerHTML = "";
+
+  removePaddockMenu();
 };
 
 const resetEstimator = () => {
@@ -151,6 +156,8 @@ const resetEstimator = () => {
 
   currentAddressLabel.innerHTML = "";
   searchField.value = "";
+
+  removePaddockMenu();
 };
 
 // events
@@ -164,6 +171,8 @@ const handleResetSearch = (e) => {
 
   newSearchBtn.classList.remove("d-block");
   newSearchBtn.classList.add("d-none");
+
+  removePaddockMenu();
 };
 
 export const handleStartPlotting = () => {
@@ -180,30 +189,45 @@ const handleDragTool = (e) => {
   e.preventDefault();
 
   drawingManager.setDrawingMode(null);
+
+  HELPERS.clearEdits(mapElements);
+  removePaddockMenu();
 };
 
 const handleLineTool = (e) => {
   e.preventDefault();
 
   drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYLINE);
+
+  HELPERS.clearEdits(mapElements);
+  removePaddockMenu();
 };
 
 const handleShapeTool = (e) => {
   e.preventDefault();
 
   drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
+
+  HELPERS.clearEdits(mapElements);
+  removePaddockMenu();
 };
 
 const handleZoomInTool = (e) => {
   e.preventDefault();
 
   map.setZoom(map.getZoom() + 1);
+
+  HELPERS.clearEdits(mapElements);
+  removePaddockMenu();
 };
 
 const handleZoomOutTool = (e) => {
   e.preventDefault();
 
   map.setZoom(map.getZoom() - 1);
+
+  HELPERS.clearEdits(mapElements);
+  removePaddockMenu();
 };
 
 const handleShapesTable = (e) => {
@@ -222,6 +246,7 @@ const handleShapesTable = (e) => {
   if (!shape) {
     return;
   }
+  removePaddockMenu();
 
   switch (element.dataset.action) {
     case SHAPES_CONTROLS.HIGHLIGHT:
@@ -309,6 +334,19 @@ const handleDeleteAllPlotting = (e) => {
 };
 
 // paddocks
+const removePaddockMenu = () => {
+  // IMPLEMENTATION 1
+  // shapeMenuOverlay && shapeMenuOverlay.toggleDOM(null);
+
+  // IMPLEMENTATION 2
+  map.setOptions({
+    draggable: true,
+  });
+
+  shapeMenuContainer.setAttribute("aria-hidden", true);
+  shapeMenuContainer.innerHTML = "";
+};
+
 const bindPaddockShapeEvents = (paddock) => {
   // when the shape is left
   // (re)calculate the measurements
@@ -336,15 +374,149 @@ const bindPaddockShapeEvents = (paddock) => {
       HELPERS.clearEdits(mapElements);
       HELPERS.editShape(paddock, true, drawingManager, selectedShape);
       savePaddockBtn.setAttribute("aria-hidden", true);
+
+      removePaddockMenu();
     }
   });
 
-  // paddock.addListener("drag", () => {
-  //   const shapeLength = google.maps.geometry.spherical.computeLength(
-  //     paddock.getPath().getArray()
-  //   );
-  //   console.log(shapeLength);
-  // });
+  /**
+   * Custom overlay for shape menu
+   */
+  class PaddockMenuOverlay extends google.maps.OverlayView {
+    //   bounds;
+    paddock;
+    div;
+    constructor(paddock) {
+      super();
+      // this.bounds = bounds;
+      this.paddock = paddock;
+    }
+    /**
+     * onAdd is called when the map's panes are ready and the overlay has been
+     * added to the map.
+     */
+    onAdd() {
+      this.div = document.createElement("div");
+      this.div.style.borderStyle = "none";
+      this.div.style.borderWidth = "0px";
+      this.div.style.position = "absolute";
+
+      // style contents
+      this.div.classList.add("paddock-menu");
+      this.div.innerHTML = `
+        <p class="paddock-menu__title">${paddock.paddockName}</p>
+        <button type="button" data-action="${SHAPES_CONTROLS.EDIT}" data-shape="${this.paddock.index}" class="paddock-menu__button paddock-menu__button--edit">
+          Edit fence
+        </button>
+        <button type="button" data-action="${SHAPES_CONTROLS.DELETE}" data-shape="${this.paddock.index}" class="paddock-menu__button paddock-menu__button--delete">
+          Delete fence
+        </button>
+      `;
+
+      // Add the element to the "overlayLayer" pane.
+      const panes = this.getPanes();
+
+      panes.overlayLayer.appendChild(this.div);
+    }
+
+    draw() {
+      // We use the south-west and north-east
+      // coordinates of the overlay to peg it to the correct position and size.
+      // To do this, we need to retrieve the projection from the overlay.
+      const overlayProjection = this.getProjection();
+
+      // Retrieve the south-west and north-east coordinates of this overlay
+      // in LatLngs and convert them to pixel coordinates.
+      // We'll use these coordinates to resize the div.
+      const sw = overlayProjection.fromLatLngToDivPixel(
+        this.paddock.coordinates
+      );
+      // const ne = overlayProjection.fromLatLngToDivPixel(
+      //   this.paddock.coordinates
+      // );
+
+      if (this.div) {
+        this.div.style.left = sw.x + 10 + "px";
+        this.div.style.top = sw.y + 10 + "px";
+      }
+    }
+    /**
+     * The onRemove() method will be called automatically from the API if
+     * we ever set the overlay's map property to 'null'.
+     */
+    onRemove() {
+      if (this.div) {
+        this.div.parentNode.removeChild(this.div);
+        delete this.div;
+      }
+    }
+    /**
+     *  Set the visibility to 'hidden' or 'visible'.
+     */
+    hide() {
+      if (this.div) {
+        this.div.style.visibility = "hidden";
+      }
+    }
+    show() {
+      if (this.div) {
+        this.div.style.visibility = "visible";
+      }
+    }
+    toggle() {
+      if (this.div) {
+        if (this.div.style.visibility === "hidden") {
+          this.show();
+        } else {
+          this.hide();
+        }
+      }
+    }
+    toggleDOM(map) {
+      if (this.getMap()) {
+        this.setMap(null);
+      } else {
+        this.setMap(map);
+      }
+    }
+  }
+
+  // this listener is for right click events
+  // documentation says rightclick has been deprecated
+  // (https://developers.google.com/maps/documentation/javascript/reference/polygon?hl=en#Polyline.rightclick)
+  // NOTE - no sure if other events may call this
+  paddock.addListener("contextmenu", (event) => {
+    // IMPLEMENTATION 1
+    // if (shapeMenuOverlay) {
+    //   shapeMenuOverlay.toggleDOM(null);
+    // }
+    // const shapeLength = google.maps.geometry.spherical.computeLength(
+    //   paddock.getPath().getArray()
+    // );
+    // console.info(event);
+
+    // shapeMenuOverlay = new PaddockMenuOverlay({
+    //   name: paddock.paddockName,
+    //   index: paddock.paddockIdx,
+    //   coordinates: event.latLng,
+    // });
+
+    // shapeMenuOverlay.setMap(map);
+
+    // IMPLEMENTATION 2
+    const rightClick = new CustomEvent("fence-estimator-shape-menu", {
+      detail: {
+        paddock: {
+          name: paddock.paddockName,
+          index: paddock.paddockIdx,
+          coordinates: event.latLng,
+        },
+        top: event.domEvent.clientY,
+        left: event.domEvent.clientX,
+      },
+    });
+    window.dispatchEvent(rightClick);
+  });
 };
 
 const createPaddockMapShape = (
@@ -354,25 +526,6 @@ const createPaddockMapShape = (
   pathCoordinates
 ) => {
   let currentShape;
-
-  // let path = new google.maps.MVCArray();
-
-  // pathCoordinates.forEach((segment) => {
-  //   const segmentCoordinates = new google.maps.LatLng(segment.lat, segment.lng);
-  //   path.push(segmentCoordinates);
-  // });
-
-  // google.maps.event.addListener(path, "insert_at", function (vertex) {
-  //   console.log("Vertex " + vertex + " inserted to path.");
-  // });
-
-  // google.maps.event.addListener(path, "set_at", function (vertex) {
-  //   console.log("Vertex " + vertex + " updated on path.");
-  // });
-
-  // google.maps.event.addListener(path, "mousedown", function (vertex) {
-  //   console.log("Vertex " + vertex + " updated on path. mouse");
-  // });
 
   const shapeDetails = {
     ...SHAPE_SETTINGS.DEFAULT,
@@ -518,6 +671,10 @@ export const createMap = () => {
       calculatePlot();
     }
   );
+
+  google.maps.event.addListener(map, "click", function (e) {
+    removePaddockMenu();
+  });
 };
 
 // caching
@@ -630,6 +787,7 @@ export const setup = (googleAPI) => {
   searchField.addEventListener("keypress", ignoreKeyPress);
 
   plottingShapes.addEventListener("click", handleShapesTable);
+  plottingShapes.addEventListener("focus", removePaddockMenu);
   plottingShapes.addEventListener("focusout", handleEditPaddockName);
   newSearchBtn.addEventListener("click", handleResetSearch);
   savePaddockBtn.addEventListener("click", handleAddPlotting);
@@ -674,6 +832,71 @@ export const setup = (googleAPI) => {
       event.target.style.transform = "translate(" + x + "px, " + y + "px)";
     });
 
+  sidebar = document.querySelectorAll(".map-search-sidebar")[0];
+  let sidebarX = 0;
+  let sidebarY = 0;
+
+  interact(sidebar)
+    .draggable({
+      modifiers: [
+        interact.modifiers.snap({
+          targets: [interact.snappers.grid({ x: 30, y: 30 })],
+          range: Infinity,
+          relativePoints: [{ x: 0, y: 0 }],
+        }),
+        interact.modifiers.restrict({
+          restriction: mapTools.parentNode,
+          elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
+          endOnly: true,
+        }),
+      ],
+      inertia: true,
+    })
+    .on("dragmove", function (event) {
+      sidebarX += event.dx;
+      sidebarY += event.dy;
+
+      event.target.style.transform =
+        "translate(" + sidebarX + "px, " + sidebarY + "px)";
+    });
+
+  shapeMenuContainer = document.querySelectorAll(".paddock-menu-container")[0];
+  shapeMenuContainer.addEventListener("click", handleShapesTable);
+
+  window.addEventListener("fence-estimator-shape-menu", function (e) {
+    if (!e.detail.paddock) {
+      return false;
+    }
+
+    const paddock = e.detail.paddock;
+    console.info(paddock);
+
+    const div = document.createElement("div");
+
+    // style contents
+    div.classList.add("paddock-menu");
+    div.style.top = e.detail.top;
+    div.style.left = e.detail.left;
+    div.innerHTML = `
+        <p class="paddock-menu__title">${paddock.name}</p>
+        <button type="button" data-action="${SHAPES_CONTROLS.EDIT}" data-shape="${paddock.index}" class="paddock-menu__button paddock-menu__button--edit">
+          Edit fence
+        </button>
+        <button type="button" data-action="${SHAPES_CONTROLS.DELETE}" data-shape="${paddock.index}" class="paddock-menu__button paddock-menu__button--delete">
+          Delete fence
+        </button>
+      `;
+    shapeMenuContainer.appendChild(div);
+
+    shapeMenuContainer.setAttribute("aria-hidden", false);
+
+    map.setOptions({
+      draggable: false,
+    });
+  });
+
   // PRINT
   printBtn.addEventListener("click", printMap);
 };
+
+export { google };
