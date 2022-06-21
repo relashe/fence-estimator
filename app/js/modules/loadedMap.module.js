@@ -858,7 +858,8 @@ export const setup = (googleAPI) => {
 
       event.target.style.transform =
         "translate(" + sidebarX + "px, " + sidebarY + "px)";
-    });
+    })
+    .on("click", removePaddockMenu);
 
   shapeMenuContainer = document.querySelectorAll(".paddock-menu-container")[0];
   shapeMenuContainer.addEventListener("click", handleShapesTable);
