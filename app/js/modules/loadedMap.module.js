@@ -20,6 +20,7 @@ let google,
   addressContainer,
   addressResultsContainer,
   plottingResultsContainer,
+  plottingTooltip,
   plottingShapes,
   searchField,
   newSearchBtn,
@@ -62,6 +63,9 @@ const calculatePlot = (storePlot = true) => {
 
   plottingShapes.innerHTML = "";
 
+  deletePlottingBtn.setAttribute("aria-hidden", !mapElements.length);
+  plottingTooltip.setAttribute("aria-hidden", !!mapElements.length);
+
   mapElements.forEach((shape, index) => {
     const shapeLength = google.maps.geometry.spherical.computeLength(
       shape.getPath().getArray()
@@ -79,9 +83,8 @@ const calculatePlot = (storePlot = true) => {
 
   // 3.
   plotPerimiter = totalPerimeter.toFixed(0);
-  plottingPerimiterLabel.innerHTML = `${plotPerimiter}m`;
+  plottingPerimiterLabel.innerHTML = `${plotPerimiter || 0}m`;
   plottingResultsContainer.setAttribute("aria-hidden", false);
-
   // 4.
   storePlot && storePaddocks();
 
@@ -157,6 +160,7 @@ const resetEstimator = () => {
   currentAddressLabel.innerHTML = "";
   searchField.value = "";
 
+  plottingTooltip.setAttribute("aria-hidden", false);
   removePaddockMenu();
 };
 
@@ -172,6 +176,7 @@ const handleResetSearch = (e) => {
   newSearchBtn.classList.remove("d-block");
   newSearchBtn.classList.add("d-none");
 
+  plottingTooltip.setAttribute("aria-hidden", false);
   removePaddockMenu();
 };
 
@@ -262,16 +267,6 @@ const handleShapesTable = (e) => {
       HELPERS.editShape(shape, true, drawingManager, selectedShape);
       savePaddockBtn.setAttribute("aria-hidden", true);
 
-      element.classList.remove("d-block");
-      element.classList.add("d-none");
-
-      const confirmDelete = element.parentElement.querySelectorAll(
-        `[data-action="${SHAPES_CONTROLS.CONFIRM_DELETE}"]`
-      )[0];
-      confirmDelete.classList.remove("d-none");
-      confirmDelete.classList.add("d-block");
-      break;
-    case SHAPES_CONTROLS.CONFIRM_DELETE:
       clearPlotShape(shapeIndex);
       drawingManager.setDrawingMode(null);
       break;
@@ -335,10 +330,6 @@ const handleDeleteAllPlotting = (e) => {
 
 // paddocks
 const removePaddockMenu = () => {
-  // IMPLEMENTATION 1
-  // shapeMenuOverlay && shapeMenuOverlay.toggleDOM(null);
-
-  // IMPLEMENTATION 2
   map.setOptions({
     draggable: true,
   });
@@ -379,131 +370,11 @@ const bindPaddockShapeEvents = (paddock) => {
     }
   });
 
-  /**
-   * Custom overlay for shape menu
-   */
-  class PaddockMenuOverlay extends google.maps.OverlayView {
-    //   bounds;
-    paddock;
-    div;
-    constructor(paddock) {
-      super();
-      // this.bounds = bounds;
-      this.paddock = paddock;
-    }
-    /**
-     * onAdd is called when the map's panes are ready and the overlay has been
-     * added to the map.
-     */
-    onAdd() {
-      this.div = document.createElement("div");
-      this.div.style.borderStyle = "none";
-      this.div.style.borderWidth = "0px";
-      this.div.style.position = "absolute";
-
-      // style contents
-      this.div.classList.add("paddock-menu");
-      this.div.innerHTML = `
-        <p class="paddock-menu__title">${paddock.paddockName}</p>
-        <button type="button" data-action="${SHAPES_CONTROLS.EDIT}" data-shape="${this.paddock.index}" class="paddock-menu__button paddock-menu__button--edit">
-          Edit fence
-        </button>
-        <button type="button" data-action="${SHAPES_CONTROLS.DELETE}" data-shape="${this.paddock.index}" class="paddock-menu__button paddock-menu__button--delete">
-          Delete fence
-        </button>
-      `;
-
-      // Add the element to the "overlayLayer" pane.
-      const panes = this.getPanes();
-
-      panes.overlayLayer.appendChild(this.div);
-    }
-
-    draw() {
-      // We use the south-west and north-east
-      // coordinates of the overlay to peg it to the correct position and size.
-      // To do this, we need to retrieve the projection from the overlay.
-      const overlayProjection = this.getProjection();
-
-      // Retrieve the south-west and north-east coordinates of this overlay
-      // in LatLngs and convert them to pixel coordinates.
-      // We'll use these coordinates to resize the div.
-      const sw = overlayProjection.fromLatLngToDivPixel(
-        this.paddock.coordinates
-      );
-      // const ne = overlayProjection.fromLatLngToDivPixel(
-      //   this.paddock.coordinates
-      // );
-
-      if (this.div) {
-        this.div.style.left = sw.x + 10 + "px";
-        this.div.style.top = sw.y + 10 + "px";
-      }
-    }
-    /**
-     * The onRemove() method will be called automatically from the API if
-     * we ever set the overlay's map property to 'null'.
-     */
-    onRemove() {
-      if (this.div) {
-        this.div.parentNode.removeChild(this.div);
-        delete this.div;
-      }
-    }
-    /**
-     *  Set the visibility to 'hidden' or 'visible'.
-     */
-    hide() {
-      if (this.div) {
-        this.div.style.visibility = "hidden";
-      }
-    }
-    show() {
-      if (this.div) {
-        this.div.style.visibility = "visible";
-      }
-    }
-    toggle() {
-      if (this.div) {
-        if (this.div.style.visibility === "hidden") {
-          this.show();
-        } else {
-          this.hide();
-        }
-      }
-    }
-    toggleDOM(map) {
-      if (this.getMap()) {
-        this.setMap(null);
-      } else {
-        this.setMap(map);
-      }
-    }
-  }
-
   // this listener is for right click events
   // documentation says rightclick has been deprecated
   // (https://developers.google.com/maps/documentation/javascript/reference/polygon?hl=en#Polyline.rightclick)
   // NOTE - no sure if other events may call this
   paddock.addListener("contextmenu", (event) => {
-    // IMPLEMENTATION 1
-    // if (shapeMenuOverlay) {
-    //   shapeMenuOverlay.toggleDOM(null);
-    // }
-    // const shapeLength = google.maps.geometry.spherical.computeLength(
-    //   paddock.getPath().getArray()
-    // );
-    // console.info(event);
-
-    // shapeMenuOverlay = new PaddockMenuOverlay({
-    //   name: paddock.paddockName,
-    //   index: paddock.paddockIdx,
-    //   coordinates: event.latLng,
-    // });
-
-    // shapeMenuOverlay.setMap(map);
-
-    // IMPLEMENTATION 2
     const rightClick = new CustomEvent("fence-estimator-shape-menu", {
       detail: {
         paddock: {
@@ -515,6 +386,7 @@ const bindPaddockShapeEvents = (paddock) => {
         left: event.domEvent.clientX,
       },
     });
+
     window.dispatchEvent(rightClick);
   });
 };
@@ -548,6 +420,7 @@ const createPaddockMapShape = (
   bindPaddockShapeEvents(currentShape);
 
   mapElements.push(currentShape);
+  plottingTooltip.setAttribute("aria-hidden", true);
 };
 
 // map
@@ -642,7 +515,7 @@ export const createMap = () => {
       // to display totals in table as lines are added
       createPaddockMapShape(
         mapElements.length,
-        `Open paddock ${mapElements.length + 1}`,
+        `${mapElements.length + 1}--Boundary Fence`,
         google.maps.drawing.OverlayType.POLYLINE,
         e.getPath().getArray()
       );
@@ -661,7 +534,7 @@ export const createMap = () => {
       // to display totals in table as lines are added
       createPaddockMapShape(
         mapElements.length,
-        `Closed paddock ${mapElements.length + 1}`,
+        `${mapElements.length + 1}--Paddock Fence`,
         google.maps.drawing.OverlayType.POLYGON,
         e.getPath().getArray()
       );
@@ -747,6 +620,9 @@ export const setup = (googleAPI) => {
   )[0];
   plottingResultsContainer = document.querySelectorAll(
     ".map-plotting-results-controller"
+  )[0];
+  plottingTooltip = document.querySelectorAll(
+    ".map-search-results__shapes-tip"
   )[0];
 
   plottingShapes = document.querySelectorAll(

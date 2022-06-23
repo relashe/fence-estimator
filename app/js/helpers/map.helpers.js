@@ -84,11 +84,6 @@ export const drawShapeRow = (paddockName, shapeLength, index) => {
         }" data-shape="${index}" class="btn-control-icons btn-control-icons--delete d-block created-fence__delete">
           <i class="fa fa-trash">d</i>
         </button>
-        <button type="button" data-action="${
-          SHAPES_CONTROLS.CONFIRM_DELETE
-        }" data-shape="${index}" class="btn-control-icons d-none created-fence__delete created-fence__delete--confirm">
-          <i class="fa fa-times"></i> Click to confirm
-        </button>
       </div>
     </div>
   `;

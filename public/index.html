@@ -78,30 +78,41 @@
     <div class="fence-estimator container-fluid p-0">
       <div class="fence-estimator__container no-gutters">
         <div class="map-search-tools-controller" aria-hidden="false">
-          <button type="button" class="map-tool map-tool-drag elementor-button">
+          <a
+            type="button"
+            class="map-tool map-tool-drag elementor-button"
+            title="Move"
+          >
             D
-          </button>
-          <button type="button" class="map-tool map-tool-line elementor-button">
+          </a>
+          <a
+            type="button"
+            class="map-tool map-tool-line elementor-button"
+            title="Boundary fence"
+          >
             L
-          </button>
-          <button
+          </a>
+          <a
             type="button"
             class="map-tool map-tool-shape elementor-button"
+            title="Closed paddock"
           >
             S
-          </button>
-          <button
+          </a>
+          <a
             type="button"
             class="map-tool map-tool-zoomin elementor-button"
+            title="Zoom in"
           >
             ZI
-          </button>
-          <button
+          </a>
+          <a
             type="button"
             class="map-tool map-tool-zoomout elementor-button"
+            title="Zoom out"
           >
             ZO
-          </button>
+          </a>
         </div>
 
         <div class="fence-estimator__map">
@@ -145,28 +156,25 @@
           <div class="map-search-controllers">
             <div class="map-search-controller p-4">
               <div class="map-search-controller__searcher">
-                <h4>Search Address</h4>
+                <h4>Property location</h4>
                 <form class="form-inline">
-                  <div class="form-group mb-2">
+                  <div class="form-group">
                     <input
                       type="text"
                       class="search-address__field form-control-plaintext border"
                       id="staticEmail2"
+                      placeholder="Type ot your address"
                     />
                   </div>
                 </form>
-                <div class="alert alert-secondary" role="alert">
-                  <strong>Tip:</strong> Start typying out your address and our
-                  auto finder will finish the job.
-                </div>
               </div>
               <div class="map-search-results__step-1" aria-hidden="true">
-                <h4 class="map-search-results__address mb-4"></h4>
+                <h4 class="map-search-results__address"></h4>
                 <button
                   type="button"
-                  class="search-address__new-search-button btn btn-secondary d-none"
+                  class="search-address__new-search-button btn btn-secondary d-none mt-4"
                 >
-                  Remove address
+                  Update address (removes all drawn fences)
                   <i class="fa fa-search ml-2"></i>
                 </button>
               </div>
@@ -174,7 +182,14 @@
             <div class="map-search-results-controller p-4" aria-hidden="false">
               <div class="map-search-results__step-2" aria-hidden="false">
                 <div class="map-search-results__shapes">
-                  <h4 class="mb-3">Fences</h4>
+                  <h4 class="mb-3">Fence list</h4>
+                  <div
+                    class="alert alert-secondary map-search-results__shapes-tip"
+                    role="alert"
+                  >
+                    <strong>Tip:</strong> Start drawing closed paddock and
+                    boundary fences using the toolbar on the lefthand side
+                  </div>
                   <div class="map-search-results__shapes-table"></div>
                   <div class="row no-gutters justify-content-between mt-4">
                     <h5 class="mb-0"></h5>
@@ -182,6 +197,7 @@
                       <button
                         type="button"
                         class="plotting__delete-button btn btn-secondary"
+                        aria-hidden="true"
                       >
                         Delete all
                       </button>
