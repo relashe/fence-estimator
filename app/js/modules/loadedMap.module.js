@@ -1,13 +1,12 @@
+import interact from "interactjs";
 import {
-  MAP_OPTIONS,
-  SHAPE_SETTINGS,
-  DEFAULT_ZOOM,
   DEFAULT_COORDINATES,
+  DEFAULT_ZOOM,
+  MAP_OPTIONS,
   SHAPES_CONTROLS,
+  SHAPE_SETTINGS,
 } from "../constants";
 import * as HELPERS from "../helpers";
-import { drawShapeRow } from "../helpers";
-import interact from "interactjs";
 
 // Elements
 let google,
@@ -39,7 +38,6 @@ let google,
   plottingPerimiterLabel,
   plottingPerimiterTrigger,
   hasConfirmedTotal = false,
-  shapeMenuOverlay,
   shapeMenuContainer,
   sidebar;
 
@@ -74,7 +72,7 @@ const calculatePlot = (storePlot = true) => {
     // 1.
     totalPerimeter += shapeLength;
     // 2.
-    plottingShapes.innerHTML += drawShapeRow(
+    plottingShapes.innerHTML += HELPERS.drawShapeRow(
       shape.paddockName,
       shapeLength,
       index
@@ -176,6 +174,7 @@ const handleResetSearch = (e) => {
   newSearchBtn.classList.remove("d-block");
   newSearchBtn.classList.add("d-none");
 
+  deletePlottingBtn.setAttribute("aria-hidden", true);
   plottingTooltip.setAttribute("aria-hidden", false);
   removePaddockMenu();
 };
