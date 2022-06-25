@@ -18,6 +18,7 @@ let google,
   addressSearchContainer,
   addressContainer,
   addressResultsContainer,
+  addressMapPlace,
   plottingResultsContainer,
   plottingTooltip,
   plottingShapes,
@@ -43,6 +44,7 @@ let google,
 
 // tools
 let mapStorage = "fence-estimator";
+let mapStorageData = {};
 
 // Values
 let addressMarker,
@@ -54,7 +56,7 @@ const calculatePlot = (storePlot = true) => {
 
   // re-draw table and recalculate
   // go through each shape/line and:
-  // 1. add length to toal
+  // 1. add length to total
   // 2. create row (button handlers have been assigned to table wrapper)
   // 3. display total
   // 4. update caching
@@ -106,7 +108,8 @@ const clearPlotShape = (idx) => {
   }
 };
 
-const resetPlot = () => {
+// remove all shapes from the map
+const resetFencesTable = () => {
   // go through all shapes and remove them from the map before clearing the array
   if (mapElements.length) {
     mapElements.forEach((shape) => {
@@ -118,24 +121,53 @@ const resetPlot = () => {
 
   plotPerimiter = 0;
 
-  removeStoredPaddocks();
-};
-
-const resetMapTools = () => {
-  // plottingStep1.setAttribute("aria-hidden", false);
-  // .setAttribute("aria-hidden", true);
-  // savePaddockBtn.setAttribute("aria-hidden", false);
-  drawingManager.setDrawingMode(null);
-
   plottingShapes.innerHTML = "";
   plottingPerimiterLabel.innerHTML = "";
 
-  removePaddockMenu();
+  deletePlottingBtn.setAttribute("aria-hidden", !mapElements.length);
+
+  // update cache
+  removeFenceEstimatorData();
+};
+
+const resetMapTools = () => {
+  drawingManager.setDrawingMode(null);
+  lineMapTool.setAttribute("aria-disabled", !!addressMapPlace ? false : true);
+  shapeMapTool.setAttribute("aria-disabled", !!addressMapPlace ? false : true);
+};
+
+// this is for when the estimator has an address and
+// the user can start adding fences
+export const setMapReadyForPlotting = (isReady) => {
+  const mapIsReady = isReady !== undefined ? !!isReady : !!addressMapPlace;
+
+  if (!addressMapPlace) {
+    return;
+  }
+
+  // show/hide address and address search field
+  addressSearchContainer.setAttribute("aria-hidden", !!mapIsReady);
+  addressContainer.setAttribute("aria-hidden", !mapIsReady);
+  addressResultsContainer.setAttribute("aria-hidden", !mapIsReady);
+
+  // show/hide search tooltip
+  plottingTooltip.setAttribute("aria-hidden", !!mapIsReady ? true : false);
+
+  // show/hide reset button
+  newSearchBtn.classList.remove(!!mapIsReady ? "d-none" : "d-block");
+  newSearchBtn.classList.add(!!mapIsReady ? "d-block" : "d-none");
+
+  // set the map to drawing state
+  // enable drawing tools
+  drawingManager.setDrawingMode(null);
+  lineMapTool.setAttribute("aria-disabled", !!mapIsReady ? false : true);
+  shapeMapTool.setAttribute("aria-disabled", !!mapIsReady ? false : true);
 };
 
 const resetEstimator = () => {
-  resetPlot();
+  resetFencesTable();
   resetMapTools();
+  removePaddockMenu();
 
   addressMarker.setVisible(false);
 
@@ -145,44 +177,17 @@ const resetEstimator = () => {
     lng: DEFAULT_COORDINATES.lng,
   });
 
-  // plottingStep1.setAttribute("aria-hidden", true);
-  // .setAttribute("aria-hidden", true);
-  // addressResultsContainer.setAttribute("aria-hidden", true);
-  // savePaddockBtn.setAttribute("aria-hidden", true);
-
-  // addressSearchContainer.setAttribute("aria-hidden", false);
-
   currentAddressLabel.innerHTML = "";
   searchField.value = "";
 
-  plottingTooltip.setAttribute("aria-hidden", false);
-  removePaddockMenu();
+  calculatePlot(false);
+  setMapReadyForPlotting(false);
 };
 
 // events
 const handleResetSearch = (e) => {
   e.preventDefault();
   resetEstimator();
-
-  addressSearchContainer.setAttribute("aria-hidden", false);
-  addressContainer.setAttribute("aria-hidden", true);
-  // addressResultsContainer.setAttribute("aria-hidden", true);
-
-  newSearchBtn.classList.remove("d-block");
-  newSearchBtn.classList.add("d-none");
-
-  deletePlottingBtn.setAttribute("aria-hidden", true);
-  plottingTooltip.setAttribute("aria-hidden", false);
-};
-
-export const handleStartPlotting = () => {
-  // initialise the drawing manager by assigning it to the map
-  drawingManager.setMap(map);
-  drawingManager.setDrawingMode(null);
-
-  // plottingStep1.setAttribute("aria-hidden", true);
-  // .setAttribute("aria-hidden", false);
-  // savePaddockBtn.setAttribute("aria-hidden", false);
 };
 
 const handleDragTool = (e) => {
@@ -197,6 +202,10 @@ const handleDragTool = (e) => {
 const handleLineTool = (e) => {
   e.preventDefault();
 
+  if (lineMapTool.getAttribute("aria-disabled") === "true") {
+    return;
+  }
+
   drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYLINE);
 
   HELPERS.clearEdits(mapElements);
@@ -205,6 +214,10 @@ const handleLineTool = (e) => {
 
 const handleShapeTool = (e) => {
   e.preventDefault();
+
+  if (shapeMapTool.getAttribute("aria-disabled") === "true") {
+    return;
+  }
 
   drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
 
@@ -322,7 +335,7 @@ const handleUsePlotting = (e) => {
 const handleDeleteAllPlotting = (e) => {
   e.preventDefault();
 
-  resetPlot();
+  resetFencesTable();
   resetMapTools();
 };
 
@@ -427,7 +440,7 @@ export const createMap = () => {
 
   google.maps.event.addListenerOnce(map, "tilesloaded", function () {
     // get elements from cache
-    getStoredPaddocks();
+    getFenceEstimatorData();
   });
 
   // Marker
@@ -456,40 +469,36 @@ export const createMap = () => {
 
   autocomplete.addListener("place_changed", function () {
     addressMarker.setVisible(false);
-    var place = autocomplete.getPlace();
+    addressMapPlace = autocomplete.getPlace();
 
-    if (!place.geometry) {
-      window.alert("No details available for input: '" + place.name + "'");
+    if (!addressMapPlace.geometry) {
+      window.alert(
+        "No details available for input: '" + addressMapPlace.name + "'"
+      );
       return;
     }
 
-    // If the place has a geometry, then present it on a map.
-    if (place.geometry.viewport) {
-      map.fitBounds(place.geometry.viewport);
-    } else {
-      map.setCenter(place.geometry.location);
-      map.setZoom(16);
-    }
+    // 1. add the place to the location storage
+    storeFenceEstimatorData({
+      place: addressMapPlace,
+    });
 
-    // display the marker on map
-    addressMarker.setPosition(place.geometry.location);
-    addressMarker.setVisible(true);
+    // 2. display location
+    HELPERS.displayAddressOnMap(
+      addressMapPlace,
+      map,
+      addressMarker,
+      currentAddressLabel
+    );
 
-    // show the address on map controllers
-    currentAddressLabel.innerHTML = place.adr_address.replace(/\,/g, "");
-
-    addressSearchContainer.setAttribute("aria-hidden", true);
-    addressContainer.setAttribute("aria-hidden", false);
-    addressResultsContainer.setAttribute("aria-hidden", false);
-    newSearchBtn.classList.remove("d-none");
-    newSearchBtn.classList.add("d-block");
-
-    handleStartPlotting();
+    // 3. begin drawing fences
+    setMapReadyForPlotting();
   });
 
   // Drawing
   drawingManager = new google.maps.drawing.DrawingManager({
-    drawingMode: google.maps.drawing.OverlayType.POLYLINE,
+    map,
+    drawingMode: null,
     drawingControl: false,
     drawingControlOptions: {
       drawingModes: [
@@ -562,28 +571,53 @@ const storePaddocks = () => {
     fences.push(shape);
   });
 
-  localStorage.setItem(`${mapStorage}`, JSON.stringify(fences));
+  storeFenceEstimatorData({
+    fences,
+  });
 };
 
-const getStoredPaddocks = () => {
-  const currentPaddocks = localStorage.getItem(mapStorage);
+const getFenceEstimatorData = () => {
+  mapStorageData = JSON.parse(localStorage.getItem(mapStorage));
 
-  if (currentPaddocks) {
-    JSON.parse(currentPaddocks).forEach((shape) => {
+  if (mapStorageData) {
+    addressMapPlace = mapStorageData.place;
+
+    // 1. display stored address
+    HELPERS.displayAddressOnMap(
+      addressMapPlace,
+      map,
+      addressMarker,
+      currentAddressLabel
+    );
+
+    // 2. create fences on map
+    mapStorageData.fences?.forEach((shape) => {
       const { type, paddockIdx, paddockName, paths } = shape;
 
       // setup paddock and add it to map
       createPaddockMapShape(paddockIdx, paddockName, type, paths);
     });
 
+    // 3. update table and total based on stored data
     calculatePlot(false);
-    addressContainer.setAttribute("aria-hidden", false);
-    addressResultsContainer.setAttribute("aria-hidden", false);
-    handleStartPlotting();
+
+    // 4. set map ready to draw more fences
+    setMapReadyForPlotting();
   }
 };
 
-const removeStoredPaddocks = () => {
+const storeFenceEstimatorData = (data) => {
+  if (data) {
+    mapStorageData = {
+      ...mapStorageData,
+      ...data,
+    };
+  }
+
+  localStorage.setItem(`${mapStorage}`, JSON.stringify(mapStorageData));
+};
+
+const removeFenceEstimatorData = () => {
   localStorage.removeItem(mapStorage);
 };
 

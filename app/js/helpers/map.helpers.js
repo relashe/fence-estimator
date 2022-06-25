@@ -83,3 +83,33 @@ export const drawShapeRow = (paddockName, shapeLength, index) => {
     </div>
   `;
 };
+
+export const displayAddressOnMap = (
+  place,
+  map,
+  addressMarker,
+  addressLabel
+) => {
+  if (!place || !map) {
+    return;
+  }
+
+  // If the place has a geometry, then present it on a map.
+  if (place.geometry.viewport) {
+    map.fitBounds(place.geometry.viewport);
+  } else {
+    map.setCenter(place.geometry.location);
+    map.setZoom(16);
+  }
+
+  // display the marker on map
+  if (addressMarker) {
+    addressMarker.setPosition(place.geometry.location);
+    addressMarker.setVisible(true);
+  }
+
+  // show the address on map controllers
+  if (addressLabel) {
+    addressLabel.innerHTML = place.adr_address.replace(/\,/g, "");
+  }
+};

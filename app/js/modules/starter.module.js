@@ -1,6 +1,6 @@
-import { createMap, handleStartPlotting, setup } from "./loadedMap.module";
 import { Loader } from "google-maps";
 import { MAP_SETTINGS } from "../constants";
+import { createMap, setup } from "./loadedMap.module";
 
 const mapLoader = new Loader(MAP_SETTINGS.key, MAP_SETTINGS.options);
 let google;
@@ -9,7 +9,6 @@ const start = () => {
   setup(google);
 
   createMap();
-  handleStartPlotting();
 };
 
 export const init = () => {
