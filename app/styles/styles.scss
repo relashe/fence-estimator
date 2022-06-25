@@ -193,7 +193,7 @@ $scrollbar-other: #fcfcfc;
 }
 
 .created-fence__section {
-  width: calc(100% / 3);
+  flex: 1 1 calc(100% / 3);
 
   & + & {
     margin-left: 5px;
@@ -220,6 +220,8 @@ $scrollbar-other: #fcfcfc;
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
+  width: 40px;
+  flex: 0 0 40px;
 }
 
 .created-fence__edit {

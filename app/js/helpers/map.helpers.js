@@ -75,11 +75,6 @@ export const drawShapeRow = (paddockName, shapeLength, index) => {
       </div>
       <div class="created-fence__section created-fence__section--actions">
         <button type="button" data-action="${
-          SHAPES_CONTROLS.EDIT
-        }" data-shape="${index}" class="btn-control-icons created-fence__edit">
-          Edit
-        </button>
-        <button type="button" data-action="${
           SHAPES_CONTROLS.DELETE
         }" data-shape="${index}" class="btn-control-icons btn-control-icons--delete d-block created-fence__delete">
           <i class="fa fa-trash">d</i>

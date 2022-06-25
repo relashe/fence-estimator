@@ -754,9 +754,6 @@ export const setup = (googleAPI) => {
     div.style.left = e.detail.left;
     div.innerHTML = `
         <p class="paddock-menu__title">${paddock.name}</p>
-        <button type="button" data-action="${SHAPES_CONTROLS.EDIT}" data-shape="${paddock.index}" class="paddock-menu__button paddock-menu__button--edit">
-          Edit fence
-        </button>
         <button type="button" data-action="${SHAPES_CONTROLS.DELETE}" data-shape="${paddock.index}" class="paddock-menu__button paddock-menu__button--delete">
           Delete fence
         </button>
