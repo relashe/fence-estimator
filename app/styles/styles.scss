@@ -2,6 +2,12 @@
 // @import "~bootstrap/scss/bootstrap";
 @import "./sn-css-temp";
 
+$scrollbar-width: 6px;
+$scrollbar-border-radius: 0;
+$scrollbar-track: #f5f5f5;
+$scrollbar-bar: #6c757d;
+$scrollbar-other: #fcfcfc;
+
 #fence-estimator-app {
   height: 80vh;
 }
@@ -50,6 +56,45 @@
   border-top: 1px solid #cccccc;
   border-bottom: 1px solid #cccccc;
   flex: 1 0 0;
+}
+
+.map-search-results__shapes {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+}
+
+.map-search-results__shapes-table {
+  flex: 1 0 0;
+  overflow-y: auto;
+  padding-right: 10px;
+
+  scrollbar-base-color: $scrollbar-track;
+  scrollbar-face-color: $scrollbar-bar;
+  scrollbar-shadow-color: $scrollbar-bar;
+  scrollbar-highlight-color: $scrollbar-other;
+  scrollbar-3dlight-color: $scrollbar-other;
+  scrollbar-darkshadow-color: $scrollbar-bar;
+  scrollbar-track-color: $scrollbar-track;
+  scrollbar-arrow-color: transparent;
+
+  &::-webkit-scrollbar {
+    background-color: $scrollbar-bar;
+    border-radius: 4px;
+    width: $scrollbar-width;
+    cursor: pointer;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: $scrollbar-track;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $scrollbar-bar;
+    border: 1px solid none;
+    border-radius: 4px;
+  }
 }
 
 // * MAP

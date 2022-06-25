@@ -82,7 +82,6 @@ const calculatePlot = (storePlot = true) => {
   // 3.
   plotPerimiter = totalPerimeter.toFixed(0);
   plottingPerimiterLabel.innerHTML = `${plotPerimiter || 0}m`;
-  plottingResultsContainer.setAttribute("aria-hidden", false);
   // 4.
   storePlot && storePaddocks();
 
@@ -125,7 +124,6 @@ const resetPlot = () => {
 const resetMapTools = () => {
   // plottingStep1.setAttribute("aria-hidden", false);
   // .setAttribute("aria-hidden", true);
-  // plottingResultsContainer.setAttribute("aria-hidden", true);
   // savePaddockBtn.setAttribute("aria-hidden", false);
   drawingManager.setDrawingMode(null);
 
@@ -150,7 +148,6 @@ const resetEstimator = () => {
   // plottingStep1.setAttribute("aria-hidden", true);
   // .setAttribute("aria-hidden", true);
   // addressResultsContainer.setAttribute("aria-hidden", true);
-  // plottingResultsContainer.setAttribute("aria-hidden", true);
   // savePaddockBtn.setAttribute("aria-hidden", true);
 
   // addressSearchContainer.setAttribute("aria-hidden", false);
@@ -169,14 +166,13 @@ const handleResetSearch = (e) => {
 
   addressSearchContainer.setAttribute("aria-hidden", false);
   addressContainer.setAttribute("aria-hidden", true);
-  addressResultsContainer.setAttribute("aria-hidden", true);
+  // addressResultsContainer.setAttribute("aria-hidden", true);
 
   newSearchBtn.classList.remove("d-block");
   newSearchBtn.classList.add("d-none");
 
   deletePlottingBtn.setAttribute("aria-hidden", true);
   plottingTooltip.setAttribute("aria-hidden", false);
-  removePaddockMenu();
 };
 
 export const handleStartPlotting = () => {
@@ -236,7 +232,8 @@ const handleZoomOutTool = (e) => {
 
 const handleShapesTable = (e) => {
   const element =
-    e.target.tagName.toLowerCase() === "button"
+    e.target.tagName.toLowerCase() === "button" ||
+    e.target.tagName.toLowerCase() === "input"
       ? e.target
       : e.target.parentElement;
 
@@ -250,6 +247,7 @@ const handleShapesTable = (e) => {
   if (!shape) {
     return;
   }
+
   removePaddockMenu();
 
   switch (element.dataset.action) {
@@ -257,6 +255,7 @@ const handleShapesTable = (e) => {
       HELPERS.highlightShape(shape);
       break;
     case SHAPES_CONTROLS.EDIT:
+    case SHAPES_CONTROLS.EDIT_NAME:
       HELPERS.clearEdits(mapElements);
       HELPERS.editShape(shape, true, drawingManager, selectedShape);
       savePaddockBtn.setAttribute("aria-hidden", true);
@@ -662,8 +661,8 @@ export const setup = (googleAPI) => {
   searchField.addEventListener("keypress", ignoreKeyPress);
 
   plottingShapes.addEventListener("click", handleShapesTable);
-  plottingShapes.addEventListener("focus", removePaddockMenu);
-  plottingShapes.addEventListener("focusout", handleEditPaddockName);
+  // plottingShapes.addEventListener("focus", handleEditSelectPaddockName);
+  plottingShapes.addEventListener("input", handleEditPaddockName);
   newSearchBtn.addEventListener("click", handleResetSearch);
   savePaddockBtn.addEventListener("click", handleAddPlotting);
   setPlottingBtn.addEventListener("click", handleUsePlotting);

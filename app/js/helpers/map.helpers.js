@@ -65,7 +65,7 @@ export const drawShapeRow = (paddockName, shapeLength, index) => {
     }" data-shape="${index}">
       <div class="created-fence__section">
         <p class="created-fence__section-label">Name</p>
-        <input id="paddock-name-${index}" value="${paddockName}" type="test" data-action="${
+        <input id="paddock-name-${index}" value="${paddockName}" type="test" data-shape="${index}" data-action="${
     SHAPES_CONTROLS.EDIT_NAME
   }" data-shape="${index}"  class="created-fence__name"/>
       </div>
