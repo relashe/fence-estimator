@@ -63,9 +63,6 @@ const calculatePlot = (storePlot = true) => {
 
   plottingShapes.innerHTML = "";
 
-  deletePlottingBtn.setAttribute("aria-hidden", !mapElements.length);
-  plottingTooltip.setAttribute("aria-hidden", !!mapElements.length);
-
   mapElements.forEach((shape, index) => {
     const shapeLength = google.maps.geometry.spherical.computeLength(
       shape.getPath().getArray()
@@ -86,6 +83,18 @@ const calculatePlot = (storePlot = true) => {
   plottingPerimiterLabel.innerHTML = `${plotPerimiter || 0}m`;
   // 4.
   storePlot && storePaddocks();
+
+  // update available action buttons
+  deletePlottingBtn.setAttribute("aria-hidden", !mapElements.length);
+  plottingTooltip.setAttribute("aria-hidden", !!mapElements.length);
+
+  if (!mapElements.length) {
+    printBtn.setAttribute("disabled", true);
+    setPlottingBtn.setAttribute("disabled", true);
+  } else {
+    printBtn.removeAttribute("disabled");
+    setPlottingBtn.removeAttribute("disabled");
+  }
 
   if (hasConfirmedTotal) {
     // if the user wants to use the list of shapes/lines created, use it.
@@ -598,12 +607,12 @@ const getFenceEstimatorData = () => {
       createPaddockMapShape(paddockIdx, paddockName, type, paths);
     });
 
-    // 3. update table and total based on stored data
-    calculatePlot(false);
-
-    // 4. set map ready to draw more fences
+    // 3. set map ready to draw more fences
     setMapReadyForPlotting();
   }
+
+  // update table and total based on current data
+  calculatePlot(false);
 };
 
 const storeFenceEstimatorData = (data) => {
@@ -623,10 +632,12 @@ const removeFenceEstimatorData = () => {
 
 // print
 const printMap = () => {
-  // 1. remove controls
-  map.setOptions({
-    zoom: DEFAULT_ZOOM,
-  });
+  if (addressMapPlace.geometry.viewport) {
+    map.fitBounds(addressMapPlace.geometry.viewport);
+  } else {
+    map.setCenter(addressMapPlace.geometry.location);
+    map.setZoom(16);
+  }
 
   const popUpAndPrint = function () {
     window.print();

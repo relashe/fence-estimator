@@ -12,7 +12,7 @@ export const DEFAULT_COORDINATES = {
   lng: 144.9630576,
 };
 
-export const DEFAULT_ZOOM = 14;
+export const DEFAULT_ZOOM = 15;
 
 export const MAP_OPTIONS = {
   center: DEFAULT_COORDINATES,
