@@ -77,7 +77,7 @@ export const drawShapeRow = (paddockName, shapeLength, index) => {
         <button type="button" data-action="${
           SHAPES_CONTROLS.DELETE
         }" data-shape="${index}" class="btn-control-icons btn-control-icons--delete d-block created-fence__delete">
-          <i class="fa fa-trash">d</i>
+          <img class="created-fence__icon" src="assets/tool-bin.svg"/>
         </button>
       </div>
     </div>

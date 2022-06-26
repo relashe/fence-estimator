@@ -6,17 +6,17 @@ const common = require("./webpack.common");
 const appPath = path.resolve(__dirname, "./app");
 const distFolder = path.resolve(__dirname, "./dist");
 
-module.exports = env => {
+module.exports = (env) => {
   return merge(common(env, false), {
     mode: "development",
     entry: {
-      main: [path.join(appPath, "/index.js")]
+      main: [path.join(appPath, "/index.js")],
     },
     output: {
       path: distFolder,
       filename: "[name].bundle.js",
       chunkFilename: "[name].bundle.js",
-      publicPath: "/"
+      publicPath: "/",
     },
     devtool: "source-map",
     devServer: {
@@ -26,13 +26,13 @@ module.exports = env => {
       overlay: true,
       port: 2030,
       publicPath: "/",
-      historyApiFallback: true
+      historyApiFallback: true,
     },
     plugins: [
       ...common(env).plugins,
       new webpack.DefinePlugin({
-        NODE_ENV: JSON.stringify(env.NODE_ENV)
-      })
-    ]
+        NODE_ENV: JSON.stringify(env.NODE_ENV),
+      }),
+    ],
   });
 };
