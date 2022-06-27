@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "start": "webpack-dev-server --env.NODE_ENV=DEV --config ./webpack.dev.js",
-    "build": "rimraf dist && webpack --config ./webpack.prod.js",
-    "build-dev": "rimraf distDev && webpack --config ./webpack.static.js",
+    "build": "webpack --config ./webpack.prod.js",
+    "build-dev": "webpack --config ./webpack.static.js",
     "deploy": "npm run build-dev && netlifyctl deploy --config netlify.toml",
     "test": "test"
   },
