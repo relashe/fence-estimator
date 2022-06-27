@@ -111,5 +111,6 @@ export const displayAddressOnMap = (
   // show the address on map controllers
   if (addressLabel) {
     addressLabel.innerHTML = place.adr_address.replace(/\,/g, "");
+    console.info(place);
   }
 };
