@@ -8,73 +8,6 @@
     />
   </head>
   <body>
-    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-body">
-            <div class="fence-estimator container-fluid p-0">
-              <div class="fence-estimator__container row no-gutters">
-                <div class="col-md-5 px-4 py-4">
-                  <div class="d-md-flex flex-column justify-content-center">
-                    <h2 class="mb-auto">Land Area Estimator</h2>
-
-                    <div class="map-search-controller py-5">
-                      <h4>Search Address</h4>
-                      <form class="form-inline">
-                        <div class="form-group mb-2">
-                          <input
-                            type="text"
-                            class="search-address__field form-control-plaintext border"
-                            id="staticEmail2"
-                          />
-                        </div>
-                      </form>
-                    </div>
-                    <div class="map-search-results-controller py-5" aria-hidden="true">
-                      <h4 class="map-search-results__address mb-4"></h4>
-                      <div class="map-search-results__step-1" aria-hidden="true">
-                        <button type="button" class="plotting__start-button elementor-button mr-4">
-                          Start New Plot
-                        </button>
-                        <button type="button" class="search-address__new-search-button elementor-button">
-                          Search New Address
-                        </button>
-                      </div>
-                      <div class="map-search-results__step-2" aria-hidden="true">
-                        <button type="button" class="plotting__undo-button btn btn-secondary mr-4">
-                          Undo
-                        </button>
-                        <button type="button" class="reset-button elementor-button">
-                          Reset and Start Again
-                        </button>
-                      </div>
-                    </div>
-                    <div class="map-plotting-results-controller mt-auto" aria-hidden="true">
-                      <h4>
-                        Estimated Perimiter
-                        <span class="map-plotting-results__perimiter ml-3"></span>
-                      </h4>
-                      <button type="button" class="plotting__accept-button elementor-button btn-block">
-                        Continue with Estimated Land Area
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div class="fence-estimator__map col-md-7">
-                  <div id="fence-estimator-map"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer"></div>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-      Launch estimator
-    </button> -->
-
     <div class="fence-estimator container-fluid p-0">
       <div class="fence-estimator__container no-gutters">
         <div class="map-search-tools-controller" aria-hidden="false">
@@ -122,32 +55,17 @@
         </div>
 
         <div class="map-search-sidebar">
-          <!-- <div
-            class="fence-estimator__instructions alert alert-secondary"
-            role="alert"
+          <button
+            class="btn btn-primary map-search-sidebar__collapse"
+            type="button"
+            data-toggle="collapse"
+            data-target="#collapseExample"
+            aria-expanded="false"
+            aria-controls="collapseExample"
           >
-            <h4>Instructions</h4>
-            <ul>
-              <li>Step 1 - Search for your address</li>
-              <li>Step 2 - Zoom in to the correct area on the map</li>
-              <li>Step 3 - Click 'Start New Fence'</li>
-              <li>Step 4 - On the map, click on each corner of your paddock</li>
-              <li>
-                Step 5 - Once you have connected the pins to the start point a
-                perimeter will be calculated
-              </li>
-              <li>
-                Step 6 - You can edit the pins of the paddock, delete a paddock
-                or create a new paddock
-              </li>
-              <li>
-                Step 7 - Accept and confirm the total paddock perimeter to be
-                used in the estimate
-              </li>
-            </ul>
-          </div> -->
-
-          <div class="map-search-controllers">
+            SB
+          </button>
+          <div class="map-search-controllers" id="collapseExample">
             <div class="map-search-controller p-4">
               <div class="map-search-controller__searcher">
                 <h4>Property location</h4>
