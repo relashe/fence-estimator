@@ -33,7 +33,6 @@ $scrollbar-other: #fcfcfc;
   width: 420px;
   height: 90vh;
   z-index: 20;
-  overflow-y: auto;
 
   .alert {
     font-size: 12px;
@@ -284,6 +283,14 @@ $scrollbar-other: #fcfcfc;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+// LENGTH LABEL
+.paddock-length {
+  position: absolute;
+  background: #ffffff;
+  border-radius: 4px;
+  padding: 5px;
 }
 
 // SHAPE MENU

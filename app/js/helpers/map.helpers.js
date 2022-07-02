@@ -84,6 +84,16 @@ export const drawShapeRow = (paddockName, shapeLength, index) => {
   `;
 };
 
+const findAddressDetail = (address, detail, shortVersion = false) => {
+  if (!address) {
+    return;
+  }
+
+  return address.find((element) =>
+    element.types.some((type) => type === detail)
+  )[shortVersion ? "short_name" : "long_name"];
+};
+
 export const displayAddressOnMap = (
   place,
   map,
@@ -109,8 +119,22 @@ export const displayAddressOnMap = (
   }
 
   // show the address on map controllers
+  const address = place.address_components;
+
   if (addressLabel) {
-    addressLabel.innerHTML = place.adr_address.replace(/\,/g, "");
+    addressLabel.innerHTML = `
+    <span class="address-line-1">${findAddressDetail(
+      address,
+      "locality"
+    )}, ${findAddressDetail(address, "administrative_area_level_2")}</span>
+    <span class="address-line-2">${findAddressDetail(
+      address,
+      "postal_code"
+    )} ${findAddressDetail(
+      address,
+      "administrative_area_level_1"
+    )}  ${findAddressDetail(address, "country", true)}</span>`;
+    place.adr_address.replace(/\,/g, "");
     console.info(place);
   }
 };

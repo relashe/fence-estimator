@@ -13,6 +13,7 @@ let google,
   map,
   drawingManager,
   mapElements = [],
+  mapLengths = [],
   selectedShape = null,
   mapContainer,
   addressSearchContainer,
@@ -105,6 +106,7 @@ const calculatePlot = (storePlot = true) => {
 const clearPlotShape = (idx) => {
   if (mapElements.length && mapElements[idx]) {
     mapElements[idx].setMap(null);
+    mapLengths[idx].setMap(null);
     google.maps.event.clearInstanceListeners(mapElements[idx]);
 
     mapElements.splice(idx, 1);
@@ -125,7 +127,12 @@ const resetFencesTable = () => {
       shape.setMap(null);
     });
 
+    mapLengths.forEach((length) => {
+      length.setMap(null);
+    });
+
     mapElements = [];
+    mapLengths = [];
   }
 
   plotPerimiter = 0;
@@ -417,7 +424,142 @@ const createPaddockMapShape = (
   type,
   pathCoordinates
 ) => {
+  /**
+   * Custom overlay for shape menu
+   */
+  class PaddockLengthLabelOverlay extends google.maps.OverlayView {
+    length;
+    coordinates;
+    p;
+    constructor(coordinates, length) {
+      super();
+      this.length = length;
+      this.coordinates = coordinates;
+    }
+
+    /**
+     * onAdd is called when the map's panes are ready and the overlay has been
+     * added to the map.
+     */
+    onAdd() {
+      this.p = document.createElement("p");
+
+      // style contents
+      this.p.classList.add("paddock-length");
+      this.p.innerHTML = `${this.length.toFixed()}m`;
+
+      // Add the element to the "overlayLayer" pane.
+      const panes = this.getPanes();
+
+      panes.overlayLayer.appendChild(this.p);
+    }
+
+    draw() {
+      // We use the south-west and north-east
+      // coordinates of the overlay to peg it to the correct position and size.
+      // To do this, we need to retrieve the projection from the overlay.
+      const overlayProjection = this.getProjection();
+
+      // Retrieve the south-west and north-east coordinates of this overlay
+      // in LatLngs and convert them to pixel coordinates.
+      // We'll use these coordinates to resize the div.
+      const sw = overlayProjection.fromLatLngToDivPixel(this.coordinates);
+      if (this.p) {
+        this.p.style.left = sw.x + 10 + "px";
+        this.p.style.top = sw.y + 10 + "px";
+      }
+    }
+    /**
+     * The onRemove() method will be called automatically from the API if
+     * we ever set the overlay's map property to 'null'.
+     */
+    onRemove() {
+      if (this.p) {
+        this.p.parentNode.removeChild(this.p);
+        delete this.p;
+      }
+    }
+    /**
+     *  Set the visibility to 'hidden' or 'visible'.
+     */
+    hide() {
+      if (this.p) {
+        this.p.style.visibility = "hidden";
+      }
+    }
+    show() {
+      if (this.p) {
+        this.p.style.visibility = "visible";
+      }
+    }
+    toggle() {
+      if (this.p) {
+        if (this.p.style.visibility === "hidden") {
+          this.show();
+        } else {
+          this.hide();
+        }
+      }
+    }
+    toggleDOM(map) {
+      if (this.getMap()) {
+        this.setMap(null);
+      } else {
+        this.setMap(map);
+      }
+    }
+    updateLength(length) {
+      this.length = length;
+      this.p.innerHTML = `${this.length.toFixed()}m`;
+    }
+  }
+
   let currentShape;
+
+  let path = new google.maps.MVCArray();
+
+  if (Array.isArray(pathCoordinates)) {
+    pathCoordinates.forEach((segment) => {
+      // const segmentCoordinates = new google.maps.LatLng(
+      //   segment.lat,
+      //   segment.lng
+      // );
+      path.push(segment);
+    });
+  } else {
+    // const segmentCoordinates = new google.maps.LatLng(
+    //   pathCoordinates.lat(),
+    //   pathCoordinates.lng()
+    // );
+    path.push(pathCoordinates);
+  }
+
+  const shapeLength = google.maps.geometry.spherical.computeLength(
+    path.getArray()
+  );
+
+  const lengthLabel = new PaddockLengthLabelOverlay(
+    { lat: path.getArray()[0].lat(), lng: path.getArray()[0].lng() },
+    shapeLength
+  );
+
+  google.maps.event.addListener(path, "insert_at", function (vertex) {
+    lengthLabel.updateLength(
+      google.maps.geometry.spherical.computeLength(path.getArray())
+    );
+  });
+
+  google.maps.event.addListener(path, "set_at", function (vertex) {
+    lengthLabel.updateLength(
+      google.maps.geometry.spherical.computeLength(path.getArray())
+    );
+  });
+
+  google.maps.event.addListener(path, "mousedown", function (vertex) {
+    lengthLabel.updateLength(
+      google.maps.geometry.spherical.computeLength(path.getArray())
+    );
+  });
 
   const shapeDetails = {
     ...SHAPE_SETTINGS.DEFAULT,
@@ -425,8 +567,8 @@ const createPaddockMapShape = (
     paddockName,
     type,
     map,
-    // path,
-    path: pathCoordinates,
+    path,
+    // path: pathCoordinates,
   };
 
   if (type === google.maps.drawing.OverlayType.POLYLINE) {
@@ -439,7 +581,10 @@ const createPaddockMapShape = (
   // set up paddock with listening events
   bindPaddockShapeEvents(currentShape);
 
+  lengthLabel.setMap(map);
+
   mapElements.push(currentShape);
+  mapLengths.push(lengthLabel);
   plottingTooltip.setAttribute("aria-hidden", true);
 };
 
@@ -529,12 +674,16 @@ export const createMap = () => {
     function (e) {
       // create polyline and add it to array of elements
       // to display totals in table as lines are added
+      const path = e.getPath().getArray();
+
       createPaddockMapShape(
         mapElements.length,
         `${mapElements.length + 1}--Boundary Fence`,
         google.maps.drawing.OverlayType.POLYLINE,
-        e.getPath().getArray()
+        path
       );
+
+      drawingManager.setDrawingMode(null);
 
       e.setMap(null);
 
@@ -548,12 +697,16 @@ export const createMap = () => {
     function (e) {
       // create polygon and add it to array of elements
       // to display totals in table as lines are added
+      const path = e.getPath().getArray();
+
       createPaddockMapShape(
         mapElements.length,
         `${mapElements.length + 1}--Paddock Fence`,
         google.maps.drawing.OverlayType.POLYGON,
-        e.getPath().getArray()
+        path
       );
+
+      drawingManager.setDrawingMode(null);
 
       e.setMap(null);
 
