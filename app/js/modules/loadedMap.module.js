@@ -520,18 +520,26 @@ const createPaddockMapShape = (
 
   if (Array.isArray(pathCoordinates)) {
     pathCoordinates.forEach((segment) => {
-      // const segmentCoordinates = new google.maps.LatLng(
-      //   segment.lat,
-      //   segment.lng
-      // );
-      path.push(segment);
+      if (typeof segment.lat === "function") {
+        path.push(segment);
+      } else {
+        const segmentCoordinates = new google.maps.LatLng(
+          segment.lat,
+          segment.lng
+        );
+        path.push(segmentCoordinates);
+      }
     });
   } else {
-    // const segmentCoordinates = new google.maps.LatLng(
-    //   pathCoordinates.lat(),
-    //   pathCoordinates.lng()
-    // );
-    path.push(pathCoordinates);
+    if (typeof pathCoordinates.lat === "function") {
+      path.push(pathCoordinates);
+    } else {
+      const segmentCoordinates = new google.maps.LatLng(
+        pathCoordinates.lat,
+        pathCoordinates.lng
+      );
+      path.push(segmentCoordinates);
+    }
   }
 
   const shapeLength = google.maps.geometry.spherical.computeLength(

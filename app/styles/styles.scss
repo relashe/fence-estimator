@@ -55,10 +55,7 @@ $scrollbar-other: #fcfcfc;
   border-top: 1px solid #cccccc;
   border-bottom: 1px solid #cccccc;
   flex: 1 0 0;
-}
-
-.map-search-results__shapes {
-  display: flex;
+  display: inline-flex;
   flex-flow: column nowrap;
   height: 100%;
 }
