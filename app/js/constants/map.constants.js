@@ -13,6 +13,7 @@ export const DEFAULT_COORDINATES = {
 };
 
 export const DEFAULT_ZOOM = 15;
+export const EXPORT_ZOOM = 16;
 
 export const MAP_OPTIONS = {
   center: DEFAULT_COORDINATES,

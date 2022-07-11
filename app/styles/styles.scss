@@ -176,9 +176,9 @@ $scrollbar-other: #fcfcfc;
     margin-top: 5px;
   }
 
-  &:hover:not([aria-disabled="true"]),
-  &:active:not([aria-disabled="true"]),
-  &:focus:not([aria-disabled="true"]) {
+  &:hover:not(.map-tool--active),
+  &:active:not(.map-tool--active),
+  &:focus:not(.map-tool--active) {
     background-color: #e2e3e5;
     outline: none;
   }
@@ -197,6 +197,10 @@ $scrollbar-other: #fcfcfc;
 .map-tool__icon {
   height: 25px;
   width: 25px;
+}
+
+.map-tool--active {
+  background-color: blue;
 }
 
 .created-fence {
@@ -343,6 +347,11 @@ $scrollbar-other: #fcfcfc;
     background-color: #e2e3e5;
   }
 }
+
+.print {
+  display: none;
+}
+
 // PRINT
 @media print {
   .map-search-tools-controller,
@@ -361,6 +370,11 @@ $scrollbar-other: #fcfcfc;
   }
 
   .fence-estimator__map {
+    display: none !important;
+  }
+
+  .print {
+    display: block;
     height: 100vh;
     width: 100vw;
   }

@@ -17,14 +17,12 @@
           <a
             class="map-tool map-tool-line elementor-button"
             title="Boundary fence"
-            aria-disabled="true"
           >
             <img src="assets/tool-boundary-fence.svg" class="map-tool__icon" />
           </a>
           <a
             class="map-tool map-tool-shape elementor-button"
             title="Closed paddock"
-            aria-disabled="true"
           >
             <img
               src="assets/tool-closed-paddock-fence.svg"
@@ -53,6 +51,8 @@
             Save paddock and add another
           </button>
         </div>
+
+        <div class="print"></div>
 
         <div class="map-search-sidebar">
           <button
@@ -122,6 +122,12 @@
                 <p class="map-plotting-results__perimiter">0m</p>
               </div>
               <div class="map-plotting-results-controller__actions">
+                <button
+                  type="button"
+                  class="plotting__download-button btn btn-secondary mr-3"
+                >
+                  DOWNLOAD
+                </button>
                 <button
                   type="button"
                   class="plotting__print-button btn btn-secondary mr-3"

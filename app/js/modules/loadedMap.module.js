@@ -1,7 +1,10 @@
+import html2canvas from "html2canvas";
 import interact from "interactjs";
+import jsPDF from "jspdf";
 import {
   DEFAULT_COORDINATES,
   DEFAULT_ZOOM,
+  EXPORT_ZOOM,
   MAP_OPTIONS,
   SHAPES_CONTROLS,
   SHAPE_SETTINGS,
@@ -30,6 +33,7 @@ let google,
   deletePlottingBtn,
   resetBtn,
   printBtn,
+  downloadBtn,
   mapTools,
   dragMapTool,
   lineMapTool,
@@ -44,11 +48,13 @@ let google,
   sidebar;
 
 // tools
-let mapStorage = "fence-estimator";
-let mapStorageData = {};
+let mapStorage = "fence-estimator",
+  mapStorageData = {},
+  mapSet = false;
 
 // Values
 let addressMarker,
+  mapCanvasAction,
   plotPerimiter = 0;
 
 // UI
@@ -91,9 +97,11 @@ const calculatePlot = (storePlot = true) => {
 
   if (!mapElements.length) {
     printBtn.setAttribute("disabled", true);
+    downloadBtn.setAttribute("disabled", true);
     setPlottingBtn.setAttribute("disabled", true);
   } else {
     printBtn.removeAttribute("disabled");
+    downloadBtn.removeAttribute("disabled");
     setPlottingBtn.removeAttribute("disabled");
   }
 
@@ -148,8 +156,6 @@ const resetFencesTable = () => {
 
 const resetMapTools = () => {
   drawingManager.setDrawingMode(null);
-  lineMapTool.setAttribute("aria-disabled", !!addressMapPlace ? false : true);
-  shapeMapTool.setAttribute("aria-disabled", !!addressMapPlace ? false : true);
 };
 
 // this is for when the estimator has an address and
@@ -174,10 +180,7 @@ export const setMapReadyForPlotting = (isReady) => {
   newSearchBtn.classList.add(!!mapIsReady ? "d-block" : "d-none");
 
   // set the map to drawing state
-  // enable drawing tools
   drawingManager.setDrawingMode(null);
-  lineMapTool.setAttribute("aria-disabled", !!mapIsReady ? false : true);
-  shapeMapTool.setAttribute("aria-disabled", !!mapIsReady ? false : true);
 };
 
 const resetEstimator = () => {
@@ -209,6 +212,10 @@ const handleResetSearch = (e) => {
 const handleDragTool = (e) => {
   e.preventDefault();
 
+  dragMapTool.classList.add("map-tool--active");
+  lineMapTool.classList.remove("map-tool--active");
+  shapeMapTool.classList.remove("map-tool--active");
+
   drawingManager.setDrawingMode(null);
 
   HELPERS.clearEdits(mapElements);
@@ -218,9 +225,9 @@ const handleDragTool = (e) => {
 const handleLineTool = (e) => {
   e.preventDefault();
 
-  if (lineMapTool.getAttribute("aria-disabled") === "true") {
-    return;
-  }
+  lineMapTool.classList.add("map-tool--active");
+  dragMapTool.classList.remove("map-tool--active");
+  shapeMapTool.classList.remove("map-tool--active");
 
   drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYLINE);
 
@@ -231,9 +238,9 @@ const handleLineTool = (e) => {
 const handleShapeTool = (e) => {
   e.preventDefault();
 
-  if (shapeMapTool.getAttribute("aria-disabled") === "true") {
-    return;
-  }
+  shapeMapTool.classList.add("map-tool--active");
+  dragMapTool.classList.remove("map-tool--active");
+  lineMapTool.classList.remove("map-tool--active");
 
   drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
 
@@ -596,13 +603,101 @@ const createPaddockMapShape = (
   plottingTooltip.setAttribute("aria-hidden", true);
 };
 
+// export
+const exportMap = () => {
+  const width = mapContainer.clientWidth;
+  const height = mapContainer.clientHeight;
+
+  html2canvas(mapContainer, {
+    useCORS: true,
+    imageTimeout: 0,
+    width,
+    height,
+  }).then(function (canvas) {
+    const img = canvas.toDataURL("image/jpeg,1.0");
+    let totalPerimeter = 0;
+    let table = [];
+
+    if (mapCanvasAction === "download") {
+      let pdf = new jsPDF();
+      pdf.setFontSize(12);
+
+      pdf.addImage(img, "JPEG", 15, 40, 180, 180);
+
+      pdf.addPage();
+      mapElements.forEach((shape, index) => {
+        const shapeLength = google.maps.geometry.spherical.computeLength(
+          shape.getPath().getArray()
+        );
+
+        table.push({
+          name: `${shape.paddockName}`,
+          length: `${shapeLength.toFixed(0)}`,
+        });
+
+        totalPerimeter += shapeLength.toFixed(0);
+      });
+
+      pdf.table(10, 10, table, ["name", "length"]);
+      pdf.text(["", `Total: ${totalPerimeter}m`], 10, 10);
+
+      pdf.save("a4.pdf");
+    }
+    if (mapCanvasAction === "print") {
+      document.querySelectorAll(".print")[0].innerHTML = `
+        <img src="${img}" style="width: ${width}px; height: ${height}px;" />
+        `;
+
+      setTimeout(() => {
+        window.print();
+      }, 0);
+    }
+
+    mapCanvasAction = undefined;
+  });
+};
+
+// adjust map to prepare canvas image
+const exportCanvas = (action) => {
+  mapCanvasAction = action;
+
+  if (addressMapPlace.geometry.viewport) {
+    map.fitBounds(addressMapPlace.geometry.viewport);
+  } else {
+    map.setCenter(addressMapPlace.geometry.location);
+  }
+
+  // set zoom firt or export map if already at the correct zoom
+  if (map.getZoom() !== EXPORT_ZOOM) {
+    map.setZoom(EXPORT_ZOOM);
+  } else {
+    exportMap();
+  }
+};
+
+const printMap = async (e) => {
+  e?.preventDefault();
+
+  exportCanvas("print");
+};
+
+const downloadMap = async (e) => {
+  e?.preventDefault();
+
+  exportCanvas("download");
+};
+
 // map
 export const createMap = () => {
   map = new google.maps.Map(mapContainer, MAP_OPTIONS);
 
   google.maps.event.addListenerOnce(map, "tilesloaded", function () {
     // get elements from cache
-    getFenceEstimatorData();
+    !mapSet && getFenceEstimatorData();
+  });
+
+  google.maps.event.addListener(map, "zoom_changed", function () {
+    !!mapCanvasAction && exportMap();
   });
 
   // Marker
@@ -774,6 +869,8 @@ const getFenceEstimatorData = () => {
 
   // update table and total based on current data
   calculatePlot(false);
+
+  mapSet = true;
 };
 
 const storeFenceEstimatorData = (data) => {
@@ -789,23 +886,6 @@ const storeFenceEstimatorData = (data) => {
 
 const removeFenceEstimatorData = () => {
   localStorage.removeItem(mapStorage);
-};
-
-// print
-const printMap = () => {
-  if (addressMapPlace.geometry.viewport) {
-    map.fitBounds(addressMapPlace.geometry.viewport);
-  } else {
-    map.setCenter(addressMapPlace.geometry.location);
-    map.setZoom(16);
-  }
-
-  const popUpAndPrint = function () {
-    window.print();
-  };
-
-  // 2. trigger print function - timeout to give time to the zoom reset
-  setTimeout(popUpAndPrint, 1000);
 };
 
 // SETUP
@@ -852,6 +932,7 @@ export const setup = (googleAPI) => {
 
   resetBtn = document.querySelectorAll(".reset-button");
   printBtn = document.querySelectorAll(".plotting__print-button")[0];
+  downloadBtn = document.querySelectorAll(".plotting__download-button")[0];
 
   dragMapTool = document.querySelectorAll(".map-tool-drag")[0];
   lineMapTool = document.querySelectorAll(".map-tool-line")[0];
@@ -950,7 +1031,6 @@ export const setup = (googleAPI) => {
     }
 
     const paddock = e.detail.paddock;
-    console.info(paddock);
 
     const div = document.createElement("div");
 
@@ -975,6 +1055,7 @@ export const setup = (googleAPI) => {
 
   // PRINT
   printBtn.addEventListener("click", printMap);
+  downloadBtn.addEventListener("click", downloadMap);
 };
 
 export { google };
