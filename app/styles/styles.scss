@@ -386,4 +386,17 @@ $scrollbar-other: #fcfcfc;
   .created-fence__section {
     width: 50%;
   }
+
+  .map-search-sidebar__collapse {
+    display: none;
+  }
+
+  .map-search-controllers {
+    height: auto;
+  }
+
+  .map-search-results-controller {
+    flex: 0;
+    display: block;
+  }
 }

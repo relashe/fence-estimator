@@ -1,3 +1,4 @@
+import jsPDF from "jspdf";
 import { SHAPES_CONTROLS, SHAPE_SETTINGS } from "../constants";
 
 export const highlightShape = (shape) => {
@@ -82,6 +83,34 @@ export const drawShapeRow = (paddockName, shapeLength, index) => {
       </div>
     </div>
   `;
+};
+
+export const generateMapPdf = (img, mapElements) => {
+  let totalPerimeter = 0;
+  let table = [];
+  let pdf = new jsPDF();
+  pdf.setFontSize(12);
+
+  pdf.addImage(img, "JPEG", 15, 40, 180, 180);
+
+  pdf.addPage();
+  mapElements.forEach((shape, index) => {
+    const shapeLength = google.maps.geometry.spherical.computeLength(
+      shape.getPath().getArray()
+    );
+
+    table.push({
+      name: `${shape.paddockName}`,
+      length: `${shapeLength.toFixed(0)}`,
+    });
+
+    totalPerimeter += shapeLength.toFixed(0);
+  });
+
+  pdf.table(10, 10, table, ["name", "length"]);
+  pdf.text(["", `Total: ${totalPerimeter}m`], 10, 10);
+
+  return pdf;
 };
 
 const findAddressDetail = (address, detail, shortVersion = false) => {

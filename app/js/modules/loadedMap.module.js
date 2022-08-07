@@ -1,6 +1,5 @@
 import html2canvas from "html2canvas";
-import interact from "interactjs";
-import jsPDF from "jspdf";
+import JSZip from "jszip";
 import {
   DEFAULT_COORDINATES,
   DEFAULT_ZOOM,
@@ -10,6 +9,7 @@ import {
   SHAPE_SETTINGS,
 } from "../constants";
 import * as HELPERS from "../helpers";
+import { generateMapPdf } from "../helpers";
 
 // Elements
 let google,
@@ -47,10 +47,8 @@ let google,
   shapeMenuContainer,
   sidebar;
 
-// tools
-let mapStorage = "fence-estimator",
-  mapStorageData = {},
-  mapSet = false;
+// flags
+let mapSet = false;
 
 // Values
 let addressMarker,
@@ -89,7 +87,7 @@ const calculatePlot = (storePlot = true) => {
   plotPerimiter = totalPerimeter.toFixed(0);
   plottingPerimiterLabel.innerHTML = `${plotPerimiter || 0}m`;
   // 4.
-  storePlot && storePaddocks();
+  storePlot && HELPERS.storePaddocks(mapElements);
 
   // update available action buttons
   deletePlottingBtn.setAttribute("aria-hidden", !mapElements.length);
@@ -151,7 +149,7 @@ const resetFencesTable = () => {
   deletePlottingBtn.setAttribute("aria-hidden", !mapElements.length);
 
   // update cache
-  removeFenceEstimatorData();
+  HELPERS.removeFenceEstimatorData();
 };
 
 const resetMapTools = () => {
@@ -327,7 +325,7 @@ const handleEditPaddockName = (e) => {
   shape.paddockName = element.value;
 
   // update local storage
-  storePaddocks();
+  storePaddocks(mapElements);
 };
 
 const handleAddPlotting = (e) => {
@@ -425,7 +423,7 @@ const bindPaddockShapeEvents = (paddock) => {
   });
 };
 
-const createPaddockMapShape = (
+export const createPaddockMapShape = (
   paddockIdx,
   paddockName,
   type,
@@ -583,7 +581,6 @@ const createPaddockMapShape = (
     type,
     map,
     path,
-    // path: pathCoordinates,
   };
 
   if (type === google.maps.drawing.OverlayType.POLYLINE) {
@@ -615,34 +612,13 @@ const exportMap = () => {
     height,
   }).then(function (canvas) {
     const img = canvas.toDataURL("image/jpeg,1.0");
-    let totalPerimeter = 0;
-    let table = [];
 
     if (mapCanvasAction === "download") {
-      let pdf = new jsPDF();
-      pdf.setFontSize(12);
-
-      pdf.addImage(img, "JPEG", 15, 40, 180, 180);
-
-      pdf.addPage();
-      mapElements.forEach((shape, index) => {
-        const shapeLength = google.maps.geometry.spherical.computeLength(
-          shape.getPath().getArray()
-        );
-
-        table.push({
-          name: `${shape.paddockName}`,
-          length: `${shapeLength.toFixed(0)}`,
-        });
-
-        totalPerimeter += shapeLength.toFixed(0);
-      });
-
-      pdf.table(10, 10, table, ["name", "length"]);
-      pdf.text(["", `Total: ${totalPerimeter}m`], 10, 10);
+      const pdf = generateMapPdf(img, mapElements);
 
       pdf.save("a4.pdf");
     }
+
     if (mapCanvasAction === "print") {
       document.querySelectorAll(".print")[0].innerHTML = `
         <img src="${img}" style="width: ${width}px; height: ${height}px;" />
@@ -651,6 +627,46 @@ const exportMap = () => {
       setTimeout(() => {
         window.print();
       }, 0);
+    }
+
+    if (mapCanvasAction === "email") {
+      const pdf = generateMapPdf(img, mapElements);
+
+      // const pdfOutput = pdf.output("blob");
+      const pdfOutputBuffer = pdf.output("arraybuffer");
+      // const pdfDataUri = pdf.output("datauristring");
+
+      const zip = new JSZip();
+
+      zip.file("fence.pdf", pdfOutputBuffer);
+
+      zip
+        .generateAsync({
+          type: "base64",
+          compression: "DEFLATE",
+          compressionOptions: {
+            level: 9,
+          },
+        })
+        .then(function (content) {
+          const pdfDataUri = `data:application/x-zip-compressed;base64,${content}`;
+
+          Email.send({
+            SecureToken: "25a36738-9b98-4ff7-9bc4-4b10ceb89033",
+            To: "paciencia@relashe.com",
+            From: "developer@relashe.com",
+            Subject: "Fence",
+            Body: "fence",
+            Attachments: [
+              {
+                name: "smtpjs",
+                data: pdfDataUri,
+              },
+            ],
+          }).then((message) => console.info(message));
+        });
+
+      const ftp = new FtpConnection();
     }
 
     mapCanvasAction = undefined;
@@ -736,7 +752,7 @@ export const createMap = () => {
     }
 
     // 1. add the place to the location storage
-    storeFenceEstimatorData({
+    HELPERS.storeFenceEstimatorData({
       place: addressMapPlace,
     });
 
@@ -823,26 +839,8 @@ export const createMap = () => {
 };
 
 // caching
-const storePaddocks = () => {
-  let fences = [];
-  mapElements.forEach((element) => {
-    const shape = {
-      paths: element.getPath().getArray(),
-      paddockIdx: element.paddockIdx,
-      paddockName: element.paddockName,
-      type: element.type,
-    };
-
-    fences.push(shape);
-  });
-
-  storeFenceEstimatorData({
-    fences,
-  });
-};
-
 const getFenceEstimatorData = () => {
-  mapStorageData = JSON.parse(localStorage.getItem(mapStorage));
+  const mapStorageData = HELPERS.getMapStorageData();
 
   if (mapStorageData) {
     addressMapPlace = mapStorageData.place;
@@ -871,21 +869,6 @@ const getFenceEstimatorData = () => {
   calculatePlot(false);
 
   mapSet = true;
-};
-
-const storeFenceEstimatorData = (data) => {
-  if (data) {
-    mapStorageData = {
-      ...mapStorageData,
-      ...data,
-    };
-  }
-
-  localStorage.setItem(`${mapStorage}`, JSON.stringify(mapStorageData));
-};
-
-const removeFenceEstimatorData = () => {
-  localStorage.removeItem(mapStorage);
 };
 
 // SETUP
@@ -967,60 +950,10 @@ export const setup = (googleAPI) => {
 
   // UI
   mapTools = document.querySelectorAll(".map-search-tools-controller")[0];
-  let x = 0;
-  let y = 0;
-
-  interact(mapTools)
-    .draggable({
-      modifiers: [
-        interact.modifiers.snap({
-          targets: [interact.snappers.grid({ x: 30, y: 30 })],
-          range: Infinity,
-          relativePoints: [{ x: 0, y: 0 }],
-        }),
-        interact.modifiers.restrict({
-          restriction: mapTools.parentNode,
-          elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
-          endOnly: true,
-        }),
-      ],
-      inertia: true,
-    })
-    .on("dragmove", function (event) {
-      x += event.dx;
-      y += event.dy;
-
-      event.target.style.transform = "translate(" + x + "px, " + y + "px)";
-    });
+  HELPERS.setDraggableMapTools(mapTools);
 
   sidebar = document.querySelectorAll(".map-search-sidebar")[0];
-  let sidebarX = 0;
-  let sidebarY = 0;
-
-  interact(sidebar)
-    .draggable({
-      modifiers: [
-        interact.modifiers.snap({
-          targets: [interact.snappers.grid({ x: 30, y: 30 })],
-          range: Infinity,
-          relativePoints: [{ x: 0, y: 0 }],
-        }),
-        interact.modifiers.restrict({
-          restriction: mapTools.parentNode,
-          elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
-          endOnly: true,
-        }),
-      ],
-      inertia: true,
-    })
-    .on("dragmove", function (event) {
-      sidebarX += event.dx;
-      sidebarY += event.dy;
-
-      event.target.style.transform =
-        "translate(" + sidebarX + "px, " + sidebarY + "px)";
-    })
-    .on("click", removePaddockMenu);
+  HELPERS.setClosableSidebar(sidebar, removePaddockMenu);
 
   shapeMenuContainer = document.querySelectorAll(".paddock-menu-container")[0];
   shapeMenuContainer.addEventListener("click", handleShapesTable);

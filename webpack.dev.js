@@ -24,9 +24,10 @@ module.exports = (env) => {
       compress: true,
       hot: true,
       overlay: true,
-      port: 2030,
+      port: 3002,
       publicPath: "/",
       historyApiFallback: true,
+      https: true,
     },
     plugins: [
       ...common(env).plugins,
