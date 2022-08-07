@@ -1,5 +1,3 @@
-import html2canvas from "html2canvas";
-import JSZip from "jszip";
 import {
   DEFAULT_COORDINATES,
   DEFAULT_ZOOM,
@@ -10,41 +8,51 @@ import {
 } from "../constants";
 import * as HELPERS from "../helpers";
 
-// Elements
-let google,
-  map,
+import { google } from "./starter.module";
+
+import {
+  validateDownloadEmail,
+  validateDownloadForm,
+  validateDownloadName,
+} from "../helpers";
+import {
+  addressContainer,
+  addressResultsContainer,
+  addressSearchContainer,
+  assignElements,
+  currentAddressLabel,
+  deletePlottingBtn,
+  downloadBtn,
+  downloadFormEmail,
+  downloadFormName,
+  dragMapTool,
+  lineMapTool,
+  mapContainer,
+  mapTools,
+  newSearchBtn,
+  plottingPerimiterLabel,
+  plottingShapes,
+  plottingTooltip,
+  printBtn,
+  resetBtn,
+  savePaddockBtn,
+  searchField,
+  setPlottingBtn,
+  shapeMapTool,
+  shapeMenuContainer,
+  sidebar,
+  zoomInTool,
+  zoomOutTool,
+} from "./mapElements.module";
+
+let map,
   drawingManager,
   mapElements = [],
   mapLengths = [],
   selectedShape = null,
-  mapContainer,
-  addressSearchContainer,
-  addressContainer,
-  addressResultsContainer,
   addressMapPlace,
-  plottingResultsContainer,
-  plottingTooltip,
-  plottingShapes,
-  searchField,
-  newSearchBtn,
-  savePaddockBtn,
-  setPlottingBtn,
-  deletePlottingBtn,
-  resetBtn,
-  printBtn,
-  downloadBtn,
-  mapTools,
-  dragMapTool,
-  lineMapTool,
-  shapeMapTool,
-  zoomInTool,
-  zoomOutTool,
-  currentAddressLabel,
-  plottingPerimiterLabel,
-  plottingPerimiterTrigger,
   hasConfirmedTotal = false,
-  shapeMenuContainer,
-  sidebar;
+  plottingPerimiterTrigger;
 
 // flags
 let mapSet = false;
@@ -483,12 +491,11 @@ const exportCanvas = (action) => {
     map.setCenter(addressMapPlace.geometry.location);
   }
 
-  // set zoom firt or export map if already at the correct zoom
-  if (map.getZoom() !== EXPORT_ZOOM) {
-    map.setZoom(EXPORT_ZOOM);
-  } else {
+  map.setZoom(EXPORT_ZOOM);
+
+  setTimeout(() => {
     HELPERS.exportMap(mapContainer, mapCanvasAction, mapElements);
-  }
+  }, 500);
 };
 
 // events
@@ -615,7 +622,7 @@ const handleEditPaddockName = (e) => {
   shape.paddockName = element.value;
 
   // update local storage
-  storePaddocks(mapElements);
+  HELPERS.storePaddocks(mapElements);
 };
 
 const handleAddPlotting = (e) => {
@@ -656,10 +663,14 @@ const handlePrintMap = (e) => {
   exportCanvas("print");
 };
 
-const handleDownloadMap = (e) => {
+const handleDownloadMap = async (e) => {
   e?.preventDefault();
 
-  exportCanvas("download");
+  const formIsValid = await validateDownloadForm();
+
+  if (formIsValid) {
+    exportCanvas("download");
+  }
 };
 
 // map
@@ -672,8 +683,9 @@ export const createMap = () => {
   });
 
   google.maps.event.addListener(map, "zoom_changed", function () {
-    !!mapCanvasAction &&
-      HELPERS.exportMap(mapContainer, mapCanvasAction, mapElements);
+    //only wait for zoom change on print
+    // mapCanvasAction === "print" &&
+    // HELPERS.exportMap(mapContainer, mapCanvasAction, mapElements);
   });
 
   // Marker
@@ -827,63 +839,9 @@ export const createMap = () => {
 };
 
 // SETUP
-export const setup = (googleAPI) => {
-  // find elements
-  mapContainer = document.getElementById("fence-estimator-map");
-  google = googleAPI;
 
-  addressSearchContainer = document.querySelectorAll(
-    ".map-search-controller__searcher"
-  )[0];
-  addressContainer = document.querySelectorAll(
-    ".map-search-results__step-1"
-  )[0];
-  addressResultsContainer = document.querySelectorAll(
-    ".map-search-results-controller"
-  )[0];
-  plottingResultsContainer = document.querySelectorAll(
-    ".map-plotting-results-controller"
-  )[0];
-  plottingTooltip = document.querySelectorAll(
-    ".map-search-results__shapes-tip"
-  )[0];
-
-  plottingShapes = document.querySelectorAll(
-    ".map-search-results__shapes-table"
-  )[0];
-
-  searchField = document.querySelectorAll(".search-address__field")[0];
-  newSearchBtn = document.querySelectorAll(
-    ".search-address__new-search-button"
-  )[0];
-  currentAddressLabel = document.querySelectorAll(
-    ".map-search-results__address"
-  )[0];
-
-  savePaddockBtn = document.querySelectorAll(
-    ".plotting__save-paddock-button"
-  )[0];
-  setPlottingBtn = document.querySelectorAll(".plotting__accept-button")[0];
-  deletePlottingBtn = document.querySelectorAll(".plotting__delete-button")[0];
-  plottingPerimiterLabel = document.querySelectorAll(
-    ".map-plotting-results__perimiter"
-  )[0];
-
-  resetBtn = document.querySelectorAll(".reset-button");
-  printBtn = document.querySelectorAll(".plotting__print-button")[0];
-  downloadBtn = document.querySelectorAll(".plotting__download-button")[0];
-
-  dragMapTool = document.querySelectorAll(".map-tool-drag")[0];
-  lineMapTool = document.querySelectorAll(".map-tool-line")[0];
-  shapeMapTool = document.querySelectorAll(".map-tool-shape")[0];
-  zoomInTool = document.querySelectorAll(".map-tool-zoomin")[0];
-  zoomOutTool = document.querySelectorAll(".map-tool-zoomout")[0];
-
-  mapTools = document.querySelectorAll(".map-search-tools-controller")[0];
-  sidebar = document.querySelectorAll(".map-search-sidebar")[0];
-  shapeMenuContainer = document.querySelectorAll(".paddock-menu-container")[0];
+const bindMapEvents = () => {
   // bind functions
-
   const ignoreKeyPress = (e) => {
     if (e.keyCode === 13) {
       e.preventDefault();
@@ -920,6 +878,14 @@ export const setup = (googleAPI) => {
   // PRINT
   printBtn.addEventListener("click", handlePrintMap);
   downloadBtn.addEventListener("click", handleDownloadMap);
+
+  downloadFormName.addEventListener("change", validateDownloadName);
+  downloadFormEmail.addEventListener("change", validateDownloadEmail);
+};
+
+export const setup = () => {
+  assignElements();
+  bindMapEvents();
 };
 
 export { google };

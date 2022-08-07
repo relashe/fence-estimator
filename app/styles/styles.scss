@@ -133,13 +133,13 @@ $scrollbar-other: #fcfcfc;
   z-index: 9999;
 }
 
-.modal-dialog {
-  max-width: 90%;
-}
+// .modal-dialog {
+//   max-width: 90%;
+// }
 
-.modal-content {
-  height: 90vh;
-}
+// .modal-content {
+//   height: 90vh;
+// }
 
 // * TOOLS
 .map-search-tools-controller {
@@ -350,6 +350,33 @@ $scrollbar-other: #fcfcfc;
 
 .print {
   display: none;
+}
+
+.download-form-field {
+  & + & {
+    margin-top: 25px;
+  }
+}
+
+.download-form-field__label {
+  display: block;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.download-form-field__input {
+  border: 1px solid #d2d2d2;
+  padding: 10px;
+  margin-bottom: 0;
+  width: 100%;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.download-form__error {
+  display: block;
+  color: red;
+  font-size: 11px;
 }
 
 // PRINT

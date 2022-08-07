@@ -126,7 +126,7 @@
                   type="button"
                   class="plotting__start-download-button btn btn-secondary mr-3"
                   data-toggle="modal"
-                  data-target="#exampleModal"
+                  data-target="#downloadModal"
                 >
                   DOWNLOAD
                 </button>
@@ -152,7 +152,7 @@
       <!-- Modal -->
       <div
         class="modal fade"
-        id="exampleModal"
+        id="downloadModal"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
@@ -160,7 +160,9 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <h5 class="modal-title" id="exampleModalLabel">
+                Download your fences (COPY)
+              </h5>
               <button
                 type="button"
                 class="close"
@@ -171,27 +173,56 @@
               </button>
             </div>
             <div class="modal-body">
-              <p>Please provide your details before downloading yout PDF (copy required)</p>
-              <div class=""download-form-field">
-                <label for="dowanload-form__name">Name</label>
-                <input id="dowanload-form__name" type="text" class="plotting__download-name" />
-              </div>
-              <div class=""download-form-field">
-                <label for="dowanload-form__email">Email</label>
-                <input id="dowanload-form__email" type="text" class="plotting__download-email" />
-              </div>
+              <p>
+                Please provide your details before downloading yout PDF (copy
+                required)
+              </p>
+              <form>
+                <div class="download-form-field download-form-field--name">
+                  <label
+                    class="download-form-field__label"
+                    for="download-form__name"
+                    >Name</label
+                  >
+                  <input
+                    id="download-form__name"
+                    type="text"
+                    class="download-form-field__input plotting__download-name"
+                  />
+                  <span
+                    class="download-form__error download-form__error--name"
+                    aria-hidden="true"
+                  ></span>
+                </div>
+                <div class="download-form-field download-form-field--email">
+                  <label
+                    class="download-form-field__label"
+                    for="download-form__email"
+                    >Email</label
+                  >
+                  <input
+                    id="download-form__email"
+                    type="text"
+                    class="download-form-field__input plotting__download-email"
+                  />
+                  <span
+                    class="download-form__error download-form__error--email"
+                    aria-hidden="true"
+                  ></span>
+                </div>
+              </form>
             </div>
             <div class="modal-footer">
               <button
                 type="button"
-                class="btn btn-secondary"
+                class="plotting__close-download-button btn btn-secondary"
                 data-dismiss="modal"
               >
                 Close
               </button>
               <button
                 type="button"
-                class="plotting__download-button btn btn-secondary mr-3"
+                class="plotting__download-button btn btn-primary mr-3"
               >
                 Download
               </button>
@@ -222,7 +253,7 @@
 
         console.log(e.detail.perimiter);
 
-        // $("#exampleModal").modal("hide");
+        // $("#downloadModal").modal("hide");
       });
     </script>
 

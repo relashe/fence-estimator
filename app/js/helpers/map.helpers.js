@@ -1,4 +1,3 @@
-import { generateMapPdf } from "../helpers";
 import { SHAPES_CONTROLS, SHAPE_SETTINGS } from "../constants";
 
 export const highlightShape = (shape) => {
@@ -66,9 +65,9 @@ export const drawShapeRow = (paddockName, shapeLength, index) => {
     }" data-shape="${index}">
       <div class="created-fence__section">
         <p class="created-fence__section-label">Name</p>
-        <input id="paddock-name-${index}" value="${paddockName}" type="test" data-shape="${index}" data-action="${
+        <input id="paddock-description-${index}" value="${paddockName}" type="test" data-shape="${index}" data-action="${
     SHAPES_CONTROLS.EDIT_NAME
-  }" data-shape="${index}"  class="created-fence__name"/>
+  }" data-shape="${index}"  class="created-fence__name" autocomplete="off"/>
       </div>
       <div class="created-fence__section">
         <p class="created-fence__section-label">Length</p>
@@ -136,6 +135,5 @@ export const displayAddressOnMap = (
       "administrative_area_level_1"
     )}  ${findAddressDetail(address, "country", true)}</span>`;
     place.adr_address.replace(/\,/g, "");
-    console.info(place);
   }
 };

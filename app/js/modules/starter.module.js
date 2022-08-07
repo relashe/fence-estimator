@@ -6,23 +6,21 @@ const mapLoader = new Loader(MAP_SETTINGS.key, MAP_SETTINGS.options);
 let google;
 
 const start = () => {
-  setup(google);
+  setup();
 
   createMap();
 };
 
-export const init = () => {
+export const init = async () => {
   if (!document.getElementById("fence-estimator-map")) {
     return false;
   }
 
   if (!google) {
-    mapLoader.load().then((googleAPI) => {
-      google = googleAPI;
-
-      start(google);
-    });
-  } else {
-    start(google);
+    google = await mapLoader.load();
   }
+
+  start();
 };
+
+export { google };
