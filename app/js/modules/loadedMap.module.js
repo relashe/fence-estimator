@@ -9,7 +9,6 @@ import {
   SHAPE_SETTINGS,
 } from "../constants";
 import * as HELPERS from "../helpers";
-import { generateMapPdf } from "../helpers";
 
 // Elements
 let google,
@@ -55,7 +54,7 @@ let addressMarker,
   mapCanvasAction,
   plotPerimiter = 0;
 
-// UI
+// ui
 const calculatePlot = (storePlot = true) => {
   let totalPerimeter = 0;
 
@@ -201,163 +200,37 @@ const resetEstimator = () => {
   setMapReadyForPlotting(false);
 };
 
-// events
-const handleResetSearch = (e) => {
-  e.preventDefault();
-  resetEstimator();
-};
+// caching
+const getFenceEstimatorData = () => {
+  const mapStorageData = HELPERS.getMapStorageData();
 
-const handleDragTool = (e) => {
-  e.preventDefault();
+  if (mapStorageData) {
+    addressMapPlace = mapStorageData.place;
 
-  dragMapTool.classList.add("map-tool--active");
-  lineMapTool.classList.remove("map-tool--active");
-  shapeMapTool.classList.remove("map-tool--active");
+    // 1. display stored address
+    HELPERS.displayAddressOnMap(
+      addressMapPlace,
+      map,
+      addressMarker,
+      currentAddressLabel
+    );
 
-  drawingManager.setDrawingMode(null);
+    // 2. create fences on map
+    mapStorageData.fences?.forEach((shape) => {
+      const { type, paddockIdx, paddockName, paths } = shape;
 
-  HELPERS.clearEdits(mapElements);
-  removePaddockMenu();
-};
+      // setup paddock and add it to map
+      createPaddockMapShape(paddockIdx, paddockName, type, paths);
+    });
 
-const handleLineTool = (e) => {
-  e.preventDefault();
-
-  lineMapTool.classList.add("map-tool--active");
-  dragMapTool.classList.remove("map-tool--active");
-  shapeMapTool.classList.remove("map-tool--active");
-
-  drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYLINE);
-
-  HELPERS.clearEdits(mapElements);
-  removePaddockMenu();
-};
-
-const handleShapeTool = (e) => {
-  e.preventDefault();
-
-  shapeMapTool.classList.add("map-tool--active");
-  dragMapTool.classList.remove("map-tool--active");
-  lineMapTool.classList.remove("map-tool--active");
-
-  drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
-
-  HELPERS.clearEdits(mapElements);
-  removePaddockMenu();
-};
-
-const handleZoomInTool = (e) => {
-  e.preventDefault();
-
-  map.setZoom(map.getZoom() + 1);
-
-  HELPERS.clearEdits(mapElements);
-  removePaddockMenu();
-};
-
-const handleZoomOutTool = (e) => {
-  e.preventDefault();
-
-  map.setZoom(map.getZoom() - 1);
-
-  HELPERS.clearEdits(mapElements);
-  removePaddockMenu();
-};
-
-const handleShapesTable = (e) => {
-  const element =
-    e.target.tagName.toLowerCase() === "button" ||
-    e.target.tagName.toLowerCase() === "input"
-      ? e.target
-      : e.target.parentElement;
-
-  if (element.dataset.shape === undefined || !element.dataset.action) {
-    return;
+    // 3. set map ready to draw more fences
+    setMapReadyForPlotting();
   }
 
-  const shapeIndex = parseInt(element.dataset.shape);
-  const shape = mapElements[shapeIndex];
+  // update table and total based on current data
+  calculatePlot(false);
 
-  if (!shape) {
-    return;
-  }
-
-  removePaddockMenu();
-
-  switch (element.dataset.action) {
-    case SHAPES_CONTROLS.HIGHLIGHT:
-      HELPERS.highlightShape(shape);
-      break;
-    case SHAPES_CONTROLS.EDIT:
-    case SHAPES_CONTROLS.EDIT_NAME:
-      HELPERS.clearEdits(mapElements);
-      HELPERS.editShape(shape, true, drawingManager, selectedShape);
-      savePaddockBtn.setAttribute("aria-hidden", true);
-      break;
-    case SHAPES_CONTROLS.DELETE:
-      HELPERS.clearEdits(mapElements);
-      HELPERS.editShape(shape, true, drawingManager, selectedShape);
-      savePaddockBtn.setAttribute("aria-hidden", true);
-
-      clearPlotShape(shapeIndex);
-      drawingManager.setDrawingMode(null);
-      break;
-  }
-};
-
-const handleEditPaddockName = (e) => {
-  const element =
-    e.target.tagName.toLowerCase() === "input"
-      ? e.target
-      : e.target.parentElement;
-
-  if (element.dataset.shape === undefined || !element.dataset.action) {
-    return;
-  }
-
-  const shapeIndex = parseInt(element.dataset.shape);
-  const shape = mapElements[shapeIndex];
-
-  if (!shape) {
-    return;
-  }
-
-  shape.paddockName = element.value;
-
-  // update local storage
-  storePaddocks(mapElements);
-};
-
-const handleAddPlotting = (e) => {
-  e.preventDefault();
-
-  drawingManager.setDrawingMode(null);
-  HELPERS.clearEdits(mapElements);
-
-  savePaddockBtn.setAttribute("aria-hidden", false);
-};
-
-const handleUsePlotting = (e) => {
-  e && e.preventDefault();
-
-  hasConfirmedTotal = true;
-
-  plottingPerimiterTrigger = new CustomEvent("fence-estimator-results", {
-    detail: { perimiter: plotPerimiter },
-  });
-  window.dispatchEvent(plottingPerimiterTrigger);
-  plottingPerimiterTrigger = null;
-
-  if (typeof elementorProFrontend !== "undefined") {
-    elementorProFrontend.modules.popup.closePopup({}, e);
-  }
-};
-
-const handleDeleteAllPlotting = (e) => {
-  e.preventDefault();
-
-  resetFencesTable();
-  resetMapTools();
+  mapSet = true;
 };
 
 // paddocks
@@ -600,79 +473,6 @@ export const createPaddockMapShape = (
   plottingTooltip.setAttribute("aria-hidden", true);
 };
 
-// export
-const exportMap = () => {
-  const width = mapContainer.clientWidth;
-  const height = mapContainer.clientHeight;
-
-  html2canvas(mapContainer, {
-    useCORS: true,
-    imageTimeout: 0,
-    width,
-    height,
-  }).then(function (canvas) {
-    const img = canvas.toDataURL("image/jpeg,1.0");
-
-    if (mapCanvasAction === "download") {
-      const pdf = generateMapPdf(img, mapElements);
-
-      pdf.save("a4.pdf");
-    }
-
-    if (mapCanvasAction === "print") {
-      document.querySelectorAll(".print")[0].innerHTML = `
-        <img src="${img}" style="width: ${width}px; height: ${height}px;" />
-        `;
-
-      setTimeout(() => {
-        window.print();
-      }, 0);
-    }
-
-    if (mapCanvasAction === "email") {
-      const pdf = generateMapPdf(img, mapElements);
-
-      // const pdfOutput = pdf.output("blob");
-      const pdfOutputBuffer = pdf.output("arraybuffer");
-      // const pdfDataUri = pdf.output("datauristring");
-
-      const zip = new JSZip();
-
-      zip.file("fence.pdf", pdfOutputBuffer);
-
-      zip
-        .generateAsync({
-          type: "base64",
-          compression: "DEFLATE",
-          compressionOptions: {
-            level: 9,
-          },
-        })
-        .then(function (content) {
-          const pdfDataUri = `data:application/x-zip-compressed;base64,${content}`;
-
-          Email.send({
-            SecureToken: "25a36738-9b98-4ff7-9bc4-4b10ceb89033",
-            To: "paciencia@relashe.com",
-            From: "developer@relashe.com",
-            Subject: "Fence",
-            Body: "fence",
-            Attachments: [
-              {
-                name: "smtpjs",
-                data: pdfDataUri,
-              },
-            ],
-          }).then((message) => console.info(message));
-        });
-
-      const ftp = new FtpConnection();
-    }
-
-    mapCanvasAction = undefined;
-  });
-};
-
 // adjust map to prepare canvas image
 const exportCanvas = (action) => {
   mapCanvasAction = action;
@@ -687,17 +487,176 @@ const exportCanvas = (action) => {
   if (map.getZoom() !== EXPORT_ZOOM) {
     map.setZoom(EXPORT_ZOOM);
   } else {
-    exportMap();
+    HELPERS.exportMap(mapContainer, mapCanvasAction, mapElements);
   }
 };
 
-const printMap = async (e) => {
+// events
+const handleResetSearch = (e) => {
+  e.preventDefault();
+  resetEstimator();
+};
+
+const handleDragTool = (e) => {
+  e.preventDefault();
+
+  dragMapTool.classList.add("map-tool--active");
+  lineMapTool.classList.remove("map-tool--active");
+  shapeMapTool.classList.remove("map-tool--active");
+
+  drawingManager.setDrawingMode(null);
+
+  HELPERS.clearEdits(mapElements);
+  removePaddockMenu();
+};
+
+const handleLineTool = (e) => {
+  e.preventDefault();
+
+  lineMapTool.classList.add("map-tool--active");
+  dragMapTool.classList.remove("map-tool--active");
+  shapeMapTool.classList.remove("map-tool--active");
+
+  drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYLINE);
+
+  HELPERS.clearEdits(mapElements);
+  removePaddockMenu();
+};
+
+const handleShapeTool = (e) => {
+  e.preventDefault();
+
+  shapeMapTool.classList.add("map-tool--active");
+  dragMapTool.classList.remove("map-tool--active");
+  lineMapTool.classList.remove("map-tool--active");
+
+  drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
+
+  HELPERS.clearEdits(mapElements);
+  removePaddockMenu();
+};
+
+const handleZoomInTool = (e) => {
+  e.preventDefault();
+
+  map.setZoom(map.getZoom() + 1);
+
+  HELPERS.clearEdits(mapElements);
+  removePaddockMenu();
+};
+
+const handleZoomOutTool = (e) => {
+  e.preventDefault();
+
+  map.setZoom(map.getZoom() - 1);
+
+  HELPERS.clearEdits(mapElements);
+  removePaddockMenu();
+};
+
+const handleShapesTable = (e) => {
+  const element =
+    e.target.tagName.toLowerCase() === "button" ||
+    e.target.tagName.toLowerCase() === "input"
+      ? e.target
+      : e.target.parentElement;
+
+  if (element.dataset.shape === undefined || !element.dataset.action) {
+    return;
+  }
+
+  const shapeIndex = parseInt(element.dataset.shape);
+  const shape = mapElements[shapeIndex];
+
+  if (!shape) {
+    return;
+  }
+
+  removePaddockMenu();
+
+  switch (element.dataset.action) {
+    case SHAPES_CONTROLS.HIGHLIGHT:
+      HELPERS.highlightShape(shape);
+      break;
+    case SHAPES_CONTROLS.EDIT:
+    case SHAPES_CONTROLS.EDIT_NAME:
+      HELPERS.clearEdits(mapElements);
+      HELPERS.editShape(shape, true, drawingManager, selectedShape);
+      savePaddockBtn.setAttribute("aria-hidden", true);
+      break;
+    case SHAPES_CONTROLS.DELETE:
+      HELPERS.clearEdits(mapElements);
+      HELPERS.editShape(shape, true, drawingManager, selectedShape);
+      savePaddockBtn.setAttribute("aria-hidden", true);
+
+      clearPlotShape(shapeIndex);
+      drawingManager.setDrawingMode(null);
+      break;
+  }
+};
+
+const handleEditPaddockName = (e) => {
+  const element =
+    e.target.tagName.toLowerCase() === "input"
+      ? e.target
+      : e.target.parentElement;
+
+  if (element.dataset.shape === undefined || !element.dataset.action) {
+    return;
+  }
+
+  const shapeIndex = parseInt(element.dataset.shape);
+  const shape = mapElements[shapeIndex];
+
+  if (!shape) {
+    return;
+  }
+
+  shape.paddockName = element.value;
+
+  // update local storage
+  storePaddocks(mapElements);
+};
+
+const handleAddPlotting = (e) => {
+  e.preventDefault();
+
+  drawingManager.setDrawingMode(null);
+  HELPERS.clearEdits(mapElements);
+
+  savePaddockBtn.setAttribute("aria-hidden", false);
+};
+
+const handleUsePlotting = (e) => {
+  e && e.preventDefault();
+
+  hasConfirmedTotal = true;
+
+  plottingPerimiterTrigger = new CustomEvent("fence-estimator-results", {
+    detail: { perimiter: plotPerimiter },
+  });
+  window.dispatchEvent(plottingPerimiterTrigger);
+  plottingPerimiterTrigger = null;
+
+  if (typeof elementorProFrontend !== "undefined") {
+    elementorProFrontend.modules.popup.closePopup({}, e);
+  }
+};
+
+const handleDeleteAllPlotting = (e) => {
+  e.preventDefault();
+
+  resetFencesTable();
+  resetMapTools();
+};
+
+const handlePrintMap = (e) => {
   e?.preventDefault();
 
   exportCanvas("print");
 };
 
-const downloadMap = async (e) => {
+const handleDownloadMap = (e) => {
   e?.preventDefault();
 
   exportCanvas("download");
@@ -713,7 +672,8 @@ export const createMap = () => {
   });
 
   google.maps.event.addListener(map, "zoom_changed", function () {
-    !!mapCanvasAction && exportMap();
+    !!mapCanvasAction &&
+      HELPERS.exportMap(mapContainer, mapCanvasAction, mapElements);
   });
 
   // Marker
@@ -836,43 +796,39 @@ export const createMap = () => {
   google.maps.event.addListener(map, "click", function (e) {
     removePaddockMenu();
   });
-};
 
-// caching
-const getFenceEstimatorData = () => {
-  const mapStorageData = HELPERS.getMapStorageData();
+  window.addEventListener("fence-estimator-shape-menu", function (e) {
+    if (!e.detail.paddock) {
+      return false;
+    }
 
-  if (mapStorageData) {
-    addressMapPlace = mapStorageData.place;
+    const paddock = e.detail.paddock;
 
-    // 1. display stored address
-    HELPERS.displayAddressOnMap(
-      addressMapPlace,
-      map,
-      addressMarker,
-      currentAddressLabel
-    );
+    const div = document.createElement("div");
 
-    // 2. create fences on map
-    mapStorageData.fences?.forEach((shape) => {
-      const { type, paddockIdx, paddockName, paths } = shape;
+    // style contents
+    div.classList.add("paddock-menu");
+    div.style.top = e.detail.top;
+    div.style.left = e.detail.left;
+    div.innerHTML = `
+        <p class="paddock-menu__title">${paddock.name}</p>
+        <button type="button" data-action="${SHAPES_CONTROLS.DELETE}" data-shape="${paddock.index}" class="paddock-menu__button paddock-menu__button--delete">
+          Delete fence
+        </button>
+      `;
+    shapeMenuContainer.appendChild(div);
 
-      // setup paddock and add it to map
-      createPaddockMapShape(paddockIdx, paddockName, type, paths);
+    shapeMenuContainer.setAttribute("aria-hidden", false);
+
+    map.setOptions({
+      draggable: false,
     });
-
-    // 3. set map ready to draw more fences
-    setMapReadyForPlotting();
-  }
-
-  // update table and total based on current data
-  calculatePlot(false);
-
-  mapSet = true;
+  });
 };
 
 // SETUP
 export const setup = (googleAPI) => {
+  // find elements
   mapContainer = document.getElementById("fence-estimator-map");
   google = googleAPI;
 
@@ -923,6 +879,11 @@ export const setup = (googleAPI) => {
   zoomInTool = document.querySelectorAll(".map-tool-zoomin")[0];
   zoomOutTool = document.querySelectorAll(".map-tool-zoomout")[0];
 
+  mapTools = document.querySelectorAll(".map-search-tools-controller")[0];
+  sidebar = document.querySelectorAll(".map-search-sidebar")[0];
+  shapeMenuContainer = document.querySelectorAll(".paddock-menu-container")[0];
+  // bind functions
+
   const ignoreKeyPress = (e) => {
     if (e.keyCode === 13) {
       e.preventDefault();
@@ -949,46 +910,16 @@ export const setup = (googleAPI) => {
   zoomOutTool.addEventListener("click", handleZoomOutTool);
 
   // UI
-  mapTools = document.querySelectorAll(".map-search-tools-controller")[0];
+
   HELPERS.setDraggableMapTools(mapTools);
 
-  sidebar = document.querySelectorAll(".map-search-sidebar")[0];
   HELPERS.setClosableSidebar(sidebar, removePaddockMenu);
 
-  shapeMenuContainer = document.querySelectorAll(".paddock-menu-container")[0];
   shapeMenuContainer.addEventListener("click", handleShapesTable);
 
-  window.addEventListener("fence-estimator-shape-menu", function (e) {
-    if (!e.detail.paddock) {
-      return false;
-    }
-
-    const paddock = e.detail.paddock;
-
-    const div = document.createElement("div");
-
-    // style contents
-    div.classList.add("paddock-menu");
-    div.style.top = e.detail.top;
-    div.style.left = e.detail.left;
-    div.innerHTML = `
-        <p class="paddock-menu__title">${paddock.name}</p>
-        <button type="button" data-action="${SHAPES_CONTROLS.DELETE}" data-shape="${paddock.index}" class="paddock-menu__button paddock-menu__button--delete">
-          Delete fence
-        </button>
-      `;
-    shapeMenuContainer.appendChild(div);
-
-    shapeMenuContainer.setAttribute("aria-hidden", false);
-
-    map.setOptions({
-      draggable: false,
-    });
-  });
-
   // PRINT
-  printBtn.addEventListener("click", printMap);
-  downloadBtn.addEventListener("click", downloadMap);
+  printBtn.addEventListener("click", handlePrintMap);
+  downloadBtn.addEventListener("click", handleDownloadMap);
 };
 
 export { google };
