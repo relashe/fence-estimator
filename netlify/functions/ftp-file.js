@@ -32,16 +32,20 @@ exports.handler = async function (event, context) {
     const pdf = await generateMapPdf(undefined, { table, totalPerimeter });
     const report = Buffer.from(pdf.output("arraybuffer"));
 
+    console.log(`PDF: ${report}`);
+
     sgMail.setApiKey(
       "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"
     );
+
+    console.log(about to send`);
+
 
     const msg = {
       to: destination,
       from: "developer@relashe.com",
       subject: "Fence Estimator - Your Fence",
-      text: "Please find your fence data attached",
-      html: "<strong>and easy to do anywhere, even with Node.js</strong>",
+      html: "<strong>Please find your fence data attached</strong>",
       attachments: [
         {
           content: report,
