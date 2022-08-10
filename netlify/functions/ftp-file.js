@@ -38,8 +38,7 @@ exports.handler = async function (event, context) {
       "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"
     );
 
-    console.log(about to send`);
-
+    console.log(`about to send`);
 
     const msg = {
       to: destination,
