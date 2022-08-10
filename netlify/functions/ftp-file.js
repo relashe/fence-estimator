@@ -1,4 +1,5 @@
 const sgMail = require("@sendgrid/mail");
+import jsPDF from "jspdf";
 
 const generateMapPdf = async (img, mapElements) => {
   const { table, totalPerimeter } = mapElements;
