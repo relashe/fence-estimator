@@ -1,5 +1,6 @@
 const sgMail = require("@sendgrid/mail");
 const { jsPDF } = require("jspdf");
+const fs = require("fs");
 
 const generateMapPdf = async (img, mapElements) => {
   const { table, totalPerimeter } = mapElements;
@@ -36,6 +37,9 @@ exports.handler = async function (event, context) {
 
     console.log(`about to send`);
 
+    let bitmap = fs.readFileSync(report);
+    const pdfB64 = Buffer.from(bitmap).toString("base64");
+
     const msg = {
       to: destination,
       from: "developer@relashe.com",
@@ -43,7 +47,7 @@ exports.handler = async function (event, context) {
       html: "<strong>Please find your fence data attached</strong>",
       attachments: [
         {
-          content: report,
+          content: pdfB64,
           filename: "attachment.pdf",
           type: "application/pdf",
           disposition: "attachment",
