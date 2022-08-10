@@ -3,4 +3,4 @@
 
 [Build]
     Publish = "distDev"
-    Functions = ""
+    Functions = "netlify/functions"
