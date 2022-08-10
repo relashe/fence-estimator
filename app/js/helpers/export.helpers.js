@@ -41,7 +41,7 @@ const generateMapPdf = (img, mapElements) => {
   return Promise.resolve(pdf);
 };
 
-const emailPdfNotification = async (pdfContent) => {
+const emailPdfNotification = async (mapElements) => {
   //   const emailMessage = `
   //     <p><strong>A new fence map has been dowloaded by:</strong></p>
 
@@ -68,7 +68,7 @@ const emailPdfNotification = async (pdfContent) => {
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify({
-        content: pdfContent,
+        mapElements,
         destination: downloadFormEmail.value,
       }), // body data type must match "Content-Type" header
     }
@@ -102,7 +102,14 @@ const downloadMap = async (mapImage, mapElements) => {
   var reader = new FileReader();
   reader.onload = async (event) => {
     pdfBase642 = event.target.result;
-    await emailPdfNotification(pdfBase642);
+    await emailPdfNotification(mapElements);
+
+    // TODO - PDF name
+    pdf.save("Fence Estimator - my fence.pdf");
+
+    closeDownloadBtn.click();
+    downloadFormName.value = "";
+    downloadFormEmail.value = "";
   };
 
   reader.readAsDataURL(pdfOutputBlob);
@@ -128,13 +135,6 @@ const downloadMap = async (mapImage, mapElements) => {
   //   });
 
   // const ftp = new FtpConnection();
-
-  // TODO - PDF name
-  pdf.save("Fence Estimator - my fence.pdf");
-
-  closeDownloadBtn.click();
-  downloadFormName.value = "";
-  downloadFormEmail.value = "";
 };
 
 export const exportMap = async (mapContainer, mapCanvasAction, mapElements) => {
