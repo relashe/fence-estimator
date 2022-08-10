@@ -2,10 +2,10 @@ const sgMail = require("@sendgrid/mail");
 
 exports.handler = async function (event, context) {
   try {
-    const { content, destination } = JSON.parse(event.body);
+    const { destination } = JSON.parse(event.body);
     console.log(`Sending PDF report to ${destination}`);
 
-    const report = Buffer.from(content);
+    // const report = Buffer.from(content);
 
     sgMail.setApiKey(
       "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"
