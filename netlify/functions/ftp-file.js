@@ -2,14 +2,14 @@ const { jsPDF } = require("jspdf");
 const nodemailer = require("nodemailer");
 const mg = require("nodemailer-mailgun-transport");
 
-const transporter = nodemailer.createTransport(
-  mg({
-    auth: {
-      api_key: process.env.MAILGUN_API_KEY,
-      domain: process.env.MAILGUN_DOMAIN,
-    },
-  })
-);
+// const transporter = nodemailer.createTransport(
+//   mg({
+//     auth: {
+//       api_key: process.env.MAILGUN_API_KEY,
+//       domain: process.env.MAILGUN_DOMAIN,
+//     },
+//   })
+// );
 
 exports.handler = async function (event, context) {
   // const { content, destination } = JSON.parse(event.body);
