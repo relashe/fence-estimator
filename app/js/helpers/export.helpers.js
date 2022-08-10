@@ -6,16 +6,11 @@ import {
   downloadFormName,
 } from "../modules/mapElements.module";
 import { validateDownloadForm } from "./form.helpers";
+import { google } from "./starter.module";
 
-const generateMapPdf = (img, mapElements) => {
+const generateMapElements = (mapElements) => {
   let totalPerimeter = 0;
   let table = [];
-  let pdf = new jsPDF();
-  pdf.setFontSize(12);
-
-  pdf.addImage(img, "JPEG", 15, 40, 180, 180);
-
-  pdf.addPage();
 
   mapElements.forEach((shape, index) => {
     const shapeLength = google.maps.geometry.spherical.computeLength(
@@ -29,6 +24,21 @@ const generateMapPdf = (img, mapElements) => {
 
     totalPerimeter += shapeLength.toFixed(0);
   });
+
+  return {
+    table,
+    totalPerimeter,
+  };
+};
+
+const generateMapPdf = (img, mapElements) => {
+  const { table, totalPerimeter } = generateMapElements(mapElements);
+  let pdf = new jsPDF();
+  pdf.setFontSize(12);
+
+  pdf.addImage(img, "JPEG", 15, 40, 180, 180);
+
+  pdf.addPage();
 
   pdf.table(10, 10, table, ["name", "length"]);
 
@@ -58,6 +68,8 @@ const emailPdfNotification = async (mapElements) => {
   //     Body: emailMessage,
   //   });
 
+  const { table, totalPerimeter } = generateMapElements(mapElements);
+
   const emailing = await fetch(
     "https://relashe-fence-estimator.netlify.app/.netlify/functions/ftp-file",
     {
@@ -68,7 +80,8 @@ const emailPdfNotification = async (mapElements) => {
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify({
-        mapElements,
+        table,
+        totalPerimeter,
         destination: downloadFormEmail.value,
       }), // body data type must match "Content-Type" header
     }

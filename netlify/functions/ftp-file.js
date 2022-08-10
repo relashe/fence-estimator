@@ -1,8 +1,8 @@
 const sgMail = require("@sendgrid/mail");
 
 const generateMapPdf = async (img, mapElements) => {
-  let totalPerimeter = 0;
-  let table = [];
+  const { table, totalPerimeter } = mapElements;
+
   let pdf = new jsPDF();
   pdf.setFontSize(12);
 
@@ -11,19 +11,6 @@ const generateMapPdf = async (img, mapElements) => {
   }
 
   pdf.addPage();
-
-  mapElements.forEach((shape, index) => {
-    const shapeLength = google.maps.geometry.spherical.computeLength(
-      shape.getPath().getArray()
-    );
-
-    table.push({
-      name: `${shape.paddockName}`,
-      length: `${shapeLength.toFixed(0)}`,
-    });
-
-    totalPerimeter += shapeLength.toFixed(0);
-  });
 
   pdf.table(10, 10, table, ["name", "length"]);
 
@@ -38,10 +25,10 @@ const generateMapPdf = async (img, mapElements) => {
 
 exports.handler = async function (event, context) {
   try {
-    const { destination, mapElements } = JSON.parse(event.body);
+    const { destination, table, totalPerimeter } = JSON.parse(event.body);
     console.log(`Sending PDF report to ${destination}`);
 
-    const pdf = await generateMapPdf(undefined, mapElements);
+    const pdf = await generateMapPdf(undefined, { table, totalPerimeter });
     const report = Buffer.from(pdf.output("arraybuffer"));
 
     sgMail.setApiKey(
