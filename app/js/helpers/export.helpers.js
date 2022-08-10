@@ -42,11 +42,7 @@ const generateMapPdf = (img, mapElements) => {
 
   pdf.table(10, 10, table, ["name", "length"]);
 
-  pdf.text(
-    [`Total: ${totalPerimeter}m`],
-    10,
-    10 * (mapElements.length + 1) + 20
-  );
+  pdf.text([`Total: ${totalPerimeter}m`], 10, 10 * (table.length + 1) + 20);
 
   return Promise.resolve(pdf);
 };
