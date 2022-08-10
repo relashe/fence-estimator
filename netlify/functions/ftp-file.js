@@ -1,42 +1,47 @@
 const { jsPDF } = require("jspdf");
-const nodemailer = require("nodemailer");
-const mg = require("nodemailer-mailgun-transport");
-
-// const transporter = nodemailer.createTransport(
-//   mg({
-//     auth: {
-//       api_key: process.env.MAILGUN_API_KEY,
-//       domain: process.env.MAILGUN_DOMAIN,
-//     },
-//   })
-// );
+const sgMail = require("@sendgrid/mail");
+const fs = require("fs");
 
 exports.handler = async function (event, context) {
-  // const { content, destination } = JSON.parse(event.body);
-  // console.log(`Sending PDF report to ${destination}`);
+  try {
+    const { content, destination } = JSON.parse(event.body);
+    console.log(`Sending PDF report to ${destination}`);
 
-  // const report = Buffer.from(
-  //   new jsPDF().text(content, 10, 10).output("arraybuffer")
-  // );
+    const report = Buffer.from(content);
 
-  // const info = await transporter.sendMail({
-  //   from: process.env.MAILGUN_SENDER,
-  //   to: destination,
-  //   subject: "Your report is ready!",
-  //   text: "See attached report PDF",
-  //   attachments: [
-  //     {
-  //       filename: `report-${new Date().toDateString()}.pdf`,
-  //       content: report,
-  //       contentType: "application/pdf",
-  //     },
-  //   ],
-  // });
+    sgMail.setApiKey(
+      "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"
+    );
 
-  // console.log(`PDF report sent: ${info.messageId}`);
+    const msg = {
+      to: destination,
+      from: "developer@relashe.com",
+      subject: "Fence Estimator - Your Fence",
+      text: "Please find your fence data attached",
+      html: "<strong>and easy to do anywhere, even with Node.js</strong>",
+      attachments: [
+        {
+          content: report,
+          filename: "attachment.pdf",
+          type: "application/pdf",
+          disposition: "attachment",
+        },
+      ],
+    };
+    await sgMail.send(msg);
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ message: "Hello World" }),
-  };
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: "Hello World" }),
+    };
+  } catch (error) {
+    console.error(error);
+
+    if (error.response) {
+      return {
+        statusCode: 200,
+        body: error.response.body,
+      };
+    }
+  }
 };

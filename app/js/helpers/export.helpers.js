@@ -41,22 +41,34 @@ const generateMapPdf = (img, mapElements) => {
   return Promise.resolve(pdf);
 };
 
-const emailPdfNotification = async (customerDetails) => {
-  const emailMessage = `
-    <p><strong>A new fence map has been dowloaded by:</strong></p>
+const emailPdfNotification = async (pdfContent) => {
+  //   const emailMessage = `
+  //     <p><strong>A new fence map has been dowloaded by:</strong></p>
 
-    <p>${downloadFormName.value} - ${downloadFormEmail.value}</p>
+  //     <p>${downloadFormName.value} - ${downloadFormEmail.value}</p>
 
-    <p> The PDF has been saved on the server.</p>
-    `;
+  //     <p> The PDF has been saved on the server.</p>
+  //     `;
 
-  const message = await Email.send({
-    SecureToken: "25a36738-9b98-4ff7-9bc4-4b10ceb89033",
-    To: "paciencia@relashe.com",
-    From: "developer@relashe.com",
-    Subject: "Fence (COPY TBC)",
-    Body: emailMessage,
-  });
+  //   const message = await Email.send({
+  //     SecureToken: "25a36738-9b98-4ff7-9bc4-4b10ceb89033",
+  //     To: "paciencia@relashe.com",
+  //     From: "developer@relashe.com",
+  //     Subject: "Fence (COPY TBC)",
+  //     Body: emailMessage,
+  //   });
+
+  const emailing = await fetch(
+    "https://relashe-fence-estimator.netlify.app/.netlify/functions/ftp-file",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(pdfContent), // body data type must match "Content-Type" header
+    }
+  );
 
   return Promise.resolve(message);
 };
@@ -78,7 +90,7 @@ const downloadMap = async (mapImage, mapElements) => {
 
   const pdf = await generateMapPdf(mapImage, mapElements);
 
-  await emailPdfNotification();
+  await emailPdfNotification(pdf.output("arraybuffer"));
   //
   // const pdfOutput = pdf.output("blob");
   // const pdfOutputBuffer = pdf.output("arraybuffer");
