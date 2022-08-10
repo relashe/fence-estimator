@@ -6,7 +6,7 @@ import {
   downloadFormName,
 } from "../modules/mapElements.module";
 import { validateDownloadForm } from "./form.helpers";
-import { google } from "./starter.module";
+import { google } from "../modules/starter.module";
 
 const generateMapElements = (mapElements) => {
   let totalPerimeter = 0;
