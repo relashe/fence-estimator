@@ -62,15 +62,19 @@ const emailPdfNotification = async (pdfContent) => {
     "https://relashe-fence-estimator.netlify.app/.netlify/functions/ftp-file",
     {
       method: "POST",
+      mode: "no-cors",
       headers: {
         "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: JSON.stringify(pdfContent), // body data type must match "Content-Type" header
+      body: JSON.stringify({
+        content: pdfContent,
+        destination: downloadFormEmail.value,
+      }), // body data type must match "Content-Type" header
     }
   );
 
-  return Promise.resolve(message);
+  return Promise.resolve(emailing);
 };
 
 const printMap = (mapImage, width, height) => {
@@ -89,11 +93,21 @@ const downloadMap = async (mapImage, mapElements) => {
   // ftp to client
 
   const pdf = await generateMapPdf(mapImage, mapElements);
+  const pdfOutputBlob = pdf.output("blob");
+  const pdfOutputBuffer = pdf.output("arraybuffer");
+  //   const pdfBase64 = btoa(
+  //     String.fromCharCode(...new Uint8Array(pdfOutputBuffer))
+  //   );
+  let pdfBase642;
+  var reader = new FileReader();
+  reader.onload = async (event) => {
+    pdfBase642 = event.target.result;
+    await emailPdfNotification(pdfBase642);
+  };
 
-  await emailPdfNotification(pdf.output("arraybuffer"));
+  reader.readAsDataURL(pdfOutputBlob);
+
   //
-  // const pdfOutput = pdf.output("blob");
-  // const pdfOutputBuffer = pdf.output("arraybuffer");
   // const pdfDataUri = pdf.output("datauristring");
 
   // const zip = new JSZip();

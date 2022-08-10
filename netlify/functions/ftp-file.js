@@ -1,6 +1,4 @@
-const { jsPDF } = require("jspdf");
 const sgMail = require("@sendgrid/mail");
-const fs = require("fs");
 
 exports.handler = async function (event, context) {
   try {
@@ -19,14 +17,14 @@ exports.handler = async function (event, context) {
       subject: "Fence Estimator - Your Fence",
       text: "Please find your fence data attached",
       html: "<strong>and easy to do anywhere, even with Node.js</strong>",
-      attachments: [
-        {
-          content: report,
-          filename: "attachment.pdf",
-          type: "application/pdf",
-          disposition: "attachment",
-        },
-      ],
+      // attachments: [
+      //   {
+      //     content: report,
+      //     filename: "attachment.pdf",
+      //     type: "application/pdf",
+      //     disposition: "attachment",
+      //   },
+      // ],
     };
     await sgMail.send(msg);
 
@@ -39,7 +37,7 @@ exports.handler = async function (event, context) {
 
     if (error.response) {
       return {
-        statusCode: 200,
+        statusCode: 500,
         body: error.response.body,
       };
     }
