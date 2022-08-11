@@ -28,9 +28,10 @@ exports.handler = async function (event, context) {
 
     const pdf = await generateMapPdf(undefined, { table, totalPerimeter });
     const pdfOutputBlob = pdf.output("blob");
-    // const report = Buffer.from(pdf.output("arraybuffer"));
+    const report = Buffer.from(pdf.output("blob"));
 
     console.log(`PDF: ${pdfOutputBlob}`);
+    console.log(`PDF report: ${report}`);
 
     sgMail.setApiKey(
       "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"
@@ -38,30 +39,31 @@ exports.handler = async function (event, context) {
 
     console.log(`about to send`);
 
-    // let bitmap = fs.readFileSync(report);
-    // const pdfB64 = Buffer.from(report).toString("base64");
+    let bitmap = fs.readFileSync(report);
+    const pdfB64 = Buffer.from(report).toString("base64");
+    console.log(pdfB64);
 
-    var reader = new FileReader();
-    reader.onload = async (event) => {
-      pdfBase64 = event.target.result;
+    // var reader = new FileReader();
+    // reader.onload = async (event) => {
+    //   pdfBase64 = event.target.result;
 
-      const msg = {
-        to: destination,
-        from: "developer@relashe.com",
-        subject: "Fence Estimator - Your Fence",
-        html: "<strong>Please find your fence data attached</strong>",
-        attachments: [
-          {
-            content: pdfB64,
-            filename: "attachment.pdf",
-            type: "application/pdf",
-            disposition: "attachment",
-          },
-        ],
-      };
-
-      await sgMail.send(msg);
+    const msg = {
+      to: destination,
+      from: "developer@relashe.com",
+      subject: "Fence Estimator - Your Fence",
+      html: "<strong>Please find your fence data attached</strong>",
+      attachments: [
+        {
+          content: pdfB64,
+          filename: "attachment.pdf",
+          type: "application/pdf",
+          disposition: "attachment",
+        },
+      ],
     };
+
+    await sgMail.send(msg);
+    // };
 
     reader.readAsDataURL(pdfOutputBlob);
 
