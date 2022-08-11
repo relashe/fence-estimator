@@ -38,7 +38,7 @@ exports.handler = async function (event, context) {
     console.log(`about to send`);
 
     let bitmap = fs.readFileSync(report);
-    const pdfB64 = Buffer.from(bitmap).toString("base64");
+    const pdfB64 = Buffer.from(report).toString("base64");
 
     const msg = {
       to: destination,
@@ -54,6 +54,7 @@ exports.handler = async function (event, context) {
         },
       ],
     };
+
     await sgMail.send(msg);
 
     return {
