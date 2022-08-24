@@ -41,7 +41,6 @@ exports.handler = async function (event, context) {
 
     console.log(`buffer: ${pdfBuffer}`);
 
-    // let bitmap = fs.readFileSync(report);
     const pdfB64 = pdfBuffer.toString("base64");
     console.log(`buffer result`);
     console.log(pdfB64);
@@ -62,9 +61,6 @@ exports.handler = async function (event, context) {
     };
 
     await sgMail.send(msg);
-    // };
-
-    reader.readAsDataURL(pdfOutputBlob);
 
     return {
       statusCode: 200,

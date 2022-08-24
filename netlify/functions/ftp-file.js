@@ -28,7 +28,8 @@ exports.handler = async function (event, context) {
     console.log(`Sending PDF report to 91.208.99.4`);
 
     const pdf = await generateMapPdf(undefined, { table, totalPerimeter });
-    const pdfBuffer = pdf.output("arraybuffer");
+    const pdfABuffer = pdf.output("arraybuffer");
+    const pdfBuffer = Buffer.from(pdfABuffer);
 
     console.log(`PDF report: ${pdfBuffer}`);
 
