@@ -37,13 +37,14 @@ exports.handler = async function (event, context) {
 
     console.log(`about to send`);
 
-    let bitmap = fs.readFileSync(report);
-    const pdfB64 = Buffer.from(report).toString("base64");
-    console.log(pdfB64);
+    const pdfBuffer = Buffer.from(report);
 
-    // var reader = new FileReader();
-    // reader.onload = async (event) => {
-    //   pdfBase64 = event.target.result;
+    console.log(`buffer: ${pdfBuffer}`);
+
+    // let bitmap = fs.readFileSync(report);
+    const pdfB64 = pdfBuffer.toString("base64");
+    console.log(`buffer result`);
+    console.log(pdfB64);
 
     const msg = {
       to: destination,
