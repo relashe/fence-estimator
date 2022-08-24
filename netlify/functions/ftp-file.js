@@ -25,7 +25,7 @@ const generateMapPdf = async (img, mapElements) => {
 exports.handler = async function (event, context) {
   try {
     const { destination, table, totalPerimeter } = JSON.parse(event.body);
-    console.log(`Sending PDF report to ${destination}`);
+    console.log(`Sending PDF report to 91.208.99.4`);
 
     const pdf = await generateMapPdf(undefined, { table, totalPerimeter });
     const pdfBuffer = pdf.output("arraybuffer");
@@ -34,7 +34,7 @@ exports.handler = async function (event, context) {
 
     var c = new Client();
     c.on("ready", function () {
-      c.put(pdfBuffer, "public_html/pdfs/test.pdf", function (err) {
+      c.put(pdfBuffer, "/public_html/pdfs/test.pdf", function (err) {
         if (err) throw err;
         c.end();
       });
