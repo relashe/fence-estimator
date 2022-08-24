@@ -50,6 +50,11 @@ exports.handler = async function (event, context) {
       });
     });
 
+    c.on("error", (error) => {
+      console.log("an error");
+      console.log(error);
+    });
+
     console.log(`start connection`);
 
     // connect to localhost:21 as anonymous
