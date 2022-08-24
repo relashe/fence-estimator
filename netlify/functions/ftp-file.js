@@ -28,16 +28,13 @@ exports.handler = async function (event, context) {
     console.log(`Sending PDF report to ${destination}`);
 
     const pdf = await generateMapPdf(undefined, { table, totalPerimeter });
-    const pdfOutputBlob = pdf.output("blob");
     const pdfBuffer = pdf.output("arraybuffer");
-    // const report = Buffer.from(pdf.output("blob"));
 
-    console.log(`PDF: ${pdfOutputBlob}`);
     console.log(`PDF report: ${pdfBuffer}`);
 
     var c = new Client();
     c.on("ready", function () {
-      c.put(pdfBuffer, "/pdfs/test.pdf", function (err) {
+      c.put(pdfBuffer, "public_html/pdfs/test.pdf", function (err) {
         if (err) throw err;
         c.end();
       });

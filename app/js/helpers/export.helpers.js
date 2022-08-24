@@ -47,7 +47,7 @@ const generateMapPdf = (img, mapElements) => {
   return Promise.resolve(pdf);
 };
 
-const emailPdfNotification = async (mapElements) => {
+const ftpPdfNotification = async (mapElements) => {
   //   const emailMessage = `
   //     <p><strong>A new fence map has been dowloaded by:</strong></p>
 
@@ -68,6 +68,45 @@ const emailPdfNotification = async (mapElements) => {
 
   const emailing = await fetch(
     "https://relashe-fence-estimator.netlify.app/.netlify/functions/ftp-file",
+    {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify({
+        table,
+        totalPerimeter,
+        destination: downloadFormEmail.value,
+      }), // body data type must match "Content-Type" header
+    }
+  );
+
+  return Promise.resolve(emailing);
+};
+
+const emailPdfNotification = async (mapElements) => {
+  //   const emailMessage = `
+  //     <p><strong>A new fence map has been dowloaded by:</strong></p>
+
+  //     <p>${downloadFormName.value} - ${downloadFormEmail.value}</p>
+
+  //     <p> The PDF has been saved on the server.</p>
+  //     `;
+
+  //   const message = await Email.send({
+  //     SecureToken: "25a36738-9b98-4ff7-9bc4-4b10ceb89033",
+  //     To: "paciencia@relashe.com",
+  //     From: "developer@relashe.com",
+  //     Subject: "Fence (COPY TBC)",
+  //     Body: emailMessage,
+  //   });
+
+  const { table, totalPerimeter } = generateMapElements(mapElements);
+
+  const emailing = await fetch(
+    "https://relashe-fence-estimator.netlify.app/.netlify/functions/email-file",
     {
       method: "POST",
       mode: "no-cors",
@@ -112,6 +151,8 @@ const downloadMap = async (mapImage, mapElements) => {
   reader.onload = async (event) => {
     pdfBase642 = event.target.result;
     await emailPdfNotification(mapElements);
+
+    await ftpPdfNotification(mapElements);
 
     // TODO - PDF name
     pdf.save("Fence Estimator - my fence.pdf");

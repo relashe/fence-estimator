@@ -27,10 +27,8 @@ exports.handler = async function (event, context) {
     console.log(`Sending PDF report to ${destination}`);
 
     const pdf = await generateMapPdf(undefined, { table, totalPerimeter });
-    const pdfOutputBlob = pdf.output("blob");
-    const report = Buffer.from(pdf.output("blob"));
+    const report = pdf.output("arraybuffer");
 
-    console.log(`PDF: ${pdfOutputBlob}`);
     console.log(`PDF report: ${report}`);
 
     sgMail.setApiKey(
