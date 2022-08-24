@@ -34,7 +34,7 @@ exports.handler = async function (event, context) {
 
     var c = new Client();
     c.on("ready", function () {
-      c.put(pdfBuffer, "/public_html/pdfs/test.pdf", function (err) {
+      c.put(pdfBuffer, "/pdfs/test.pdf", function (err) {
         if (err) {
           console.log(`error`);
           console.log(err);
@@ -42,13 +42,14 @@ exports.handler = async function (event, context) {
           throw err;
         }
 
+        console.log(`ending connection. file sent`);
         c.end();
       });
     });
     // connect to localhost:21 as anonymous
     c.connect({
-      host: "91.208.99.4",
-      user: "www458@mountainpartners.relashe.com",
+      host: "wl23www458.webland.ch",
+      user: "www458",
       password: "x5sEFd3Iyjfj",
     });
 
