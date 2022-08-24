@@ -1,6 +1,5 @@
 const sgMail = require("@sendgrid/mail");
 const { jsPDF } = require("jspdf");
-var Client = require("ftp");
 const fs = require("fs");
 
 const generateMapPdf = async (img, mapElements) => {
@@ -34,19 +33,39 @@ exports.handler = async function (event, context) {
     console.log(`PDF: ${pdfOutputBlob}`);
     console.log(`PDF report: ${report}`);
 
-    var c = new Client();
-    c.on("ready", function () {
-      c.put(report, "/pdfs/test.pdf", function (err) {
-        if (err) throw err;
-        c.end();
-      });
-    });
-    // connect to localhost:21 as anonymous
-    c.connect({
-      host: "91.208.99.4",
-      user: "www458@mountainpartners.relashe.com",
-      password: "x5sEFd3Iyjfj",
-    });
+    sgMail.setApiKey(
+      "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"
+    );
+
+    console.log(`about to send`);
+
+    let bitmap = fs.readFileSync(report);
+    const pdfB64 = Buffer.from(report).toString("base64");
+    console.log(pdfB64);
+
+    // var reader = new FileReader();
+    // reader.onload = async (event) => {
+    //   pdfBase64 = event.target.result;
+
+    const msg = {
+      to: destination,
+      from: "developer@relashe.com",
+      subject: "Fence Estimator - Your Fence",
+      html: "<strong>Please find your fence data attached</strong>",
+      attachments: [
+        {
+          content: pdfB64,
+          filename: "attachment.pdf",
+          type: "application/pdf",
+          disposition: "attachment",
+        },
+      ],
+    };
+
+    await sgMail.send(msg);
+    // };
+
+    reader.readAsDataURL(pdfOutputBlob);
 
     return {
       statusCode: 200,

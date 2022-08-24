@@ -30,6 +30,7 @@
     "css-loader": "^3.4.2",
     "file-loader": "^5.1.0",
     "fs": "^0.0.1-security",
+    "ftp": "^0.3.10",
     "google-maps": "^4.3.3",
     "html2canvas": "^1.4.1",
     "interactjs": "^1.10.11",

@@ -24,7 +24,7 @@ module.exports = (env) => {
       compress: true,
       hot: true,
       overlay: true,
-      port: 3002,
+      port: 2030,
       publicPath: "/",
       historyApiFallback: true,
       https: true,

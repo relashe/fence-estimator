@@ -8,100 +8,36 @@
     />
   </head>
   <body>
-    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-body">
-            <div class="fence-estimator container-fluid p-0">
-              <div class="fence-estimator__container row no-gutters">
-                <div class="col-md-5 px-4 py-4">
-                  <div class="d-md-flex flex-column justify-content-center">
-                    <h2 class="mb-auto">Land Area Estimator</h2>
-
-                    <div class="map-search-controller py-5">
-                      <h4>Search Address</h4>
-                      <form class="form-inline">
-                        <div class="form-group mb-2">
-                          <input
-                            type="text"
-                            class="search-address__field form-control-plaintext border"
-                            id="staticEmail2"
-                          />
-                        </div>
-                      </form>
-                    </div>
-                    <div class="map-search-results-controller py-5" aria-hidden="true">
-                      <h4 class="map-search-results__address mb-4"></h4>
-                      <div class="map-search-results__step-1" aria-hidden="true">
-                        <button type="button" class="plotting__start-button elementor-button mr-4">
-                          Start New Plot
-                        </button>
-                        <button type="button" class="search-address__new-search-button elementor-button">
-                          Search New Address
-                        </button>
-                      </div>
-                      <div class="map-search-results__step-2" aria-hidden="true">
-                        <button type="button" class="plotting__undo-button btn btn-secondary mr-4">
-                          Undo
-                        </button>
-                        <button type="button" class="reset-button elementor-button">
-                          Reset and Start Again
-                        </button>
-                      </div>
-                    </div>
-                    <div class="map-plotting-results-controller mt-auto" aria-hidden="true">
-                      <h4>
-                        Estimated Perimiter
-                        <span class="map-plotting-results__perimiter ml-3"></span>
-                      </h4>
-                      <button type="button" class="plotting__accept-button elementor-button btn-block">
-                        Continue with Estimated Land Area
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div class="fence-estimator__map col-md-7">
-                  <div id="fence-estimator-map"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer"></div>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-      Launch estimator
-    </button> -->
-
     <div class="fence-estimator container-fluid p-0">
       <div class="fence-estimator__container no-gutters">
-        <div class="map-search-tools-controller p-2" aria-hidden="false">
-          <button type="button" class="map-tool map-tool-drag elementor-button">
-            D
-          </button>
-          <button type="button" class="map-tool map-tool-line elementor-button">
-            L
-          </button>
-          <button
-            type="button"
+        <div class="map-search-tools-controller" aria-hidden="false">
+          <a class="map-tool map-tool-drag elementor-button" title="Move">
+            <img src="assets/tool-move.svg" class="map-tool__icon" />
+          </a>
+          <a
+            class="map-tool map-tool-line elementor-button"
+            title="Boundary fence"
+          >
+            <img src="assets/tool-boundary-fence.svg" class="map-tool__icon" />
+          </a>
+          <a
             class="map-tool map-tool-shape elementor-button"
+            title="Closed paddock"
           >
-            S
-          </button>
-          <button
-            type="button"
-            class="map-tool map-tool-zoomin elementor-button"
-          >
-            ZI
-          </button>
-          <button
-            type="button"
+            <img
+              src="assets/tool-closed-paddock-fence.svg"
+              class="map-tool__icon"
+            />
+          </a>
+          <a class="map-tool map-tool-zoomin elementor-button" title="Zoom in">
+            <img src="assets/tool-zoom-in.svg" class="map-tool__icon" />
+          </a>
+          <a
             class="map-tool map-tool-zoomout elementor-button"
+            title="Zoom out"
           >
-            ZO
-          </button>
+            <img src="assets/tool-zoom-out.svg" class="map-tool__icon" />
+          </a>
         </div>
 
         <div class="fence-estimator__map">
@@ -116,102 +52,95 @@
           </button>
         </div>
 
-        <div class="map-search-sidebar">
-          <!-- <div
-            class="fence-estimator__instructions alert alert-secondary"
-            role="alert"
-          >
-            <h4>Instructions</h4>
-            <ul>
-              <li>Step 1 - Search for your address</li>
-              <li>Step 2 - Zoom in to the correct area on the map</li>
-              <li>Step 3 - Click 'Start New Fence'</li>
-              <li>Step 4 - On the map, click on each corner of your paddock</li>
-              <li>
-                Step 5 - Once you have connected the pins to the start point a
-                perimeter will be calculated
-              </li>
-              <li>
-                Step 6 - You can edit the pins of the paddock, delete a paddock
-                or create a new paddock
-              </li>
-              <li>
-                Step 7 - Accept and confirm the total paddock perimeter to be
-                used in the estimate
-              </li>
-            </ul>
-          </div> -->
+        <div class="print"></div>
 
-          <div class="map-search-controllers">
+        <div class="map-search-sidebar">
+          <button
+            class="btn btn-primary map-search-sidebar__collapse"
+            type="button"
+            data-toggle="collapse"
+            data-target="#collapseExample"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            SB
+          </button>
+          <div class="map-search-controllers" id="collapseExample">
             <div class="map-search-controller p-4">
               <div class="map-search-controller__searcher">
-                <h4>Search Address</h4>
+                <h4>Property location</h4>
                 <form class="form-inline">
-                  <div class="form-group mb-2">
+                  <div class="form-group">
                     <input
                       type="text"
                       class="search-address__field form-control-plaintext border"
                       id="staticEmail2"
+                      placeholder="Type ot your address"
                     />
                   </div>
                 </form>
-                <div class="alert alert-secondary" role="alert">
-                  <strong>Tip:</strong> Start typying out your address and our
-                  auto finder will finish the job.
-                </div>
               </div>
               <div class="map-search-results__step-1" aria-hidden="true">
-                <h4 class="map-search-results__address mb-4"></h4>
+                <h4 class="map-search-results__address"></h4>
                 <button
                   type="button"
-                  class="search-address__new-search-button btn btn-secondary d-none"
+                  class="search-address__new-search-button btn btn-secondary d-none mt-4"
                 >
-                  Remove address
+                  Update address (removes all drawn fences)
                   <i class="fa fa-search ml-2"></i>
                 </button>
               </div>
             </div>
             <div class="map-search-results-controller p-4" aria-hidden="false">
-              <div class="map-search-results__step-2" aria-hidden="false">
-                <div class="map-search-results__shapes">
-                  <h4 class="mb-3">Fences</h4>
-                  <div class="map-search-results__shapes-table"></div>
-                  <div class="row no-gutters justify-content-between mt-4">
-                    <h5 class="mb-0"></h5>
-                    <div class="ml-4">
-                      <button
-                        type="button"
-                        class="plotting__delete-button btn btn-secondary"
-                      >
-                        Delete all
-                      </button>
-                    </div>
-                  </div>
+              <h4 class="mb-3">Fence list</h4>
+              <div
+                class="alert alert-secondary map-search-results__shapes-tip"
+                role="alert"
+              >
+                <strong>Tip:</strong> Start drawing closed paddock and boundary
+                fences using the toolbar on the lefthand side
+              </div>
+              <div class="map-search-results__shapes-table"></div>
+              <div class="row no-gutters justify-content-between mt-4">
+                <h5 class="mb-0"></h5>
+                <div class="ml-4">
+                  <button
+                    type="button"
+                    class="plotting__delete-button btn btn-secondary"
+                    aria-hidden="true"
+                  >
+                    Delete all
+                  </button>
                 </div>
               </div>
             </div>
-            <div
-              class="map-plotting-results-controller p-4 py-5"
-              aria-hidden="true"
-            >
+            <div class="map-plotting-results-controller p-4 py-5">
               <div class="map-plotting-results-controller__total mb-4">
                 <p class="map-plotting-results-controller__total-label">
                   Total length
                 </p>
-                <p class="map-plotting-results__perimiter"></p>
+                <p class="map-plotting-results__perimiter">0m</p>
               </div>
               <div class="map-plotting-results-controller__actions">
                 <button
                   type="button"
+                  class="plotting__start-download-button btn btn-secondary mr-3"
+                  data-toggle="modal"
+                  data-target="#downloadModal"
+                >
+                  DOWNLOAD
+                </button>
+                <button
+                  type="button"
                   class="plotting__print-button btn btn-secondary mr-3"
                 >
-                  Print
+                  PRINT
                 </button>
                 <button
                   type="button"
                   class="plotting__accept-button btn btn-primary"
                 >
-                  Next
+                  NEXT
                 </button>
               </div>
               <!-- <input class="qty" type="text" /> -->
@@ -219,6 +148,89 @@
           </div>
         </div>
       </div>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="downloadModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Download your fences (COPY)
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>
+                Please provide your details before downloading yout PDF (copy
+                required)
+              </p>
+              <form>
+                <div class="download-form-field download-form-field--name">
+                  <label
+                    class="download-form-field__label"
+                    for="download-form__name"
+                    >Name</label
+                  >
+                  <input
+                    id="download-form__name"
+                    type="text"
+                    class="download-form-field__input plotting__download-name"
+                  />
+                  <span
+                    class="download-form__error download-form__error--name"
+                    aria-hidden="true"
+                  ></span>
+                </div>
+                <div class="download-form-field download-form-field--email">
+                  <label
+                    class="download-form-field__label"
+                    for="download-form__email"
+                    >Email</label
+                  >
+                  <input
+                    id="download-form__email"
+                    type="text"
+                    class="download-form-field__input plotting__download-email"
+                  />
+                  <span
+                    class="download-form__error download-form__error--email"
+                    aria-hidden="true"
+                  ></span>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="plotting__close-download-button btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                class="plotting__download-button btn btn-primary mr-3"
+              >
+                Download
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal -->
     </div>
 
     <script>
@@ -241,7 +253,7 @@
 
         console.log(e.detail.perimiter);
 
-        // $("#exampleModal").modal("hide");
+        // $("#downloadModal").modal("hide");
       });
     </script>
 
@@ -260,5 +272,6 @@
       integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
       crossorigin="anonymous"
     ></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
   <script src="/vendors.bundle.js"></script><script src="/main.bundle.js"></script></body>
 </html>
