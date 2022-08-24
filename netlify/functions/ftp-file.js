@@ -35,7 +35,13 @@ exports.handler = async function (event, context) {
     var c = new Client();
     c.on("ready", function () {
       c.put(pdfBuffer, "/public_html/pdfs/test.pdf", function (err) {
-        if (err) throw err;
+        if (err) {
+          console.log(`error`);
+          console.log(err);
+
+          throw err;
+        }
+
         c.end();
       });
     });
