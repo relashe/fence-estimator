@@ -34,7 +34,10 @@ exports.handler = async function (event, context) {
 
     var c = new Client();
     c.on("ready", function () {
+      console.log(`connection ready`);
+
       c.put(pdfBuffer, "/pdfs/test.pdf", function (err) {
+        console.log(`put completed`);
         if (err) {
           console.log(`error`);
           console.log(err);
@@ -46,6 +49,9 @@ exports.handler = async function (event, context) {
         c.end();
       });
     });
+
+    console.log(`start connection`);
+
     // connect to localhost:21 as anonymous
     c.connect({
       host: "wl23www458.webland.ch",
