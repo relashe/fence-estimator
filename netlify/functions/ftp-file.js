@@ -36,7 +36,7 @@ exports.handler = async function (event, context) {
     c.on("ready", function () {
       console.log(`connection ready`);
 
-      c.put(pdfBuffer, "/pdfs/test.pdf", function (err) {
+      c.put(pdfBuffer, "test.pdf", function (err) {
         console.log(`put completed`);
         if (err) {
           console.log(`error`);
