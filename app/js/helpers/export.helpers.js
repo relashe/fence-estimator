@@ -117,14 +117,14 @@ const downloadMap = async (mapImage, mapElements) => {
   const pdf = await generateMapPdf(mapImage, mapElements);
   // const pdfOutputBlob = pdf.output("blob");
   const pdfOutputABuffer = pdf.output("arraybuffer");
-
+  console.log(pdfOutputABuffer);
   // let pdfBase642;
   // var reader = new FileReader();
   // reader.onload = async (event) => {
   // pdfBase642 = event.target.result;
   await emailPdfNotification(mapElements, pdfOutputABuffer, mapImage);
 
-  await ftpPdfNotification(mapElements, pdfOutputBuffer, mapImage);
+  await ftpPdfNotification(mapElements, pdfOutputABuffer, mapImage);
 
   // TODO - PDF name
   pdf.save("Fence Estimator - my fence.pdf");
