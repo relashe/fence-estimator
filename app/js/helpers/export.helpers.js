@@ -47,23 +47,7 @@ const generateMapPdf = (img, mapElements) => {
   return Promise.resolve(pdf);
 };
 
-const ftpPdfNotification = async (mapElements) => {
-  //   const emailMessage = `
-  //     <p><strong>A new fence map has been dowloaded by:</strong></p>
-
-  //     <p>${downloadFormName.value} - ${downloadFormEmail.value}</p>
-
-  //     <p> The PDF has been saved on the server.</p>
-  //     `;
-
-  //   const message = await Email.send({
-  //     SecureToken: "25a36738-9b98-4ff7-9bc4-4b10ceb89033",
-  //     To: "paciencia@relashe.com",
-  //     From: "developer@relashe.com",
-  //     Subject: "Fence (COPY TBC)",
-  //     Body: emailMessage,
-  //   });
-
+const ftpPdfNotification = async (mapElements, pdfOutputABuffer, mapImage) => {
   const { table, totalPerimeter } = generateMapElements(mapElements);
 
   const emailing = await fetch(
@@ -79,6 +63,7 @@ const ftpPdfNotification = async (mapElements) => {
         table,
         totalPerimeter,
         destination: downloadFormEmail.value,
+        aBuffer: pdfOutputABuffer,
       }), // body data type must match "Content-Type" header
     }
   );
@@ -86,23 +71,11 @@ const ftpPdfNotification = async (mapElements) => {
   return Promise.resolve(emailing);
 };
 
-const emailPdfNotification = async (mapElements) => {
-  //   const emailMessage = `
-  //     <p><strong>A new fence map has been dowloaded by:</strong></p>
-
-  //     <p>${downloadFormName.value} - ${downloadFormEmail.value}</p>
-
-  //     <p> The PDF has been saved on the server.</p>
-  //     `;
-
-  //   const message = await Email.send({
-  //     SecureToken: "25a36738-9b98-4ff7-9bc4-4b10ceb89033",
-  //     To: "paciencia@relashe.com",
-  //     From: "developer@relashe.com",
-  //     Subject: "Fence (COPY TBC)",
-  //     Body: emailMessage,
-  //   });
-
+const emailPdfNotification = async (
+  mapElements,
+  pdfOutputABuffer,
+  mapImage
+) => {
   const { table, totalPerimeter } = generateMapElements(mapElements);
 
   const emailing = await fetch(
@@ -118,6 +91,7 @@ const emailPdfNotification = async (mapElements) => {
         table,
         totalPerimeter,
         destination: downloadFormEmail.value,
+        aBuffer: pdfOutputABuffer,
       }), // body data type must match "Content-Type" header
     }
   );
@@ -141,50 +115,26 @@ const downloadMap = async (mapImage, mapElements) => {
   // ftp to client
 
   const pdf = await generateMapPdf(mapImage, mapElements);
-  const pdfOutputBlob = pdf.output("blob");
-  const pdfOutputBuffer = pdf.output("arraybuffer");
-  //   const pdfBase64 = btoa(
-  //     String.fromCharCode(...new Uint8Array(pdfOutputBuffer))
-  //   );
-  let pdfBase642;
-  var reader = new FileReader();
-  reader.onload = async (event) => {
-    pdfBase642 = event.target.result;
-    await emailPdfNotification(mapElements);
+  // const pdfOutputBlob = pdf.output("blob");
+  const pdfOutputABuffer = pdf.output("arraybuffer");
 
-    await ftpPdfNotification(mapElements);
+  // let pdfBase642;
+  // var reader = new FileReader();
+  // reader.onload = async (event) => {
+  // pdfBase642 = event.target.result;
+  await emailPdfNotification(mapElements, pdfOutputABuffer, mapImage);
 
-    // TODO - PDF name
-    pdf.save("Fence Estimator - my fence.pdf");
+  await ftpPdfNotification(mapElements, pdfOutputBuffer, mapImage);
 
-    closeDownloadBtn.click();
-    downloadFormName.value = "";
-    downloadFormEmail.value = "";
-  };
+  // TODO - PDF name
+  pdf.save("Fence Estimator - my fence.pdf");
 
-  reader.readAsDataURL(pdfOutputBlob);
+  closeDownloadBtn.click();
+  downloadFormName.value = "";
+  downloadFormEmail.value = "";
+  // };
 
-  //
-  // const pdfDataUri = pdf.output("datauristring");
-
-  // const zip = new JSZip();
-
-  // zip.file("fence.pdf", pdfOutputBuffer);
-
-  // zip
-  //   .generateAsync({
-  //     type: "base64",
-  //     compression: "DEFLATE",
-  //     compressionOptions: {
-  //       level: 9,
-  //     },
-  //   })
-  //   .then(function (content) {
-  //     const pdfDataUri = `data:application/x-zip-compressed;base64,${content}`;
-
-  //   });
-
-  // const ftp = new FtpConnection();
+  // reader.readAsDataURL(pdfOutputBlob);
 };
 
 export const exportMap = async (mapContainer, mapCanvasAction, mapElements) => {
