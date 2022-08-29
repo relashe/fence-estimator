@@ -71,7 +71,7 @@ function parseMultipartForm(event) {
     // now that all handlers are set up, we can finally start processing our request!
     bb.write(event.body);
 
-    bb.end();
+    // bb.end();
   });
 }
 
