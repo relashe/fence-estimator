@@ -30,10 +30,10 @@ exports.handler = async function (event, context) {
 
     const pdfBlob = files[0];
 
-    const pdf = await generateMapPdf(undefined, {
-      table: JSON.parse(table),
-      totalPerimeter,
-    });
+    // const pdf = await generateMapPdf(undefined, {
+    //   table: JSON.parse(table),
+    //   totalPerimeter,
+    // });
 
     sgMail.setApiKey(
       "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"
@@ -42,11 +42,16 @@ exports.handler = async function (event, context) {
     console.log(`about to send`);
 
     // const pdfBuffer = Buffer.from(aBuffer);
-    const pdfBuffer = Buffer.from(pdfBlob, "binary");
+    // const pdfBuffer = Buffer.from(pdfBlob, "binary");
 
-    console.log(`buffer: ${pdfBuffer}`);
+    // console.log(`buffer: ${pdfBuffer}`);
 
-    const pdfB64 = pdfBuffer.toString("base64");
+    var reader = new FileReader();
+    reader.onload = function() {
+        var dataUrl = reader.result;
+        var pdfB64 = dataUrl.split(',')[1];
+        
+        // const pdfB64 = pdfBuffer.toString("base64");
     console.log(`buffer result`);
     console.log(pdfB64);
 
@@ -66,6 +71,12 @@ exports.handler = async function (event, context) {
     };
 
     await sgMail.send(msg);
+
+    };
+    
+    reader.readAsDataURL(pdfBlob);
+
+    
 
     return {
       statusCode: 200,
