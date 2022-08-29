@@ -59,7 +59,7 @@ const parseMultipartForm = (event) => {
     });
 
     // now that all handlers are set up, we can finally start processing our request!
-    bb.end(event.body);
+    bb.write(event.body);
 
     // bb.end();
   });
