@@ -5,6 +5,7 @@ const fs = require("fs");
 const multipart = require("parse-multipart-data");
 var multiparty = require("multiparty");
 var util = require("util");
+const parser = require("lambda-multipart-parser");
 
 const parseMultipartForm = (event) => {
   return new Promise((resolve) => {
@@ -100,34 +101,9 @@ const generateMapPdf = async (img, mapElements) => {
 exports.handler = async function (event, context) {
   try {
     console.log(`Sending PDF report to 91.208.99.4`);
-    // const { table, totalPerimeter, pdfBlob } = await parseMultipartForm(event);
-    // const { table, totalPerimeter, pdfBlob } = await parseMultipartForm(event);
 
-    // const parts = multipart.parse(event.body, "fence");
-    // console.log(`Parts: ${parts?.length || `no parts`}`);
-
-    // parts.forEach((part) => {
-    //   console.log("new part");
-    //   console.log(part);
-    // });
-    var form = new multiparty.Form();
-    form.parse(event, function (err, fields, files) {
-      if (err) {
-        console.log("deu erro");
-        console.log(err);
-      }
-      // res.end(util.inspect({ fields: fields, files: files }));
-
-      fields.forEach((field) => {
-        console.log("new field");
-        console.log(field);
-      });
-
-      files.forEach((file) => {
-        console.log("new file");
-        console.log(file);
-      });
-    });
+    const result = await parser.parse(event);
+    console.log(result.files);
 
     // // generate PDF server side
     // const pdf = await generateMapPdf(undefined, { table, totalPerimeter });
