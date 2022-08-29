@@ -43,6 +43,7 @@
     "nodemailer-mailgun-transport": "^2.1.4",
     "parse-multipart-data": "^1.4.0",
     "postcss-loader": "^3.0.0",
+    "read-blob": "^1.1.2",
     "regenerator-runtime": "^0.13.7",
     "resolve-url-loader": "^3.1.1",
     "sass": "^1.51.0",

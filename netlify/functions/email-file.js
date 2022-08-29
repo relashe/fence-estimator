@@ -1,6 +1,7 @@
 const sgMail = require("@sendgrid/mail");
 const { jsPDF } = require("jspdf");
 const parser = require("lambda-multipart-parser");
+const readBlob = require("read-blob");
 
 const generateMapPdf = async (img, mapElements) => {
   const { table, totalPerimeter } = mapElements;
@@ -41,39 +42,27 @@ exports.handler = async function (event, context) {
 
     console.log(`about to send`);
 
-    // const pdfBuffer = Buffer.from(aBuffer);
-    // const pdfBuffer = Buffer.from(pdfBlob, "binary");
+    var pdfB64 = await readBlob.dataurl(pdfBlob);
 
-    // console.log(`buffer: ${pdfBuffer}`);
+    console.log(`buffer result`);
+    console.log(pdfB64);
 
-    var reader = new FileReader();
-    reader.onload = async () => {
-      var dataUrl = reader.result;
-      var pdfB64 = dataUrl.split(",")[1];
-
-      // const pdfB64 = pdfBuffer.toString("base64");
-      console.log(`buffer result`);
-      console.log(pdfB64);
-
-      const msg = {
-        to: destination,
-        from: "developer@relashe.com",
-        subject: "Fence Estimator - Your Fence",
-        html: "<strong>Please find your fence data attached</strong>",
-        attachments: [
-          {
-            content: pdfB64,
-            filename: "attachment.pdf",
-            type: "application/pdf",
-            disposition: "attachment",
-          },
-        ],
-      };
-
-      await sgMail.send(msg);
+    const msg = {
+      to: destination,
+      from: "developer@relashe.com",
+      subject: "Fence Estimator - Your Fence",
+      html: "<strong>Please find your fence data attached</strong>",
+      attachments: [
+        {
+          content: pdfB64,
+          filename: "attachment.pdf",
+          type: "application/pdf",
+          disposition: "attachment",
+        },
+      ],
     };
 
-    reader.readAsDataURL(pdfBlob);
+    await sgMail.send(msg);
 
     return {
       statusCode: 200,
