@@ -1,83 +1,6 @@
 const { jsPDF } = require("jspdf");
 var Client = require("ftp");
-const fs = require("fs");
-// const busboy = require("busboy");
-const multipart = require("parse-multipart-data");
-var multiparty = require("multiparty");
-var util = require("util");
 const parser = require("lambda-multipart-parser");
-
-const parseMultipartForm = (event) => {
-  return new Promise((resolve) => {
-    console.log(`parsing`);
-    console.log(`${event.params?.boundary}`);
-    console.log(`${event.headers}`);
-
-    // we'll store all form fields inside of this
-    const fields = {};
-
-    console.log("instatiate now");
-
-    // let's instantiate our busboy instance!
-    const bb = busboy({
-      // it uses request headers
-      // to extract the form boundary value (the ----WebKitFormBoundary thing)
-      headers: event.headers,
-    });
-
-    console.log("file now");
-
-    // before parsing anything, we need to set up some handlers.
-    // whenever busboy comes across a file ...
-    bb.on(
-      "file",
-      (fieldname, filestream, filename, transferEncoding, mimeType) => {
-        // ... we take a look at the file's data ...
-        console.log(`filename: ${filename}`);
-        filestream.on("data", (data) => {
-          // ... and write the file's name, type and content into `fields`.
-          fields[fieldname] = {
-            filename,
-            type: mimeType,
-            content: data,
-          };
-        });
-
-        filestream.on("error", (err) => {
-          console.log(`bb file error: ${err}`);
-        });
-      }
-    );
-
-    console.log("field now");
-
-    // whenever busboy comes across a normal field ...
-    bb.on("field", (fieldName, value) => {
-      console.log(`field: ${fieldName}`);
-      // ... we write its value into `fields`.
-      fields[fieldName] = value;
-    });
-
-    console.log("error now");
-
-    bb.on("error", (error) => {
-      console.log(`bb error: ${error}`);
-    });
-
-    console.log("close now");
-    // once busboy is finished, we resolve the promise with the resulted fields.
-    bb.on("close", () => {
-      console.log(`finished form`);
-      resolve(fields);
-    });
-
-    console.log("write now");
-    // now that all handlers are set up, we can finally start processing our request!
-    bb.write(event.body);
-
-    // bb.end();
-  });
-};
 
 const generateMapPdf = async (img, mapElements) => {
   const { table, totalPerimeter } = mapElements;
@@ -102,8 +25,8 @@ exports.handler = async function (event, context) {
   try {
     console.log(`Sending PDF report to 91.208.99.4`);
 
-    const result = await parser.parse(event);
-    console.log(result.files);
+    const { table, totalPerimeter, files } = await parser.parse(event);
+    console.log(files);
 
     // generate PDF server side
     const pdf = await generateMapPdf(undefined, { table, totalPerimeter });

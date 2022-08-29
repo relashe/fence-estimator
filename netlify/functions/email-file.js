@@ -1,7 +1,5 @@
 const sgMail = require("@sendgrid/mail");
 const { jsPDF } = require("jspdf");
-const fs = require("fs");
-const busboy = require("busboy");
 const parser = require("lambda-multipart-parser");
 
 const generateMapPdf = async (img, mapElements) => {
@@ -27,10 +25,10 @@ exports.handler = async function (event, context) {
   try {
     console.log(`Sending PDF report to ${destination}`);
 
-    const result = await parser.parse(event);
-    console.log(result.files);
+    const { table, totalPerimeter, files } = await parser.parse(event);
+    console.log(files);
 
-    const pdfBlob = result.files[0];
+    const pdfBlob = files[0];
 
     const pdf = await generateMapPdf(undefined, { table, totalPerimeter });
 
