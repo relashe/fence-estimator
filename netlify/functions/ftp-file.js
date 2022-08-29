@@ -29,7 +29,10 @@ exports.handler = async function (event, context) {
     console.log(files);
 
     // generate PDF server side
-    const pdf = await generateMapPdf(undefined, { JSON.parse(table), totalPerimeter });
+    const pdf = await generateMapPdf(undefined, {
+      table: JSON.parse(table),
+      totalPerimeter,
+    });
     const pdfABuffer = pdf.output("arraybuffer");
     // const pdfBuffer = Buffer.from(pdfABuffer);
     const pdfBuffer = Buffer.from(pdfBlob, "binary");
