@@ -1,7 +1,7 @@
 const { jsPDF } = require("jspdf");
 var Client = require("ftp");
 const fs = require("fs");
-const busboy = require("busboy");
+// const busboy = require("busboy");
 const multipart = require("parse-multipart-data");
 
 const parseMultipartForm = (event) => {
@@ -102,50 +102,51 @@ exports.handler = async function (event, context) {
     // const { table, totalPerimeter, pdfBlob } = await parseMultipartForm(event);
 
     const parts = multipart.parse(event.body, "fence");
+    console.log(`Parts: ${parts?.length || `parts`}`);
 
     parts.forEach((part) => {
       console.log("new part");
       console.log(part);
     });
 
-    // generate PDF server side
-    const pdf = await generateMapPdf(undefined, { table, totalPerimeter });
-    const pdfABuffer = pdf.output("arraybuffer");
-    // const pdfBuffer = Buffer.from(pdfABuffer);
-    const pdfBuffer = Buffer.from(pdfBlob, "binary");
+    // // generate PDF server side
+    // const pdf = await generateMapPdf(undefined, { table, totalPerimeter });
+    // const pdfABuffer = pdf.output("arraybuffer");
+    // // const pdfBuffer = Buffer.from(pdfABuffer);
+    // const pdfBuffer = Buffer.from(pdfBlob, "binary");
 
-    console.log(`PDF report: ${pdfBuffer}`);
+    // console.log(`PDF report: ${pdfBuffer}`);
 
-    var c = new Client();
-    c.on("error", (error) => {
-      console.log("an ftp error");
-      console.log(error);
-    });
+    // var c = new Client();
+    // c.on("error", (error) => {
+    //   console.log("an ftp error");
+    //   console.log(error);
+    // });
 
-    c.on("ready", function () {
-      console.log(`ftp connection ready`);
+    // c.on("ready", function () {
+    //   console.log(`ftp connection ready`);
 
-      c.put(pdfBuffer, "test.pdf", function (err) {
-        console.log(`put completed`);
-        if (err) {
-          console.log(`ftp error`);
-          console.log(err);
+    //   c.put(pdfBuffer, "test.pdf", function (err) {
+    //     console.log(`put completed`);
+    //     if (err) {
+    //       console.log(`ftp error`);
+    //       console.log(err);
 
-          throw err;
-        }
+    //       throw err;
+    //     }
 
-        console.log(`ending connection. file sent`);
-        c.end();
-      });
-    });
+    //     console.log(`ending connection. file sent`);
+    //     c.end();
+    //   });
+    // });
 
-    console.log(`start ftp connection`);
+    // console.log(`start ftp connection`);
 
-    c.connect({
-      host: "wl23www458.webland.ch",
-      user: "www458",
-      password: "x5sEFd3Iyjfj",
-    });
+    // c.connect({
+    //   host: "wl23www458.webland.ch",
+    //   user: "www458",
+    //   password: "x5sEFd3Iyjfj",
+    // });
 
     return {
       statusCode: 200,
