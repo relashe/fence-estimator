@@ -6,6 +6,8 @@ import * as Busboy from "busboy";
 
 function parseMultipartForm(event) {
   return new Promise((resolve) => {
+    console.log(`parsing`);
+
     // we'll store all form fields inside of this
     const fields = {};
 
@@ -70,11 +72,11 @@ const generateMapPdf = async (img, mapElements) => {
 
 exports.handler = async function (event, context) {
   try {
+    console.log(`Sending PDF report to 91.208.99.4`);
     const { table, totalPerimeter, mapImage } = parseMultipartForm(event);
     // const {destination, table, totalPerimeter, aBuffer } = JSON.parse(
     //   event.body
     // );
-    console.log(`Sending PDF report to 91.208.99.4`);
 
     // generate PDF server side
     const pdf = await generateMapPdf(mapImage, { table, totalPerimeter });
