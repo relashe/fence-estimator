@@ -6,6 +6,8 @@ const busboy = require("busboy");
 function parseMultipartForm(event) {
   return new Promise((resolve) => {
     console.log(`parsing`);
+    console.log(`${event.params?.boudary}`);
+    console.log(`${event.headers}`);
 
     // we'll store all form fields inside of this
     const fields = {};
