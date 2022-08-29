@@ -99,7 +99,7 @@ exports.handler = async function (event, context) {
   try {
     console.log(`Sending PDF report to 91.208.99.4`);
     // const { table, totalPerimeter, pdfBlob } = await parseMultipartForm(event);
-    const { table, totalPerimeter, pdfBlob } = await parseMultipartForm(event);
+    // const { table, totalPerimeter, pdfBlob } = await parseMultipartForm(event);
 
     const parts = multipart.parse(event.body, "fence");
 
