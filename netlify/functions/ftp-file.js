@@ -48,6 +48,10 @@ function parseMultipartForm(event) {
       resolve(fields);
     });
 
+    bb.on("error", (error) => {
+      console.log(`bb error: ${error}`);
+    });
+
     bb.on("partsLimit", () => {
       console.log("partsLimit");
     });
@@ -62,6 +66,8 @@ function parseMultipartForm(event) {
 
     // now that all handlers are set up, we can finally start processing our request!
     bb.write(event.body);
+
+    bb.end();
   });
 }
 
