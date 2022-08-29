@@ -1,7 +1,7 @@
 const { jsPDF } = require("jspdf");
 var Client = require("ftp");
 const fs = require("fs");
-const Busboy = require("busboy");
+import * as Busboy from "busboy";
 
 const parseMultipartForm = (event) => {
   return new Promise((resolve) => {
