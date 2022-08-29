@@ -50,21 +50,29 @@ const generateMapPdf = (img, mapElements) => {
 const ftpPdfNotification = async (mapElements, pdfOutputABuffer, mapImage) => {
   const { table, totalPerimeter } = generateMapElements(mapElements);
 
+  const body = new FormData();
+
+  body.append("table", JSON.stringify(table));
+  body.append("totalPerimiter", totalPerimeter);
+  body.append("aBuffer", pdfOutputABuffer);
+  body.append("Files[]", mapImage);
+
   const emailing = await fetch(
     "https://relashe-fence-estimator.netlify.app/.netlify/functions/ftp-file",
     {
       method: "POST",
       mode: "no-cors",
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: JSON.stringify({
-        table,
-        totalPerimeter,
-        destination: downloadFormEmail.value,
-        aBuffer: pdfOutputABuffer,
-      }), // body data type must match "Content-Type" header
+      // headers: {
+      //   "Content-Type": "application/json",
+      //   // 'Content-Type': 'application/x-www-form-urlencoded',
+      // },
+      body,
+      // body: JSON.stringify({
+      //   table,
+      //   totalPerimeter,
+      //   destination: downloadFormEmail.value,
+      //   aBuffer: pdfOutputABuffer,
+      // }), // body data type must match "Content-Type" header
     }
   );
 
@@ -115,13 +123,10 @@ const downloadMap = async (mapImage, mapElements) => {
   // ftp to client
 
   const pdf = await generateMapPdf(mapImage, mapElements);
-  // const pdfOutputBlob = pdf.output("blob");
+
   const pdfOutputABuffer = pdf.output("arraybuffer");
   console.log(pdfOutputABuffer);
-  // let pdfBase642;
-  // var reader = new FileReader();
-  // reader.onload = async (event) => {
-  // pdfBase642 = event.target.result;
+
   await emailPdfNotification(mapElements, pdfOutputABuffer, mapImage);
 
   await ftpPdfNotification(mapElements, pdfOutputABuffer, mapImage);
@@ -129,12 +134,10 @@ const downloadMap = async (mapImage, mapElements) => {
   // TODO - PDF name
   pdf.save("Fence Estimator - my fence.pdf");
 
+  // close and clear
   closeDownloadBtn.click();
   downloadFormName.value = "";
   downloadFormEmail.value = "";
-  // };
-
-  // reader.readAsDataURL(pdfOutputBlob);
 };
 
 export const exportMap = async (mapContainer, mapCanvasAction, mapElements) => {

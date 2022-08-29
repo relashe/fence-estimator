@@ -24,25 +24,38 @@ const generateMapPdf = async (img, mapElements) => {
 
 exports.handler = async function (event, context) {
   try {
-    const { destination, table, totalPerimeter, aBuffer } = JSON.parse(
-      event.body
-    );
+    const table = JSON.parse(event.body.get("destination"));
+    const totalPerimeter = event.body.get("destination");
+    const aBuffer = event.body.get("aBuffer");
+    const mapImage = event.body.get("files")[0];
+    // const {destination, table, totalPerimeter, aBuffer } = JSON.parse(
+    //   event.body
+    // );
     console.log(`Sending PDF report to 91.208.99.4`);
 
-    const pdf = await generateMapPdf(undefined, { table, totalPerimeter });
+    console.log(`buffer received`);
+    console.log(aBuffer);
+
+    // generate PDF server side
+    const pdf = await generateMapPdf(mapImage, { table, totalPerimeter });
     const pdfABuffer = pdf.output("arraybuffer");
     const pdfBuffer = Buffer.from(pdfABuffer);
 
     console.log(`PDF report: ${pdfBuffer}`);
 
     var c = new Client();
+    c.on("error", (error) => {
+      console.log("an ftp error");
+      console.log(error);
+    });
+
     c.on("ready", function () {
-      console.log(`connection ready`);
+      console.log(`ftp connection ready`);
 
       c.put(pdfBuffer, "test.pdf", function (err) {
         console.log(`put completed`);
         if (err) {
-          console.log(`error`);
+          console.log(`ftp error`);
           console.log(err);
 
           throw err;
@@ -53,14 +66,8 @@ exports.handler = async function (event, context) {
       });
     });
 
-    c.on("error", (error) => {
-      console.log("an error");
-      console.log(error);
-    });
+    console.log(`start ftp connection`);
 
-    console.log(`start connection`);
-
-    // connect to localhost:21 as anonymous
     c.connect({
       host: "wl23www458.webland.ch",
       user: "www458",
@@ -72,6 +79,7 @@ exports.handler = async function (event, context) {
       body: JSON.stringify({ message: "Hello World" }),
     };
   } catch (error) {
+    console.log(`failed on server`);
     console.error(error);
 
     if (error.response) {
