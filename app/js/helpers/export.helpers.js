@@ -37,7 +37,7 @@ const generateMapPdf = (img, mapElements) => {
 
   // pdf.addImage(img, "JPEG", 15, 40, 180, 180);
 
-  pdf.addPage();
+  // pdf.addPage();
 
   pdf.table(10, 10, table, ["name", "length"]);
 
@@ -121,7 +121,7 @@ const downloadMap = async (mapImage, mapElements) => {
   const pdfOutpoutBlob = pdf.output("blob");
   console.log(pdfOutpoutBlob);
 
-  await emailPdfNotification(mapElements, mapImage, pdfOutpoutBlob);
+  // await emailPdfNotification(mapElements, mapImage, pdfOutpoutBlob);
 
   await ftpPdfNotification(mapElements, mapImage, pdfOutpoutBlob);
 

@@ -6,11 +6,13 @@ const Busboy = require("busboy");
 const parseMultipartForm = (event) => {
   return new Promise((resolve) => {
     console.log(`parsing`);
-    console.log(`${event.params?.boudary}`);
+    console.log(`${event.params?.boundary}`);
     console.log(`${event.headers}`);
 
     // we'll store all form fields inside of this
     const fields = {};
+
+    console.log("instatiate now");
 
     // let's instantiate our busboy instance!
     const bb = new Busboy({
@@ -18,6 +20,8 @@ const parseMultipartForm = (event) => {
       // to extract the form boundary value (the ----WebKitFormBoundary thing)
       headers: event.headers,
     });
+
+    console.log("file now");
 
     // before parsing anything, we need to set up some handlers.
     // whenever busboy comes across a file ...
@@ -41,6 +45,8 @@ const parseMultipartForm = (event) => {
       }
     );
 
+    console.log("field now");
+
     // whenever busboy comes across a normal field ...
     bb.on("field", (fieldName, value) => {
       console.log(`field: ${fieldName}`);
@@ -48,16 +54,20 @@ const parseMultipartForm = (event) => {
       fields[fieldName] = value;
     });
 
+    console.log("error now");
+
     bb.on("error", (error) => {
       console.log(`bb error: ${error}`);
     });
 
+    console.log("finish now");
     // once busboy is finished, we resolve the promise with the resulted fields.
     bb.on("finish", () => {
       console.log(`finished form`);
       resolve(fields);
     });
 
+    console.log("write now");
     // now that all handlers are set up, we can finally start processing our request!
     bb.write(event.body);
 
