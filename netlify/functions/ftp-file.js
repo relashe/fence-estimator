@@ -36,7 +36,7 @@ exports.handler = async function (event, context) {
 
       console.log(`ftp connection ready`);
 
-      c.put(pdfBuffer, "test.pdf", (err) => {
+      c.put(pdfBuffer, "./test.pdf", (err) => {
         console.log(`put completed`);
         if (err) {
           console.log(`ftp error`);
