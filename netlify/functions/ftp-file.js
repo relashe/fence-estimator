@@ -2,6 +2,7 @@ const { jsPDF } = require("jspdf");
 var Client = require("ftp");
 const fs = require("fs");
 const busboy = require("busboy");
+const multipart = require("parse-multipart-data");
 
 const parseMultipartForm = (event) => {
   return new Promise((resolve) => {
@@ -97,10 +98,15 @@ const generateMapPdf = async (img, mapElements) => {
 exports.handler = async function (event, context) {
   try {
     console.log(`Sending PDF report to 91.208.99.4`);
+    // const { table, totalPerimeter, pdfBlob } = await parseMultipartForm(event);
     const { table, totalPerimeter, pdfBlob } = await parseMultipartForm(event);
-    // const {destination, table, totalPerimeter, aBuffer } = JSON.parse(
-    //   event.body
-    // );
+
+    const parts = multipart.parse(event.body, "fence");
+
+    parts.forEach((part) => {
+      console.log("new part");
+      console.log(part);
+    });
 
     // generate PDF server side
     const pdf = await generateMapPdf(undefined, { table, totalPerimeter });
