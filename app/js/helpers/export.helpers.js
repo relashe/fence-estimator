@@ -47,43 +47,39 @@ const generateMapPdf = (img, mapElements) => {
   return Promise.resolve(pdf);
 };
 
-const ftpPdfNotification = async (mapElements, pdfOutputABuffer, mapImage) => {
+const ftpPdfNotification = async (mapElements, mapImage) => {
   const { table, totalPerimeter } = generateMapElements(mapElements);
 
-  const body = new FormData();
+  const data = new FormData();
 
-  body.append("table", JSON.stringify(table));
-  body.append("totalPerimiter", totalPerimeter);
-  body.append("aBuffer", pdfOutputABuffer);
-  body.append("Files[]", mapImage);
+  data.append("table", JSON.stringify(table));
+  data.append("totalPerimiter", totalPerimeter);
+  // data.append("aBuffer", pdfOutputABuffer);
+  data.append("mapImage", mapImage);
 
-  const emailing = await fetch(
+  const ftping = await fetch(
     "https://relashe-fence-estimator.netlify.app/.netlify/functions/ftp-file",
     {
       method: "POST",
       mode: "no-cors",
-      // headers: {
-      //   "Content-Type": "application/json",
-      //   // 'Content-Type': 'application/x-www-form-urlencoded',
-      // },
-      body,
+      headers: {
+        "Content-Type": "multipart/form-data",
+        // "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      // body data type must match "Content-Type" header
+      body: data,
       // body: JSON.stringify({
       //   table,
       //   totalPerimeter,
-      //   destination: downloadFormEmail.value,
-      //   aBuffer: pdfOutputABuffer,
-      // }), // body data type must match "Content-Type" header
+      // }),
     }
   );
 
-  return Promise.resolve(emailing);
+  return Promise.resolve(ftping);
 };
 
-const emailPdfNotification = async (
-  mapElements,
-  pdfOutputABuffer,
-  mapImage
-) => {
+const emailPdfNotification = async (mapElements) => {
   const { table, totalPerimeter } = generateMapElements(mapElements);
 
   const emailing = await fetch(
@@ -99,7 +95,7 @@ const emailPdfNotification = async (
         table,
         totalPerimeter,
         destination: downloadFormEmail.value,
-        aBuffer: pdfOutputABuffer,
+        // aBuffer: pdfOutputABuffer,
       }), // body data type must match "Content-Type" header
     }
   );
@@ -124,12 +120,12 @@ const downloadMap = async (mapImage, mapElements) => {
 
   const pdf = await generateMapPdf(mapImage, mapElements);
 
-  const pdfOutputABuffer = pdf.output("arraybuffer");
-  console.log(pdfOutputABuffer);
+  // const pdfOutputABuffer = pdf.output("arraybuffer");
+  // console.log(pdfOutputABuffer);
 
-  await emailPdfNotification(mapElements, pdfOutputABuffer, mapImage);
+  // await emailPdfNotification(mapElements);
 
-  await ftpPdfNotification(mapElements, pdfOutputABuffer, mapImage);
+  await ftpPdfNotification(mapElements, mapImage);
 
   // TODO - PDF name
   pdf.save("Fence Estimator - my fence.pdf");
