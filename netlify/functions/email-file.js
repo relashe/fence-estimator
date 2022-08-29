@@ -47,36 +47,33 @@ exports.handler = async function (event, context) {
     // console.log(`buffer: ${pdfBuffer}`);
 
     var reader = new FileReader();
-    reader.onload = function() {
-        var dataUrl = reader.result;
-        var pdfB64 = dataUrl.split(',')[1];
-        
-        // const pdfB64 = pdfBuffer.toString("base64");
-    console.log(`buffer result`);
-    console.log(pdfB64);
+    reader.onload = async () => {
+      var dataUrl = reader.result;
+      var pdfB64 = dataUrl.split(",")[1];
 
-    const msg = {
-      to: destination,
-      from: "developer@relashe.com",
-      subject: "Fence Estimator - Your Fence",
-      html: "<strong>Please find your fence data attached</strong>",
-      attachments: [
-        {
-          content: pdfB64,
-          filename: "attachment.pdf",
-          type: "application/pdf",
-          disposition: "attachment",
-        },
-      ],
+      // const pdfB64 = pdfBuffer.toString("base64");
+      console.log(`buffer result`);
+      console.log(pdfB64);
+
+      const msg = {
+        to: destination,
+        from: "developer@relashe.com",
+        subject: "Fence Estimator - Your Fence",
+        html: "<strong>Please find your fence data attached</strong>",
+        attachments: [
+          {
+            content: pdfB64,
+            filename: "attachment.pdf",
+            type: "application/pdf",
+            disposition: "attachment",
+          },
+        ],
+      };
+
+      await sgMail.send(msg);
     };
 
-    await sgMail.send(msg);
-
-    };
-    
     reader.readAsDataURL(pdfBlob);
-
-    
 
     return {
       statusCode: 200,
