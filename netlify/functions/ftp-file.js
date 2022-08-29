@@ -73,15 +73,16 @@ const generateMapPdf = async (img, mapElements) => {
 exports.handler = async function (event, context) {
   try {
     console.log(`Sending PDF report to 91.208.99.4`);
-    const { table, totalPerimeter, mapImage } = await parseMultipartForm(event);
+    const { table, totalPerimeter, pdfBlob } = await parseMultipartForm(event);
     // const {destination, table, totalPerimeter, aBuffer } = JSON.parse(
     //   event.body
     // );
 
     // generate PDF server side
-    const pdf = await generateMapPdf(mapImage, { table, totalPerimeter });
+    const pdf = await generateMapPdf(undefined, { table, totalPerimeter });
     const pdfABuffer = pdf.output("arraybuffer");
-    const pdfBuffer = Buffer.from(pdfABuffer);
+    // const pdfBuffer = Buffer.from(pdfABuffer);
+    const pdfBuffer = Buffer.from(pdfBlob, "binary");
 
     console.log(`PDF report: ${pdfBuffer}`);
 

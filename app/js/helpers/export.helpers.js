@@ -47,15 +47,15 @@ const generateMapPdf = (img, mapElements) => {
   return Promise.resolve(pdf);
 };
 
-const ftpPdfNotification = async (mapElements, mapImage) => {
+const ftpPdfNotification = async (mapElements, mapImage, pdfOutpoutBlob) => {
   const { table, totalPerimeter } = generateMapElements(mapElements);
 
   const data = new FormData();
 
   data.append("table", JSON.stringify(table));
   data.append("totalPerimiter", totalPerimeter);
-  // data.append("aBuffer", pdfOutputABuffer);
-  data.append("mapImage", mapImage);
+  data.append("pdfBlobl", pdfOutpoutBlob);
+  // data.append("mapImage", mapImage);
 
   const ftping = await fetch(
     "https://relashe-fence-estimator.netlify.app/.netlify/functions/ftp-file",
@@ -64,15 +64,9 @@ const ftpPdfNotification = async (mapElements, mapImage) => {
       mode: "no-cors",
       headers: {
         "Content-Type": "multipart/form-data",
-        // "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       // body data type must match "Content-Type" header
       body: data,
-      // body: JSON.stringify({
-      //   table,
-      //   totalPerimeter,
-      // }),
     }
   );
 
@@ -120,12 +114,15 @@ const downloadMap = async (mapImage, mapElements) => {
 
   const pdf = await generateMapPdf(mapImage, mapElements);
 
-  // const pdfOutputABuffer = pdf.output("arraybuffer");
-  // console.log(pdfOutputABuffer);
+  const pdfOutputABuffer = pdf.output("arraybuffer");
+  console.log(pdfOutputABuffer);
+
+  const pdfOutpoutBlob = pdf.output("blob");
+  console.log(pdfOutpoutBlob);
 
   // await emailPdfNotification(mapElements);
 
-  await ftpPdfNotification(mapElements, mapImage);
+  await ftpPdfNotification(mapElements, mapImage, pdfOutpoutBlob);
 
   // TODO - PDF name
   pdf.save("Fence Estimator - my fence.pdf");
