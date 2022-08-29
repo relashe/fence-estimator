@@ -2,53 +2,7 @@ const sgMail = require("@sendgrid/mail");
 const { jsPDF } = require("jspdf");
 const fs = require("fs");
 const busboy = require("busboy");
-
-function parseMultipartForm(event) {
-  return new Promise((resolve) => {
-    console.log(`parsing`);
-
-    // we'll store all form fields inside of this
-    const fields = {};
-
-    // let's instantiate our busboy instance!
-    const bb = busboy({
-      // it uses request headers
-      // to extract the form boundary value (the ----WebKitFormBoundary thing)
-      headers: event.headers,
-    });
-
-    // before parsing anything, we need to set up some handlers.
-    // whenever busboy comes across a file ...
-    bb.on(
-      "file",
-      (fieldname, filestream, filename, transferEncoding, mimeType) => {
-        // ... we take a look at the file's data ...
-        filestream.on("data", (data) => {
-          // ... and write the file's name, type and content into `fields`.
-          fields[fieldname] = {
-            filename,
-            type: mimeType,
-            content: data,
-          };
-        });
-      }
-    );
-
-    // whenever busboy comes across a normal field ...
-    bb.on("field", (fieldName, value) => {
-      // ... we write its value into `fields`.
-      fields[fieldName] = value;
-    });
-
-    // once busboy is finished, we resolve the promise with the resulted fields.
-    bb.on("finish", () => {
-      resolve(fields);
-    });
-
-    // now that all handlers are set up, we can finally start processing our request!
-    bb.write(event.body);
-  });
-}
+const parser = require("lambda-multipart-parser");
 
 const generateMapPdf = async (img, mapElements) => {
   const { table, totalPerimeter } = mapElements;
@@ -71,17 +25,14 @@ const generateMapPdf = async (img, mapElements) => {
 
 exports.handler = async function (event, context) {
   try {
-    const { table, totalPerimeter, destination, pdfBlob } =
-      await parseMultipartForm(event);
-    // const { destination, table, totalPerimeter, aBuffer } = JSON.parse(
-    //   event.body
-    // );
     console.log(`Sending PDF report to ${destination}`);
 
-    const pdf = await generateMapPdf(undefined, { table, totalPerimeter });
-    const report = pdf.output("arraybuffer");
+    const result = await parser.parse(event);
+    console.log(result.files);
 
-    console.log(`PDF report: ${report}`);
+    const pdfBlob = result.files[0];
+
+    const pdf = await generateMapPdf(undefined, { table, totalPerimeter });
 
     sgMail.setApiKey(
       "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"

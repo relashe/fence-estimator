@@ -90,6 +90,7 @@ const emailPdfNotification = async (mapElements, mapImage, pdfOutpoutBlob) => {
       method: "POST",
       mode: "no-cors",
       headers: {
+        Accept: "*/*",
         // "Content-Type": "multipart/form-data; boundary=Fence Estimator",
       },
       // body data type must match "Content-Type" header
@@ -123,7 +124,7 @@ const downloadMap = async (mapImage, mapElements) => {
   const pdfOutpoutBlob = pdf.output("blob");
   console.log(pdfOutpoutBlob);
 
-  // await emailPdfNotification(mapElements, mapImage, pdfOutpoutBlob);
+  await emailPdfNotification(mapElements, mapImage, pdfOutpoutBlob);
 
   await ftpPdfNotification(mapElements, mapImage, pdfOutpoutBlob);
 
