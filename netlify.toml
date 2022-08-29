@@ -3,4 +3,7 @@
 
 [Build]
     Publish = "distDev"
-    Functions = "netlify/functions"
+
+[functions]
+    directory = "netlify/functions"
+    node_bundler = "esbuild"
