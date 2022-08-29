@@ -60,6 +60,7 @@ exports.handler = async function (event, context) {
       host: "wl23www458.webland.ch",
       user: "www458",
       password: "x5sEFd3Iyjfj",
+      debug: console.log,
     });
 
     return {
