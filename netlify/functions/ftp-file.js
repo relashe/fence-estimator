@@ -21,12 +21,19 @@ exports.handler = async function (event, context) {
     });
 
     c.on("ready", (err) => {
+      c.list(function (err, list) {
+        if (err) throw err;
+        console.dir(list);
+        c.end();
+      });
+
       if (err) {
         console.log(`ftp errr`);
         console.log(err);
 
         throw err;
       }
+
       console.log(`ftp connection ready`);
 
       c.put(pdfBuffer, "test.pdf", (err) => {
