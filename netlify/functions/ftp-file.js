@@ -2,42 +2,17 @@ const { jsPDF } = require("jspdf");
 var Client = require("ftp");
 const parser = require("lambda-multipart-parser");
 
-const generateMapPdf = async (img, mapElements) => {
-  const { table, totalPerimeter } = mapElements;
-
-  let pdf = new jsPDF();
-  pdf.setFontSize(12);
-
-  if (img) {
-    pdf.addImage(img, "JPEG", 15, 40, 180, 180);
-  }
-
-  pdf.addPage();
-
-  pdf.table(10, 10, table, ["name", "length"]);
-
-  pdf.text([`Total: ${totalPerimeter}m`], 10, 10 * (table.length + 1) + 20);
-
-  return Promise.resolve(pdf);
-};
-
 exports.handler = async function (event, context) {
   try {
     console.log(`Sending PDF report to 91.208.99.4`);
 
-    const { table, totalPerimeter, files } = await parser.parse(event);
+    const { files } = await parser.parse(event);
     console.log(files);
 
-    // generate PDF server side
-    const pdf = await generateMapPdf(undefined, {
-      table: JSON.parse(table),
-      totalPerimeter,
-    });
-    const pdfABuffer = pdf.output("arraybuffer");
-    // const pdfBuffer = Buffer.from(pdfABuffer);
-    const pdfBuffer = Buffer.from(pdfBlob, "binary");
-
-    console.log(`PDF report: ${pdfBuffer}`);
+    const pdfBlob = files[0];
+    console.log(`arraybuffer`);
+    const pdfBuffer = Buffer.from(pdfBlob.content);
+    console.log(pdfBuffer);
 
     var c = new Client();
     c.on("error", (error) => {

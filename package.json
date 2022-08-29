@@ -26,6 +26,7 @@
     "autoprefixer": "^9.7.4",
     "babel-loader": "^8.0.6",
     "bootstrap": "^4.5.0",
+    "browser-image-compression": "^2.0.0",
     "busboy": "^1.6.0",
     "cross-env": "^7.0.2",
     "css-loader": "^3.4.2",

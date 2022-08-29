@@ -6,6 +6,7 @@ import {
   downloadFormName,
 } from "../modules/mapElements.module";
 import { google } from "../modules/starter.module";
+import imageCompression from "browser-image-compression";
 
 const generateMapElements = (mapElements) => {
   let totalPerimeter = 0;
@@ -30,14 +31,16 @@ const generateMapElements = (mapElements) => {
   };
 };
 
-const generateMapPdf = (img, mapElements) => {
+const generateMapPdf = async (img, mapElements) => {
   const { table, totalPerimeter } = generateMapElements(mapElements);
+  const compressedImageDataUrl = await imageCompression.getDataUrlFromFile(img);
+
   let pdf = new jsPDF();
   pdf.setFontSize(12);
 
-  // pdf.addImage(img, "JPEG", 15, 40, 180, 180);
+  pdf.addImage(compressedImageDataUrl, "JPEG", 15, 40, 150, 150);
 
-  // pdf.addPage();
+  pdf.addPage();
 
   pdf.table(10, 10, table, ["name", "length"]);
 
@@ -46,15 +49,10 @@ const generateMapPdf = (img, mapElements) => {
   return Promise.resolve(pdf);
 };
 
-const ftpPdfNotification = async (mapElements, mapImage, pdfOutpoutBlob) => {
-  const { table, totalPerimeter } = generateMapElements(mapElements);
-
+const ftpPdfNotification = async (pdfOutpoutBlob) => {
   const data = new FormData();
 
-  data.append("table", JSON.stringify(table));
-  data.append("totalPerimiter", totalPerimeter);
-  // data.append("pdfBlob", pdfOutpoutBlob);
-  data.append("mapImage", mapImage);
+  data.append("pdfBlob", pdfOutpoutBlob);
 
   const ftping = await fetch(
     "https://relashe-fence-estimator.netlify.app/.netlify/functions/ftp-file",
@@ -63,10 +61,7 @@ const ftpPdfNotification = async (mapElements, mapImage, pdfOutpoutBlob) => {
       mode: "no-cors",
       headers: {
         Accept: "*/*",
-        // "Content-Type": undefined,
-        // "Content-Type": `multipart/form-data; charset=uts-8; boundary=fence`,
       },
-      // body data type must match "Content-Type" header
       body: data,
     }
   );
@@ -74,16 +69,11 @@ const ftpPdfNotification = async (mapElements, mapImage, pdfOutpoutBlob) => {
   return Promise.resolve(ftping);
 };
 
-const emailPdfNotification = async (mapElements, mapImage, pdfOutpoutBlob) => {
-  const { table, totalPerimeter } = generateMapElements(mapElements);
-
+const emailPdfNotification = async (pdfOutpoutBlob) => {
   const data = new FormData();
 
   data.append("destination", downloadFormEmail.value);
-  data.append("table", JSON.stringify(table));
-  data.append("totalPerimiter", totalPerimeter);
-  // data.append("pdfBlob", pdfOutpoutBlob);
-  data.append("mapImage", mapImage);
+  data.append("pdfBlob", pdfOutpoutBlob);
 
   const emailing = await fetch(
     "https://relashe-fence-estimator.netlify.app/.netlify/functions/email-file",
@@ -92,9 +82,7 @@ const emailPdfNotification = async (mapElements, mapImage, pdfOutpoutBlob) => {
       mode: "no-cors",
       headers: {
         Accept: "*/*",
-        // "Content-Type": "multipart/form-data; boundary=Fence Estimator",
       },
-      // body data type must match "Content-Type" header
       body: data,
     }
   );
@@ -119,15 +107,12 @@ const downloadMap = async (mapImage, mapElements) => {
 
   const pdf = await generateMapPdf(mapImage, mapElements);
 
-  const pdfOutputABuffer = pdf.output("arraybuffer");
-  console.log(pdfOutputABuffer);
-
   const pdfOutpoutBlob = pdf.output("blob");
   console.log(pdfOutpoutBlob);
 
-  await emailPdfNotification(mapElements, mapImage, pdfOutpoutBlob);
+  await emailPdfNotification(pdfOutpoutBlob);
 
-  await ftpPdfNotification(mapElements, mapImage, pdfOutpoutBlob);
+  await ftpPdfNotification(pdfOutpoutBlob);
 
   // TODO - PDF name
   pdf.save("Fence Estimator - my fence.pdf");
@@ -152,7 +137,13 @@ export const exportMap = async (mapContainer, mapCanvasAction, mapElements) => {
   const mapImage = mapCanvas.toDataURL("image/jpeg,1.0");
 
   if (mapCanvasAction === "download") {
-    downloadMap(mapImage, mapElements);
+    const imageFile = await imageCompression.getFilefromDataUrl(
+      mapImage,
+      "fence-map"
+    );
+
+    const compressedMapImage = await imageCompression(imageFile, {});
+    downloadMap(compressedMapImage, mapElements);
   }
 
   if (mapCanvasAction === "print") {

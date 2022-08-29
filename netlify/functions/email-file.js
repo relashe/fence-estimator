@@ -1,31 +1,9 @@
 const sgMail = require("@sendgrid/mail");
-const { jsPDF } = require("jspdf");
 const parser = require("lambda-multipart-parser");
-
-const generateMapPdf = async (img, mapElements) => {
-  const { table, totalPerimeter } = mapElements;
-
-  let pdf = new jsPDF();
-  pdf.setFontSize(12);
-
-  if (img) {
-    pdf.addImage(img, "JPEG", 15, 40, 180, 180);
-  }
-
-  pdf.addPage();
-
-  pdf.table(10, 10, table, ["name", "length"]);
-
-  pdf.text([`Total: ${totalPerimeter}m`], 10, 10 * (table.length + 1) + 20);
-
-  return Promise.resolve(pdf);
-};
 
 exports.handler = async function (event, context) {
   try {
-    const { table, totalPerimeter, destination, files } = await parser.parse(
-      event
-    );
+    const { destination, files } = await parser.parse(event);
     console.log(files);
 
     const pdfBlob = files[0];
