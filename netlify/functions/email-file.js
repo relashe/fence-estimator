@@ -30,6 +30,9 @@ exports.handler = async function (event, context) {
     console.log(files);
 
     const pdfBlob = files[0];
+    console.log(`arraybuffer`);
+    const pdfBuffer = Buffer.from(pdfBlob.content);
+    console.log(pdfBuffer);
 
     // const pdf = await generateMapPdf(undefined, {
     //   table: JSON.parse(table),
@@ -42,8 +45,8 @@ exports.handler = async function (event, context) {
 
     console.log(`about to send`);
 
-    var pdfB64 = await readBlob.dataurl(pdfBlob);
-
+    // var pdfB64 = await readBlob(pdfBlob, );
+    const pdfB64 = pdfBuffer.toString("base64");
     console.log(`buffer result`);
     console.log(pdfB64);
 
