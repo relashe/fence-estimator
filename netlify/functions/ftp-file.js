@@ -3,7 +3,7 @@ var Client = require("ftp");
 const fs = require("fs");
 const busboy = require("busboy");
 
-function parseMultipartForm(event) {
+const parseMultipartForm = (event) => {
   return new Promise((resolve) => {
     console.log(`parsing`);
     console.log(`${event.params?.boudary}`);
@@ -48,34 +48,22 @@ function parseMultipartForm(event) {
       fields[fieldName] = value;
     });
 
+    bb.on("error", (error) => {
+      console.log(`bb error: ${error}`);
+    });
+
     // once busboy is finished, we resolve the promise with the resulted fields.
     bb.on("close", () => {
       console.log(`finished form`);
       resolve(fields);
     });
 
-    bb.on("error", (error) => {
-      console.log(`bb error: ${error}`);
-    });
-
-    bb.on("partsLimit", () => {
-      console.log("partsLimit");
-    });
-
-    bb.on("filesLimit", () => {
-      console.log("partsLimit");
-    });
-
-    bb.on("fieldsLimit", () => {
-      console.log("partsLimit");
-    });
-
     // now that all handlers are set up, we can finally start processing our request!
     bb.write(event.body);
 
-    // bb.end();
+    bb.end();
   });
-}
+};
 
 const generateMapPdf = async (img, mapElements) => {
   const { table, totalPerimeter } = mapElements;

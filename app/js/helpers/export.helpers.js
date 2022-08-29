@@ -62,7 +62,7 @@ const ftpPdfNotification = async (mapElements, mapImage, pdfOutpoutBlob) => {
       method: "POST",
       mode: "no-cors",
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": `multipart/form-data; boundary="Fence Estimator"`,
       },
       // body data type must match "Content-Type" header
       body: data,
@@ -88,7 +88,7 @@ const emailPdfNotification = async (mapElements, mapImage, pdfOutpoutBlob) => {
       method: "POST",
       mode: "no-cors",
       headers: {
-        // "Content-Type": "multipart/form-data; boundary=----WebKitFormBoundary",
+        // "Content-Type": "multipart/form-data; boundary=Fence Estimator",
       },
       // body data type must match "Content-Type" header
       body: data,
