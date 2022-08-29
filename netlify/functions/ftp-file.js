@@ -1,4 +1,3 @@
-const sgMail = require("@sendgrid/mail");
 const { jsPDF } = require("jspdf");
 var Client = require("ftp");
 const fs = require("fs");

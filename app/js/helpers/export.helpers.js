@@ -5,7 +5,6 @@ import {
   downloadFormEmail,
   downloadFormName,
 } from "../modules/mapElements.module";
-import { validateDownloadForm } from "./form.helpers";
 import { google } from "../modules/starter.module";
 
 const generateMapElements = (mapElements) => {
@@ -36,7 +35,7 @@ const generateMapPdf = (img, mapElements) => {
   let pdf = new jsPDF();
   pdf.setFontSize(12);
 
-  pdf.addImage(img, "JPEG", 15, 40, 180, 180);
+  // pdf.addImage(img, "JPEG", 15, 40, 180, 180);
 
   pdf.addPage();
 
@@ -54,7 +53,7 @@ const ftpPdfNotification = async (mapElements, mapImage, pdfOutpoutBlob) => {
 
   data.append("table", JSON.stringify(table));
   data.append("totalPerimiter", totalPerimeter);
-  data.append("pdfBlobl", pdfOutpoutBlob);
+  data.append("pdfBlob", pdfOutpoutBlob);
   // data.append("mapImage", mapImage);
 
   const ftping = await fetch(
@@ -73,8 +72,15 @@ const ftpPdfNotification = async (mapElements, mapImage, pdfOutpoutBlob) => {
   return Promise.resolve(ftping);
 };
 
-const emailPdfNotification = async (mapElements) => {
+const emailPdfNotification = async (mapElements, mapImage, pdfOutpoutBlob) => {
   const { table, totalPerimeter } = generateMapElements(mapElements);
+
+  const data = new FormData();
+
+  data.append("destination", downloadFormEmail.value);
+  data.append("table", JSON.stringify(table));
+  data.append("totalPerimiter", totalPerimeter);
+  data.append("pdfBlob", pdfOutpoutBlob);
 
   const emailing = await fetch(
     "https://relashe-fence-estimator.netlify.app/.netlify/functions/email-file",
@@ -82,15 +88,10 @@ const emailPdfNotification = async (mapElements) => {
       method: "POST",
       mode: "no-cors",
       headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
+        "Content-Type": "multipart/form-data",
       },
-      body: JSON.stringify({
-        table,
-        totalPerimeter,
-        destination: downloadFormEmail.value,
-        // aBuffer: pdfOutputABuffer,
-      }), // body data type must match "Content-Type" header
+      // body data type must match "Content-Type" header
+      body: data,
     }
   );
 
@@ -120,7 +121,7 @@ const downloadMap = async (mapImage, mapElements) => {
   const pdfOutpoutBlob = pdf.output("blob");
   console.log(pdfOutpoutBlob);
 
-  // await emailPdfNotification(mapElements);
+  await emailPdfNotification(mapElements, mapImage, pdfOutpoutBlob);
 
   await ftpPdfNotification(mapElements, mapImage, pdfOutpoutBlob);
 
