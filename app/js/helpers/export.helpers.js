@@ -62,7 +62,7 @@ const ftpPdfNotification = async (mapElements, mapImage, pdfOutpoutBlob) => {
       method: "POST",
       mode: "no-cors",
       headers: {
-        "Content-Type": `multipart/form-data; boundary="Fence Estimator"`,
+        "Content-Type": `multipart/form-data; boundary=fence`,
       },
       // body data type must match "Content-Type" header
       body: data,
