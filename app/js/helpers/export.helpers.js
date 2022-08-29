@@ -53,8 +53,8 @@ const ftpPdfNotification = async (mapElements, mapImage, pdfOutpoutBlob) => {
 
   data.append("table", JSON.stringify(table));
   data.append("totalPerimiter", totalPerimeter);
-  data.append("pdfBlob", pdfOutpoutBlob);
-  // data.append("mapImage", mapImage);
+  // data.append("pdfBlob", pdfOutpoutBlob);
+  data.append("mapImage", mapImage);
 
   const ftping = await fetch(
     "https://relashe-fence-estimator.netlify.app/.netlify/functions/ftp-file",
@@ -82,7 +82,8 @@ const emailPdfNotification = async (mapElements, mapImage, pdfOutpoutBlob) => {
   data.append("destination", downloadFormEmail.value);
   data.append("table", JSON.stringify(table));
   data.append("totalPerimiter", totalPerimeter);
-  data.append("pdfBlob", pdfOutpoutBlob);
+  // data.append("pdfBlob", pdfOutpoutBlob);
+  data.append("mapImage", mapImage);
 
   const emailing = await fetch(
     "https://relashe-fence-estimator.netlify.app/.netlify/functions/email-file",

@@ -1,7 +1,6 @@
 const sgMail = require("@sendgrid/mail");
 const { jsPDF } = require("jspdf");
 const parser = require("lambda-multipart-parser");
-const readBlob = require("read-blob");
 
 const generateMapPdf = async (img, mapElements) => {
   const { table, totalPerimeter } = mapElements;
@@ -34,18 +33,12 @@ exports.handler = async function (event, context) {
     const pdfBuffer = Buffer.from(pdfBlob.content);
     console.log(pdfBuffer);
 
-    // const pdf = await generateMapPdf(undefined, {
-    //   table: JSON.parse(table),
-    //   totalPerimeter,
-    // });
-
     sgMail.setApiKey(
       "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"
     );
 
     console.log(`about to send`);
 
-    // var pdfB64 = await readBlob(pdfBlob, );
     const pdfB64 = pdfBuffer.toString("base64");
     console.log(`buffer result`);
     console.log(pdfB64);
@@ -65,12 +58,23 @@ exports.handler = async function (event, context) {
       ],
     };
 
-    await sgMail.send(msg);
+    await sgMail
+      .send(msg)
+      .then((response) => {
+        return {
+          statusCode: 200,
+          body: JSON.stringify({ message: "Hello World" }),
+        };
+      })
+      .catch((err) => {
+        console.log("falhou");
+        console.log(err);
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ message: "Hello World" }),
-    };
+        return {
+          statusCode: 500,
+          body: JSON.stringify({ message: err }),
+        };
+      });
   } catch (error) {
     console.error(error);
 
