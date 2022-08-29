@@ -32,6 +32,10 @@ function parseMultipartForm(event) {
             content: data,
           };
         });
+
+        filestream.on("error", (err) => {
+          console.log(`bb file error: ${err}`);
+        });
       }
     );
 
