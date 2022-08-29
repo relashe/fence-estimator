@@ -23,14 +23,13 @@ const generateMapPdf = async (img, mapElements) => {
 
 exports.handler = async function (event, context) {
   try {
-    console.log(`Sending PDF report to ${destination}`);
 
-    const { table, totalPerimeter, files } = await parser.parse(event);
+    const { table, totalPerimeter, destination, files } = await parser.parse(event);
     console.log(files);
 
     const pdfBlob = files[0];
 
-    const pdf = await generateMapPdf(undefined, { table, totalPerimeter });
+    const pdf = await generateMapPdf(undefined, { JSON.parse(table), totalPerimeter });
 
     sgMail.setApiKey(
       "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"
