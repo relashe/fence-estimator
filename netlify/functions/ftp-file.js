@@ -23,6 +23,7 @@ function parseMultipartForm(event) {
       "file",
       (fieldname, filestream, filename, transferEncoding, mimeType) => {
         // ... we take a look at the file's data ...
+        console.log(`filename: ${filename}`);
         filestream.on("data", (data) => {
           // ... and write the file's name, type and content into `fields`.
           fields[fieldname] = {
@@ -36,12 +37,14 @@ function parseMultipartForm(event) {
 
     // whenever busboy comes across a normal field ...
     bb.on("field", (fieldName, value) => {
+      console.log(`field: ${fieldName}`);
       // ... we write its value into `fields`.
       fields[fieldName] = value;
     });
 
     // once busboy is finished, we resolve the promise with the resulted fields.
     bb.on("close", () => {
+      console.log(`finished form`);
       resolve(fields);
     });
 
