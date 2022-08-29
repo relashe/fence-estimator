@@ -1,7 +1,7 @@
 const { jsPDF } = require("jspdf");
 var Client = require("ftp");
 const fs = require("fs");
-import * as Busboy from "busboy";
+const busboy = require("busboy");
 
 const parseMultipartForm = (event) => {
   return new Promise((resolve) => {
@@ -15,7 +15,7 @@ const parseMultipartForm = (event) => {
     console.log("instatiate now");
 
     // let's instantiate our busboy instance!
-    const bb = new Busboy({
+    const bb = busboy({
       // it uses request headers
       // to extract the form boundary value (the ----WebKitFormBoundary thing)
       headers: event.headers,
@@ -60,9 +60,9 @@ const parseMultipartForm = (event) => {
       console.log(`bb error: ${error}`);
     });
 
-    console.log("finish now");
+    console.log("close now");
     // once busboy is finished, we resolve the promise with the resulted fields.
-    bb.on("finish", () => {
+    bb.on("close", () => {
       console.log(`finished form`);
       resolve(fields);
     });
