@@ -52,6 +52,10 @@ exports.handler = async function (event, context) {
 
     console.log(`start ftp connection`);
 
+    c.on("greeting", (message) => {
+      console.log(message);
+    });
+
     c.connect({
       host: "wl23www458.webland.ch",
       user: "www458",
