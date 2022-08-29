@@ -41,8 +41,20 @@ function parseMultipartForm(event) {
     });
 
     // once busboy is finished, we resolve the promise with the resulted fields.
-    bb.on("finish", () => {
+    bb.on("close", () => {
       resolve(fields);
+    });
+
+    bb.on("partsLimit", () => {
+      console.log("partsLimit");
+    });
+
+    bb.on("filesLimit", () => {
+      console.log("partsLimit");
+    });
+
+    bb.on("fieldsLimit", () => {
+      console.log("partsLimit");
     });
 
     // now that all handlers are set up, we can finally start processing our request!
