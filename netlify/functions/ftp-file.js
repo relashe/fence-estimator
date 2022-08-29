@@ -73,7 +73,7 @@ const generateMapPdf = async (img, mapElements) => {
 exports.handler = async function (event, context) {
   try {
     console.log(`Sending PDF report to 91.208.99.4`);
-    const { table, totalPerimeter, mapImage } = parseMultipartForm(event);
+    const { table, totalPerimeter, mapImage } = await parseMultipartForm(event);
     // const {destination, table, totalPerimeter, aBuffer } = JSON.parse(
     //   event.body
     // );
