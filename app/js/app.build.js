@@ -1,8 +1,8 @@
-import { init as loadedMapModule } from "./modules/starter.module";
+import { init as initMap } from "./modules/starter.module";
 
 const mapStarter = (timing = 200) => {
   setTimeout(() => {
-    loadedMapModule();
+    initMap();
   }, timing);
 };
 

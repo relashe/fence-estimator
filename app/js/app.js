@@ -1,9 +1,9 @@
-import { init as loadedMapModule } from "./modules/starter.module";
+import { init as initMap } from "./modules/starter.module";
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadedMapModule();
+  initMap();
 
   // $("#exampleModal").on("shown.bs.modal", function(e) {
-  //   loadedMapModule();
+  //   initMap();
   // });
 });

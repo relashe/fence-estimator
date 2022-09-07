@@ -682,12 +682,6 @@ export const createMap = () => {
     getFenceEstimatorData();
   });
 
-  google.maps.event.addListener(map, "zoom_changed", function () {
-    //only wait for zoom change on print
-    // mapCanvasAction === "print" &&
-    // HELPERS.exportMap(mapContainer, mapCanvasAction, mapElements);
-  });
-
   // Marker
   addressMarker = new google.maps.Marker({
     position: new google.maps.LatLng(
@@ -839,7 +833,6 @@ export const createMap = () => {
 };
 
 // SETUP
-
 const bindMapEvents = () => {
   // bind functions
   const ignoreKeyPress = (e) => {
