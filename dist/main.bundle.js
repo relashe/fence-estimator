@@ -177,7 +177,12 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _js_app_build_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/app.build.js */ \"./app/js/app.build.js\");\n// IMPORTS\n// import \"./styles/styles.scss\";\n// JS\n\n\n//# sourceURL=webpack:///./app/index.build.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _js_app_build_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/app.build.js */ "./app/js/app.build.js");
+// IMPORTS
+// import "./styles/styles.scss";
+// JS
+
 
 /***/ }),
 
@@ -189,7 +194,24 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _js_
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_starter_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/starter.module */ \"./app/js/modules/starter.module.js\");\n\n\nconst mapStarter = function () {\n  let timing = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 200;\n  setTimeout(() => {\n    Object(_modules_starter_module__WEBPACK_IMPORTED_MODULE_0__[\"init\"])();\n  }, timing);\n};\n\nvar fenceEstimatorTrigger = document.getElementById(\"fence-estimator-trigger\");\nfenceEstimatorTrigger && fenceEstimatorTrigger.addEventListener(\"click\", () => {\n  mapStarter();\n});\ndocument.addEventListener(\"DOMContentLoaded\", () => {\n  mapStarter(1200);\n});\n\n//# sourceURL=webpack:///./app/js/app.build.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _modules_starter_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/starter.module */ "./app/js/modules/starter.module.js");
+
+
+const mapStarter = function () {
+  let timing = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 200;
+  setTimeout(() => {
+    Object(_modules_starter_module__WEBPACK_IMPORTED_MODULE_0__["init"])();
+  }, timing);
+};
+
+var fenceEstimatorTrigger = document.getElementById("fence-estimator-trigger");
+fenceEstimatorTrigger && fenceEstimatorTrigger.addEventListener("click", () => {
+  mapStarter();
+});
+document.addEventListener("DOMContentLoaded", () => {
+  mapStarter(1200);
+});
 
 /***/ }),
 
@@ -201,7 +223,20 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _mod
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"COLORS\", function() { return COLORS; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"OPACITY\", function() { return OPACITY; });\nconst COLORS = {\n  DEFAULT: \"#c99700\",\n  STROKE: \"#c99700\",\n  EDIT: \"#ff0000\",\n  HIGHLIGHT: \"#c99700\"\n};\nconst OPACITY = {\n  DEFAULT: 0.25,\n  EDIT: 0.8,\n  HIGHLIGHT: 0.8\n};\n\n//# sourceURL=webpack:///./app/js/constants/colors.constants.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "COLORS", function() { return COLORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OPACITY", function() { return OPACITY; });
+const COLORS = {
+  DEFAULT: "#c99700",
+  STROKE: "#c99700",
+  EDIT: "#ff0000",
+  HIGHLIGHT: "#c99700"
+};
+const OPACITY = {
+  DEFAULT: 0.25,
+  EDIT: 0.8,
+  HIGHLIGHT: 0.8
+};
 
 /***/ }),
 
@@ -212,7 +247,13 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("// export { default as IconDelete } from \"../../../public/assets/tool-bin.svg\";\n// export { default as IconBoundaryFence } from \"../../../public/assets/tool-boundary-fence.svg\";\n// export { default as IconClosedPaddock } from \"../../../public/assets/tool-closed-paddock-fence.svg\";\n// export { default as IconDrag } from \"../../../public/assets/tool-move.svg\";\n// export { default as IconPrint } from \"../../../public/assets/tool-print.svg\";\n// export { default as IconZoomIn } from \"../../../public/assets/tool-zoom-in.svg\";\n// export { default as IconZoomOut } from \"../../../public/assets/tool-zoom-out.svg\";\n\n//# sourceURL=webpack:///./app/js/constants/icons.constants.js?");
+// export { default as IconDelete } from "../../../public/assets/tool-bin.svg";
+// export { default as IconBoundaryFence } from "../../../public/assets/tool-boundary-fence.svg";
+// export { default as IconClosedPaddock } from "../../../public/assets/tool-closed-paddock-fence.svg";
+// export { default as IconDrag } from "../../../public/assets/tool-move.svg";
+// export { default as IconPrint } from "../../../public/assets/tool-print.svg";
+// export { default as IconZoomIn } from "../../../public/assets/tool-zoom-in.svg";
+// export { default as IconZoomOut } from "../../../public/assets/tool-zoom-out.svg";
 
 /***/ }),
 
@@ -224,7 +265,33 @@ eval("// export { default as IconDelete } from \"../../../public/assets/tool-bin
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _colors_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./colors.constants */ \"./app/js/constants/colors.constants.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"COLORS\", function() { return _colors_constants__WEBPACK_IMPORTED_MODULE_0__[\"COLORS\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"OPACITY\", function() { return _colors_constants__WEBPACK_IMPORTED_MODULE_0__[\"OPACITY\"]; });\n\n/* harmony import */ var _map_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./map.constants */ \"./app/js/constants/map.constants.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"MAP_SETTINGS\", function() { return _map_constants__WEBPACK_IMPORTED_MODULE_1__[\"MAP_SETTINGS\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"DEFAULT_COORDINATES\", function() { return _map_constants__WEBPACK_IMPORTED_MODULE_1__[\"DEFAULT_COORDINATES\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"DEFAULT_ZOOM\", function() { return _map_constants__WEBPACK_IMPORTED_MODULE_1__[\"DEFAULT_ZOOM\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"EXPORT_ZOOM\", function() { return _map_constants__WEBPACK_IMPORTED_MODULE_1__[\"EXPORT_ZOOM\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"MAP_OPTIONS\", function() { return _map_constants__WEBPACK_IMPORTED_MODULE_1__[\"MAP_OPTIONS\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"SHAPE_SETTINGS\", function() { return _map_constants__WEBPACK_IMPORTED_MODULE_1__[\"SHAPE_SETTINGS\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"SHAPES_CONTROLS\", function() { return _map_constants__WEBPACK_IMPORTED_MODULE_1__[\"SHAPES_CONTROLS\"]; });\n\n/* harmony import */ var _icons_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./icons.constants */ \"./app/js/constants/icons.constants.js\");\n/* harmony import */ var _icons_constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_icons_constants__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _icons_constants__WEBPACK_IMPORTED_MODULE_2__) if([\"default\",\"COLORS\",\"OPACITY\",\"MAP_SETTINGS\",\"DEFAULT_COORDINATES\",\"DEFAULT_ZOOM\",\"EXPORT_ZOOM\",\"MAP_OPTIONS\",\"SHAPE_SETTINGS\",\"SHAPES_CONTROLS\"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _icons_constants__WEBPACK_IMPORTED_MODULE_2__[key]; }) }(__WEBPACK_IMPORT_KEY__));\n\n\n\n\n//# sourceURL=webpack:///./app/js/constants/index.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _colors_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./colors.constants */ "./app/js/constants/colors.constants.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "COLORS", function() { return _colors_constants__WEBPACK_IMPORTED_MODULE_0__["COLORS"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "OPACITY", function() { return _colors_constants__WEBPACK_IMPORTED_MODULE_0__["OPACITY"]; });
+
+/* harmony import */ var _map_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./map.constants */ "./app/js/constants/map.constants.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MAP_SETTINGS", function() { return _map_constants__WEBPACK_IMPORTED_MODULE_1__["MAP_SETTINGS"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DEFAULT_COORDINATES", function() { return _map_constants__WEBPACK_IMPORTED_MODULE_1__["DEFAULT_COORDINATES"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DEFAULT_ZOOM", function() { return _map_constants__WEBPACK_IMPORTED_MODULE_1__["DEFAULT_ZOOM"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "EXPORT_ZOOM", function() { return _map_constants__WEBPACK_IMPORTED_MODULE_1__["EXPORT_ZOOM"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MAP_OPTIONS", function() { return _map_constants__WEBPACK_IMPORTED_MODULE_1__["MAP_OPTIONS"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SHAPE_SETTINGS", function() { return _map_constants__WEBPACK_IMPORTED_MODULE_1__["SHAPE_SETTINGS"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SHAPES_CONTROLS", function() { return _map_constants__WEBPACK_IMPORTED_MODULE_1__["SHAPES_CONTROLS"]; });
+
+/* harmony import */ var _icons_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./icons.constants */ "./app/js/constants/icons.constants.js");
+/* harmony import */ var _icons_constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_icons_constants__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _icons_constants__WEBPACK_IMPORTED_MODULE_2__) if(["default","COLORS","OPACITY","MAP_SETTINGS","DEFAULT_COORDINATES","DEFAULT_ZOOM","EXPORT_ZOOM","MAP_OPTIONS","SHAPE_SETTINGS","SHAPES_CONTROLS"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _icons_constants__WEBPACK_IMPORTED_MODULE_2__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+
 
 /***/ }),
 
@@ -236,7 +303,68 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _col
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"MAP_SETTINGS\", function() { return MAP_SETTINGS; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"DEFAULT_COORDINATES\", function() { return DEFAULT_COORDINATES; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"DEFAULT_ZOOM\", function() { return DEFAULT_ZOOM; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"EXPORT_ZOOM\", function() { return EXPORT_ZOOM; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"MAP_OPTIONS\", function() { return MAP_OPTIONS; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"SHAPE_SETTINGS\", function() { return SHAPE_SETTINGS; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"SHAPES_CONTROLS\", function() { return SHAPES_CONTROLS; });\n/* harmony import */ var _colors_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./colors.constants */ \"./app/js/constants/colors.constants.js\");\n\nconst MAP_SETTINGS = {\n  key: \"AIzaSyDKn1YutebCypgyFrQSP6gtACQ_LbCsEGs\",\n  options: {\n    libraries: [\"drawing\", \"places\", \"geometry\"],\n    version: \"3\"\n  }\n};\nconst DEFAULT_COORDINATES = {\n  lat: -37.8136276,\n  lng: 144.9630576\n};\nconst DEFAULT_ZOOM = 15;\nconst EXPORT_ZOOM = 16;\nconst MAP_OPTIONS = {\n  center: DEFAULT_COORDINATES,\n  zoom: DEFAULT_ZOOM,\n  fullscreenControl: false,\n  mapTypeControl: false,\n  mapTypeId: \"satellite\",\n  streetViewControl: false,\n  tilt: 0,\n  zoomControl: false\n};\nconst SHAPE_SETTINGS = {\n  DEFAULT: {\n    fillOpacity: _colors_constants__WEBPACK_IMPORTED_MODULE_0__[\"OPACITY\"].DEFAULT,\n    fillColor: _colors_constants__WEBPACK_IMPORTED_MODULE_0__[\"COLORS\"].DEFAULT,\n    strokeColor: _colors_constants__WEBPACK_IMPORTED_MODULE_0__[\"COLORS\"].STROKE,\n    strokeWeight: 3,\n    editable: true,\n    draggable: true,\n    clickable: true,\n    visible: true\n  },\n  EDIT: {\n    fillOpacity: _colors_constants__WEBPACK_IMPORTED_MODULE_0__[\"OPACITY\"].EDIT,\n    fillColor: _colors_constants__WEBPACK_IMPORTED_MODULE_0__[\"COLORS\"].EDIT,\n    strokeColor: _colors_constants__WEBPACK_IMPORTED_MODULE_0__[\"COLORS\"].EDIT\n  },\n  HIGHLIGHT: {\n    fillOpacity: _colors_constants__WEBPACK_IMPORTED_MODULE_0__[\"OPACITY\"].HIGHLIGHT,\n    fillColor: _colors_constants__WEBPACK_IMPORTED_MODULE_0__[\"COLORS\"].HIGHLIGHT,\n    strokeColor: _colors_constants__WEBPACK_IMPORTED_MODULE_0__[\"COLORS\"].HIGHLIGHT\n  }\n};\nconst SHAPES_CONTROLS = {\n  HIGHLIGHT: \"highlight\",\n  EDIT: \"edit\",\n  DELETE: \"delete\",\n  CONFIRM_DELETE: \"confirm-delete\",\n  EDIT_NAME: \"edit-name\"\n};\n\n//# sourceURL=webpack:///./app/js/constants/map.constants.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MAP_SETTINGS", function() { return MAP_SETTINGS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DEFAULT_COORDINATES", function() { return DEFAULT_COORDINATES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DEFAULT_ZOOM", function() { return DEFAULT_ZOOM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EXPORT_ZOOM", function() { return EXPORT_ZOOM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MAP_OPTIONS", function() { return MAP_OPTIONS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SHAPE_SETTINGS", function() { return SHAPE_SETTINGS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SHAPES_CONTROLS", function() { return SHAPES_CONTROLS; });
+/* harmony import */ var _colors_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./colors.constants */ "./app/js/constants/colors.constants.js");
+
+const MAP_SETTINGS = {
+  key: "AIzaSyDKn1YutebCypgyFrQSP6gtACQ_LbCsEGs",
+  options: {
+    libraries: ["drawing", "places", "geometry"],
+    version: "3"
+  }
+};
+const DEFAULT_COORDINATES = {
+  lat: -37.8136276,
+  lng: 144.9630576
+};
+const DEFAULT_ZOOM = 15;
+const EXPORT_ZOOM = 16;
+const MAP_OPTIONS = {
+  center: DEFAULT_COORDINATES,
+  zoom: DEFAULT_ZOOM,
+  fullscreenControl: false,
+  mapTypeControl: false,
+  mapTypeId: "satellite",
+  streetViewControl: false,
+  tilt: 0,
+  zoomControl: false
+};
+const SHAPE_SETTINGS = {
+  DEFAULT: {
+    fillOpacity: _colors_constants__WEBPACK_IMPORTED_MODULE_0__["OPACITY"].DEFAULT,
+    fillColor: _colors_constants__WEBPACK_IMPORTED_MODULE_0__["COLORS"].DEFAULT,
+    strokeColor: _colors_constants__WEBPACK_IMPORTED_MODULE_0__["COLORS"].STROKE,
+    strokeWeight: 3,
+    editable: true,
+    draggable: true,
+    clickable: true,
+    visible: true
+  },
+  EDIT: {
+    fillOpacity: _colors_constants__WEBPACK_IMPORTED_MODULE_0__["OPACITY"].EDIT,
+    fillColor: _colors_constants__WEBPACK_IMPORTED_MODULE_0__["COLORS"].EDIT,
+    strokeColor: _colors_constants__WEBPACK_IMPORTED_MODULE_0__["COLORS"].EDIT
+  },
+  HIGHLIGHT: {
+    fillOpacity: _colors_constants__WEBPACK_IMPORTED_MODULE_0__["OPACITY"].HIGHLIGHT,
+    fillColor: _colors_constants__WEBPACK_IMPORTED_MODULE_0__["COLORS"].HIGHLIGHT,
+    strokeColor: _colors_constants__WEBPACK_IMPORTED_MODULE_0__["COLORS"].HIGHLIGHT
+  }
+};
+const SHAPES_CONTROLS = {
+  HIGHLIGHT: "highlight",
+  EDIT: "edit",
+  DELETE: "delete",
+  CONFIRM_DELETE: "confirm-delete",
+  EDIT_NAME: "edit-name"
+};
 
 /***/ }),
 
@@ -248,7 +376,49 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"storePaddocks\", function() { return storePaddocks; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"initMapStorageData\", function() { return initMapStorageData; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getMapStorageData\", function() { return getMapStorageData; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"storeFenceEstimatorData\", function() { return storeFenceEstimatorData; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"removeFenceEstimatorData\", function() { return removeFenceEstimatorData; });\nlet mapStorage = \"fence-estimator\",\n    mapStorageData = {}; // store paddocks data into session storage\n\nconst storePaddocks = mapElements => {\n  let fences = [];\n  mapElements.forEach(element => {\n    const shape = {\n      paths: element.getPath().getArray(),\n      paddockIdx: element.paddockIdx,\n      paddockName: element.paddockName,\n      type: element.type\n    };\n    fences.push(shape);\n  });\n  storeFenceEstimatorData({\n    fences\n  });\n};\nconst initMapStorageData = () => {\n  mapStorageData = JSON.parse(localStorage.getItem(mapStorage));\n};\nconst getMapStorageData = () => {\n  initMapStorageData();\n  return mapStorageData;\n};\nconst storeFenceEstimatorData = data => {\n  if (data) {\n    mapStorageData = { ...mapStorageData,\n      ...data\n    };\n  }\n\n  localStorage.setItem(\"\".concat(mapStorage), JSON.stringify(mapStorageData));\n};\nconst removeFenceEstimatorData = () => {\n  localStorage.removeItem(mapStorage);\n};\n\n//# sourceURL=webpack:///./app/js/helpers/cache.helpers.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "storePaddocks", function() { return storePaddocks; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initMapStorageData", function() { return initMapStorageData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMapStorageData", function() { return getMapStorageData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "storeFenceEstimatorData", function() { return storeFenceEstimatorData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeFenceEstimatorData", function() { return removeFenceEstimatorData; });
+let mapStorage = "fence-estimator",
+    mapStorageData = {}; // store paddocks data into session storage
+
+const storePaddocks = mapElements => {
+  let fences = [];
+  mapElements.forEach(element => {
+    const shape = {
+      paths: element.getPath().getArray(),
+      paddockIdx: element.paddockIdx,
+      paddockName: element.paddockName,
+      type: element.type
+    };
+    fences.push(shape);
+  });
+  storeFenceEstimatorData({
+    fences
+  });
+};
+const initMapStorageData = () => {
+  mapStorageData = JSON.parse(localStorage.getItem(mapStorage));
+};
+const getMapStorageData = () => {
+  initMapStorageData();
+  return mapStorageData;
+};
+const storeFenceEstimatorData = data => {
+  if (data) {
+    mapStorageData = { ...mapStorageData,
+      ...data
+    };
+  }
+
+  localStorage.setItem("".concat(mapStorage), JSON.stringify(mapStorageData));
+};
+const removeFenceEstimatorData = () => {
+  localStorage.removeItem(mapStorage);
+};
 
 /***/ }),
 
@@ -260,7 +430,128 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"exportMap\", function() { return exportMap; });\n/* harmony import */ var html2canvas__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! html2canvas */ \"./node_modules/html2canvas/dist/html2canvas.js\");\n/* harmony import */ var html2canvas__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(html2canvas__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var jspdf__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jspdf */ \"./node_modules/jspdf/dist/jspdf.es.min.js\");\n/* harmony import */ var _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../modules/mapElements.module */ \"./app/js/modules/mapElements.module.js\");\n/* harmony import */ var _form_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./form.helpers */ \"./app/js/helpers/form.helpers.js\");\n/* harmony import */ var _modules_starter_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../modules/starter.module */ \"./app/js/modules/starter.module.js\");\n\n\n\n\n\n\nconst generateMapElements = mapElements => {\n  let totalPerimeter = 0;\n  let table = [];\n  mapElements.forEach((shape, index) => {\n    const shapeLength = _modules_starter_module__WEBPACK_IMPORTED_MODULE_4__[\"google\"].maps.geometry.spherical.computeLength(shape.getPath().getArray());\n    table.push({\n      name: \"\".concat(shape.paddockName),\n      length: \"\".concat(shapeLength.toFixed(0))\n    });\n    totalPerimeter += shapeLength.toFixed(0);\n  });\n  return {\n    table,\n    totalPerimeter\n  };\n};\n\nconst generateMapPdf = (img, mapElements) => {\n  const {\n    table,\n    totalPerimeter\n  } = generateMapElements(mapElements);\n  let pdf = new jspdf__WEBPACK_IMPORTED_MODULE_1__[\"default\"]();\n  pdf.setFontSize(12);\n  pdf.addImage(img, \"JPEG\", 15, 40, 180, 180);\n  pdf.addPage();\n  pdf.table(10, 10, table, [\"name\", \"length\"]);\n  pdf.text([\"Total: \".concat(totalPerimeter, \"m\")], 10, 10 * (table.length + 1) + 20);\n  return Promise.resolve(pdf);\n};\n\nconst emailPdfNotification = async mapElements => {\n  //   const emailMessage = `\n  //     <p><strong>A new fence map has been dowloaded by:</strong></p>\n  //     <p>${downloadFormName.value} - ${downloadFormEmail.value}</p>\n  //     <p> The PDF has been saved on the server.</p>\n  //     `;\n  //   const message = await Email.send({\n  //     SecureToken: \"25a36738-9b98-4ff7-9bc4-4b10ceb89033\",\n  //     To: \"paciencia@relashe.com\",\n  //     From: \"developer@relashe.com\",\n  //     Subject: \"Fence (COPY TBC)\",\n  //     Body: emailMessage,\n  //   });\n  const {\n    table,\n    totalPerimeter\n  } = generateMapElements(mapElements);\n  const emailing = await fetch(\"https://relashe-fence-estimator.netlify.app/.netlify/functions/ftp-file\", {\n    method: \"POST\",\n    mode: \"no-cors\",\n    headers: {\n      \"Content-Type\": \"application/json\" // 'Content-Type': 'application/x-www-form-urlencoded',\n\n    },\n    body: JSON.stringify({\n      table,\n      totalPerimeter,\n      destination: _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_2__[\"downloadFormEmail\"].value\n    }) // body data type must match \"Content-Type\" header\n\n  });\n  return Promise.resolve(emailing);\n};\n\nconst printMap = (mapImage, width, height) => {\n  document.querySelectorAll(\".print\")[0].innerHTML = \"\\n          <img src=\\\"\".concat(mapImage, \"\\\" style=\\\"width: \").concat(width, \"px; height: \").concat(height, \"px;\\\" />\\n          \");\n  setTimeout(() => {\n    window.print();\n  }, 0);\n};\n\nconst downloadMap = async (mapImage, mapElements) => {\n  // generate PDF\n  // email customer details\n  // ftp to client\n  const pdf = await generateMapPdf(mapImage, mapElements);\n  const pdfOutputBlob = pdf.output(\"blob\");\n  const pdfOutputBuffer = pdf.output(\"arraybuffer\"); //   const pdfBase64 = btoa(\n  //     String.fromCharCode(...new Uint8Array(pdfOutputBuffer))\n  //   );\n\n  let pdfBase642;\n  var reader = new FileReader();\n\n  reader.onload = async event => {\n    pdfBase642 = event.target.result;\n    await emailPdfNotification(mapElements); // TODO - PDF name\n\n    pdf.save(\"Fence Estimator - my fence.pdf\");\n    _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_2__[\"closeDownloadBtn\"].click();\n    _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_2__[\"downloadFormName\"].value = \"\";\n    _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_2__[\"downloadFormEmail\"].value = \"\";\n  };\n\n  reader.readAsDataURL(pdfOutputBlob); //\n  // const pdfDataUri = pdf.output(\"datauristring\");\n  // const zip = new JSZip();\n  // zip.file(\"fence.pdf\", pdfOutputBuffer);\n  // zip\n  //   .generateAsync({\n  //     type: \"base64\",\n  //     compression: \"DEFLATE\",\n  //     compressionOptions: {\n  //       level: 9,\n  //     },\n  //   })\n  //   .then(function (content) {\n  //     const pdfDataUri = `data:application/x-zip-compressed;base64,${content}`;\n  //   });\n  // const ftp = new FtpConnection();\n};\n\nconst exportMap = async (mapContainer, mapCanvasAction, mapElements) => {\n  const width = mapContainer.clientWidth;\n  const height = mapContainer.clientHeight;\n  const mapCanvas = await html2canvas__WEBPACK_IMPORTED_MODULE_0___default()(mapContainer, {\n    useCORS: true,\n    imageTimeout: 0,\n    width,\n    height\n  });\n  const mapImage = mapCanvas.toDataURL(\"image/jpeg,1.0\");\n\n  if (mapCanvasAction === \"download\") {\n    downloadMap(mapImage, mapElements);\n  }\n\n  if (mapCanvasAction === \"print\") {\n    printMap(mapImage, width, height);\n  }\n\n  mapCanvasAction = undefined;\n};\n\n//# sourceURL=webpack:///./app/js/helpers/export.helpers.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "exportMap", function() { return exportMap; });
+/* harmony import */ var html2canvas__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! html2canvas */ "./node_modules/html2canvas/dist/html2canvas.js");
+/* harmony import */ var html2canvas__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(html2canvas__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var jspdf__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jspdf */ "./node_modules/jspdf/dist/jspdf.es.min.js");
+/* harmony import */ var _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../modules/mapElements.module */ "./app/js/modules/mapElements.module.js");
+/* harmony import */ var _modules_starter_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../modules/starter.module */ "./app/js/modules/starter.module.js");
+/* harmony import */ var browser_image_compression__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! browser-image-compression */ "./node_modules/browser-image-compression/dist/browser-image-compression.mjs");
+
+
+
+
+
+
+const generateMapElements = mapElements => {
+  let totalPerimeter = 0;
+  let table = [];
+  mapElements.forEach((shape, index) => {
+    const shapeLength = _modules_starter_module__WEBPACK_IMPORTED_MODULE_3__["google"].maps.geometry.spherical.computeLength(shape.getPath().getArray());
+    table.push({
+      name: "".concat(shape.paddockName),
+      length: "".concat(shapeLength.toFixed(0))
+    });
+    totalPerimeter += shapeLength.toFixed(0);
+  });
+  return {
+    table,
+    totalPerimeter
+  };
+};
+
+const generateMapPdf = async (img, mapElements) => {
+  const {
+    table,
+    totalPerimeter
+  } = generateMapElements(mapElements);
+  const compressedImageDataUrl = await browser_image_compression__WEBPACK_IMPORTED_MODULE_4__["default"].getDataUrlFromFile(img);
+  let pdf = new jspdf__WEBPACK_IMPORTED_MODULE_1__["default"]();
+  pdf.setFontSize(12);
+  pdf.addImage(compressedImageDataUrl, "JPEG", 15, 40, 150, 150);
+  pdf.addPage();
+  pdf.table(10, 10, table, ["name", "length"]);
+  pdf.text(["Total: ".concat(totalPerimeter, "m")], 10, 10 * (table.length + 1) + 20);
+  return Promise.resolve(pdf);
+};
+
+const ftpPdfNotification = async pdfOutpoutBlob => {
+  const data = new FormData();
+  data.append("pdfBlob", pdfOutpoutBlob);
+  const ftping = await fetch("https://relashe-fence-estimator.netlify.app/.netlify/functions/ftp-file", {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      Accept: "*/*"
+    },
+    body: data
+  });
+  return Promise.resolve(ftping);
+};
+
+const emailPdfNotification = async pdfOutpoutBlob => {
+  const data = new FormData();
+  data.append("destination", _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_2__["downloadFormEmail"].value);
+  data.append("pdfBlob", pdfOutpoutBlob);
+  const emailing = await fetch("https://relashe-fence-estimator.netlify.app/.netlify/functions/email-file", {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      Accept: "*/*"
+    },
+    body: data
+  });
+  return Promise.resolve(emailing);
+};
+
+const printMap = (mapImage, width, height) => {
+  document.querySelectorAll(".print")[0].innerHTML = "\n          <img src=\"".concat(mapImage, "\" style=\"width: ").concat(width, "px; height: ").concat(height, "px;\" />\n          ");
+  setTimeout(() => {
+    window.print();
+  }, 0);
+};
+
+const downloadMap = async (mapImage, mapElements) => {
+  // generate PDF
+  // email customer details
+  // ftp to client
+  const pdf = await generateMapPdf(mapImage, mapElements);
+  const pdfOutpoutBlob = pdf.output("blob");
+  console.log(pdfOutpoutBlob);
+  await emailPdfNotification(pdfOutpoutBlob);
+  await ftpPdfNotification(pdfOutpoutBlob); // TODO - PDF name
+
+  pdf.save("Fence Estimator - my fence.pdf"); // close and clear
+
+  _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_2__["closeDownloadBtn"].click();
+  _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_2__["downloadFormName"].value = "";
+  _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_2__["downloadFormEmail"].value = "";
+};
+
+const exportMap = async (mapContainer, mapCanvasAction, mapElements) => {
+  const width = mapContainer.clientWidth;
+  const height = mapContainer.clientHeight;
+  const mapCanvas = await html2canvas__WEBPACK_IMPORTED_MODULE_0___default()(mapContainer, {
+    useCORS: true,
+    imageTimeout: 0,
+    width,
+    height
+  });
+  const mapImage = mapCanvas.toDataURL("image/jpeg,1.0");
+
+  if (mapCanvasAction === "download") {
+    const imageFile = await browser_image_compression__WEBPACK_IMPORTED_MODULE_4__["default"].getFilefromDataUrl(mapImage, "fence-map");
+    const compressedMapImage = await Object(browser_image_compression__WEBPACK_IMPORTED_MODULE_4__["default"])(imageFile, {});
+    downloadMap(compressedMapImage, mapElements);
+  }
+
+  if (mapCanvasAction === "print") {
+    printMap(mapImage, width, height);
+  }
+
+  mapCanvasAction = undefined;
+};
 
 /***/ }),
 
@@ -272,7 +563,53 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"validateDownloadName\", function() { return validateDownloadName; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"validateDownloadEmail\", function() { return validateDownloadEmail; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"validateDownloadForm\", function() { return validateDownloadForm; });\n/* harmony import */ var _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../modules/mapElements.module */ \"./app/js/modules/mapElements.module.js\");\n\n\nconst validateEmailFormat = email => {\n  var re = /\\S+@\\S+\\.\\S+/;\n  return re.test(email);\n};\n\nconst validateDownloadName = () => {\n  let isNameValid = true; // validate name\n\n  if (_modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__[\"downloadFormName\"].value === \"\") {\n    isNameValid = false;\n    _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__[\"downloadFormNameError\"].innerHTML = \"Please add your name\";\n  } else {\n    isNameValid = true;\n    _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__[\"downloadFormNameError\"].innerHTML = \"\";\n  }\n\n  _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__[\"downloadFormNameError\"].setAttribute(\"aria-hidden\", !isNameValid);\n  return isNameValid;\n};\nconst validateDownloadEmail = () => {\n  let isEmailValid = true; // validate email\n\n  if (_modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__[\"downloadFormEmail\"].value === \"\") {\n    isEmailValid = false;\n    _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__[\"downloadFormEmailError\"].innerHTML = \"Please insert your email\";\n  } else if (!validateEmailFormat(_modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__[\"downloadFormEmail\"].value)) {\n    isEmailValid = false;\n    _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__[\"downloadFormEmailError\"].innerHTML = \"Please insert an email address in the right format.\";\n  } else {\n    isEmailValid = true;\n    _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__[\"downloadFormEmailError\"].innerHTML = \"\";\n  }\n\n  return isEmailValid;\n};\nconst validateDownloadForm = () => {\n  const isNameValid = validateDownloadName();\n  const isEmailValid = validateDownloadEmail();\n  return Promise.resolve(isNameValid && isEmailValid);\n};\n\n//# sourceURL=webpack:///./app/js/helpers/form.helpers.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "validateDownloadName", function() { return validateDownloadName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "validateDownloadEmail", function() { return validateDownloadEmail; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "validateDownloadForm", function() { return validateDownloadForm; });
+/* harmony import */ var _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../modules/mapElements.module */ "./app/js/modules/mapElements.module.js");
+
+
+const validateEmailFormat = email => {
+  var re = /\S+@\S+\.\S+/;
+  return re.test(email);
+};
+
+const validateDownloadName = () => {
+  let isNameValid = true; // validate name
+
+  if (_modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__["downloadFormName"].value === "") {
+    isNameValid = false;
+    _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__["downloadFormNameError"].innerHTML = "Please add your name";
+  } else {
+    isNameValid = true;
+    _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__["downloadFormNameError"].innerHTML = "";
+  }
+
+  _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__["downloadFormNameError"].setAttribute("aria-hidden", !isNameValid);
+  return isNameValid;
+};
+const validateDownloadEmail = () => {
+  let isEmailValid = true; // validate email
+
+  if (_modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__["downloadFormEmail"].value === "") {
+    isEmailValid = false;
+    _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__["downloadFormEmailError"].innerHTML = "Please insert your email";
+  } else if (!validateEmailFormat(_modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__["downloadFormEmail"].value)) {
+    isEmailValid = false;
+    _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__["downloadFormEmailError"].innerHTML = "Please insert an email address in the right format.";
+  } else {
+    isEmailValid = true;
+    _modules_mapElements_module__WEBPACK_IMPORTED_MODULE_0__["downloadFormEmailError"].innerHTML = "";
+  }
+
+  return isEmailValid;
+};
+const validateDownloadForm = () => {
+  const isNameValid = validateDownloadName();
+  const isEmailValid = validateDownloadEmail();
+  return Promise.resolve(isNameValid && isEmailValid);
+};
 
 /***/ }),
 
@@ -284,7 +621,49 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _map_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./map.helpers */ \"./app/js/helpers/map.helpers.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"highlightShape\", function() { return _map_helpers__WEBPACK_IMPORTED_MODULE_0__[\"highlightShape\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"editShape\", function() { return _map_helpers__WEBPACK_IMPORTED_MODULE_0__[\"editShape\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"clearEdits\", function() { return _map_helpers__WEBPACK_IMPORTED_MODULE_0__[\"clearEdits\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"drawShapeRow\", function() { return _map_helpers__WEBPACK_IMPORTED_MODULE_0__[\"drawShapeRow\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"displayAddressOnMap\", function() { return _map_helpers__WEBPACK_IMPORTED_MODULE_0__[\"displayAddressOnMap\"]; });\n\n/* harmony import */ var _cache_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./cache.helpers */ \"./app/js/helpers/cache.helpers.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"storePaddocks\", function() { return _cache_helpers__WEBPACK_IMPORTED_MODULE_1__[\"storePaddocks\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"initMapStorageData\", function() { return _cache_helpers__WEBPACK_IMPORTED_MODULE_1__[\"initMapStorageData\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getMapStorageData\", function() { return _cache_helpers__WEBPACK_IMPORTED_MODULE_1__[\"getMapStorageData\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"storeFenceEstimatorData\", function() { return _cache_helpers__WEBPACK_IMPORTED_MODULE_1__[\"storeFenceEstimatorData\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"removeFenceEstimatorData\", function() { return _cache_helpers__WEBPACK_IMPORTED_MODULE_1__[\"removeFenceEstimatorData\"]; });\n\n/* harmony import */ var _ui_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ui.helpers */ \"./app/js/helpers/ui.helpers.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"setDraggableMapTools\", function() { return _ui_helpers__WEBPACK_IMPORTED_MODULE_2__[\"setDraggableMapTools\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"setClosableSidebar\", function() { return _ui_helpers__WEBPACK_IMPORTED_MODULE_2__[\"setClosableSidebar\"]; });\n\n/* harmony import */ var _export_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./export.helpers */ \"./app/js/helpers/export.helpers.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"exportMap\", function() { return _export_helpers__WEBPACK_IMPORTED_MODULE_3__[\"exportMap\"]; });\n\n/* harmony import */ var _form_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./form.helpers */ \"./app/js/helpers/form.helpers.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"validateDownloadName\", function() { return _form_helpers__WEBPACK_IMPORTED_MODULE_4__[\"validateDownloadName\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"validateDownloadEmail\", function() { return _form_helpers__WEBPACK_IMPORTED_MODULE_4__[\"validateDownloadEmail\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"validateDownloadForm\", function() { return _form_helpers__WEBPACK_IMPORTED_MODULE_4__[\"validateDownloadForm\"]; });\n\n\n\n\n\n\n\n//# sourceURL=webpack:///./app/js/helpers/index.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _map_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./map.helpers */ "./app/js/helpers/map.helpers.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "highlightShape", function() { return _map_helpers__WEBPACK_IMPORTED_MODULE_0__["highlightShape"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "editShape", function() { return _map_helpers__WEBPACK_IMPORTED_MODULE_0__["editShape"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "clearEdits", function() { return _map_helpers__WEBPACK_IMPORTED_MODULE_0__["clearEdits"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "drawShapeRow", function() { return _map_helpers__WEBPACK_IMPORTED_MODULE_0__["drawShapeRow"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "displayAddressOnMap", function() { return _map_helpers__WEBPACK_IMPORTED_MODULE_0__["displayAddressOnMap"]; });
+
+/* harmony import */ var _cache_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./cache.helpers */ "./app/js/helpers/cache.helpers.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "storePaddocks", function() { return _cache_helpers__WEBPACK_IMPORTED_MODULE_1__["storePaddocks"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "initMapStorageData", function() { return _cache_helpers__WEBPACK_IMPORTED_MODULE_1__["initMapStorageData"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getMapStorageData", function() { return _cache_helpers__WEBPACK_IMPORTED_MODULE_1__["getMapStorageData"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "storeFenceEstimatorData", function() { return _cache_helpers__WEBPACK_IMPORTED_MODULE_1__["storeFenceEstimatorData"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "removeFenceEstimatorData", function() { return _cache_helpers__WEBPACK_IMPORTED_MODULE_1__["removeFenceEstimatorData"]; });
+
+/* harmony import */ var _ui_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ui.helpers */ "./app/js/helpers/ui.helpers.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "setDraggableMapTools", function() { return _ui_helpers__WEBPACK_IMPORTED_MODULE_2__["setDraggableMapTools"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "setClosableSidebar", function() { return _ui_helpers__WEBPACK_IMPORTED_MODULE_2__["setClosableSidebar"]; });
+
+/* harmony import */ var _export_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./export.helpers */ "./app/js/helpers/export.helpers.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "exportMap", function() { return _export_helpers__WEBPACK_IMPORTED_MODULE_3__["exportMap"]; });
+
+/* harmony import */ var _form_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./form.helpers */ "./app/js/helpers/form.helpers.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "validateDownloadName", function() { return _form_helpers__WEBPACK_IMPORTED_MODULE_4__["validateDownloadName"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "validateDownloadEmail", function() { return _form_helpers__WEBPACK_IMPORTED_MODULE_4__["validateDownloadEmail"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "validateDownloadForm", function() { return _form_helpers__WEBPACK_IMPORTED_MODULE_4__["validateDownloadForm"]; });
+
+
+
+
+
+
 
 /***/ }),
 
@@ -296,7 +675,100 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _map
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"highlightShape\", function() { return highlightShape; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"editShape\", function() { return editShape; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"clearEdits\", function() { return clearEdits; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"drawShapeRow\", function() { return drawShapeRow; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"displayAddressOnMap\", function() { return displayAddressOnMap; });\n/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ \"./app/js/constants/index.js\");\n\nconst highlightShape = shape => {\n  if (!shape) {\n    return;\n  }\n\n  shape.setOptions(_constants__WEBPACK_IMPORTED_MODULE_0__[\"SHAPE_SETTINGS\"].HIGHLIGHT);\n  setTimeout(() => {\n    shape.setOptions(_constants__WEBPACK_IMPORTED_MODULE_0__[\"SHAPE_SETTINGS\"].DEFAULT);\n  }, 500);\n};\nconst editShape = function (shape) {\n  let edit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;\n  let drawingManager = arguments.length > 2 ? arguments[2] : undefined;\n  let selectedShape = arguments.length > 3 ? arguments[3] : undefined;\n\n  if (!shape || shape === selectedShape) {\n    return;\n  }\n\n  if (edit) {\n    drawingManager && drawingManager.setDrawingMode(null);\n    shape.setOptions(_constants__WEBPACK_IMPORTED_MODULE_0__[\"SHAPE_SETTINGS\"].EDIT);\n    selectedShape = shape;\n  } else {\n    shape.setOptions(_constants__WEBPACK_IMPORTED_MODULE_0__[\"SHAPE_SETTINGS\"].DEFAULT);\n    selectedShape = null;\n  }\n};\nconst clearEdits = mapShapes => {\n  if (!mapShapes) {\n    return;\n  }\n\n  mapShapes.forEach(shape => {\n    editShape(shape, false);\n  });\n  document.querySelectorAll(\"[data-action=\\\"\".concat(_constants__WEBPACK_IMPORTED_MODULE_0__[\"SHAPES_CONTROLS\"].CONFIRM_DELETE, \"\\\"]\")).forEach(confirmDeleteButton => {\n    confirmDeleteButton.classList.remove(\"d-block\");\n    confirmDeleteButton.classList.add(\"d-none\");\n  });\n  document.querySelectorAll(\"[data-action=\\\"\".concat(_constants__WEBPACK_IMPORTED_MODULE_0__[\"SHAPES_CONTROLS\"].DELETE, \"\\\"]\")).forEach(deleteButton => {\n    deleteButton.classList.remove(\"d-none\");\n    deleteButton.classList.add(\"d-block\");\n  });\n};\nconst drawShapeRow = (paddockName, shapeLength, index) => {\n  return \"\\n    <div class=\\\"created-fence\\\" data-action=\\\"\".concat(_constants__WEBPACK_IMPORTED_MODULE_0__[\"SHAPES_CONTROLS\"].HIGHLIGHT, \"\\\" data-shape=\\\"\").concat(index, \"\\\">\\n      <div class=\\\"created-fence__section\\\">\\n        <p class=\\\"created-fence__section-label\\\">Name</p>\\n        <input id=\\\"paddock-description-\").concat(index, \"\\\" value=\\\"\").concat(paddockName, \"\\\" type=\\\"test\\\" data-shape=\\\"\").concat(index, \"\\\" data-action=\\\"\").concat(_constants__WEBPACK_IMPORTED_MODULE_0__[\"SHAPES_CONTROLS\"].EDIT_NAME, \"\\\" data-shape=\\\"\").concat(index, \"\\\"  class=\\\"created-fence__name\\\" autocomplete=\\\"off\\\"/>\\n      </div>\\n      <div class=\\\"created-fence__section\\\">\\n        <p class=\\\"created-fence__section-label\\\">Length</p>\\n        <p class=\\\"created-fence__length\\\">\").concat(shapeLength.toFixed(0), \"m </p>\\n      </div>\\n      <div class=\\\"created-fence__section created-fence__section--actions\\\">\\n        <button type=\\\"button\\\" data-action=\\\"\").concat(_constants__WEBPACK_IMPORTED_MODULE_0__[\"SHAPES_CONTROLS\"].DELETE, \"\\\" data-shape=\\\"\").concat(index, \"\\\" class=\\\"btn-control-icons btn-control-icons--delete d-block created-fence__delete\\\">\\n          <img class=\\\"created-fence__icon\\\" src=\\\"assets/tool-bin.svg\\\"/>\\n        </button>\\n      </div>\\n    </div>\\n  \");\n};\n\nconst findAddressDetail = function (address, detail) {\n  let shortVersion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;\n\n  if (!address) {\n    return;\n  }\n\n  return address.find(element => element.types.some(type => type === detail))[shortVersion ? \"short_name\" : \"long_name\"];\n};\n\nconst displayAddressOnMap = (place, map, addressMarker, addressLabel) => {\n  if (!place || !map) {\n    return;\n  } // If the place has a geometry, then present it on a map.\n\n\n  if (place.geometry.viewport) {\n    map.fitBounds(place.geometry.viewport);\n  } else {\n    map.setCenter(place.geometry.location);\n    map.setZoom(16);\n  } // display the marker on map\n\n\n  if (addressMarker) {\n    addressMarker.setPosition(place.geometry.location);\n    addressMarker.setVisible(true);\n  } // show the address on map controllers\n\n\n  const address = place.address_components;\n\n  if (addressLabel) {\n    addressLabel.innerHTML = \"\\n    <span class=\\\"address-line-1\\\">\".concat(findAddressDetail(address, \"locality\"), \", \").concat(findAddressDetail(address, \"administrative_area_level_2\"), \"</span>\\n    <span class=\\\"address-line-2\\\">\").concat(findAddressDetail(address, \"postal_code\"), \" \").concat(findAddressDetail(address, \"administrative_area_level_1\"), \"  \").concat(findAddressDetail(address, \"country\", true), \"</span>\");\n    place.adr_address.replace(/\\,/g, \"\");\n  }\n};\n\n//# sourceURL=webpack:///./app/js/helpers/map.helpers.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "highlightShape", function() { return highlightShape; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "editShape", function() { return editShape; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearEdits", function() { return clearEdits; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "drawShapeRow", function() { return drawShapeRow; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "displayAddressOnMap", function() { return displayAddressOnMap; });
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./app/js/constants/index.js");
+
+const highlightShape = shape => {
+  if (!shape) {
+    return;
+  }
+
+  shape.setOptions(_constants__WEBPACK_IMPORTED_MODULE_0__["SHAPE_SETTINGS"].HIGHLIGHT);
+  setTimeout(() => {
+    shape.setOptions(_constants__WEBPACK_IMPORTED_MODULE_0__["SHAPE_SETTINGS"].DEFAULT);
+  }, 500);
+};
+const editShape = function (shape) {
+  let edit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+  let drawingManager = arguments.length > 2 ? arguments[2] : undefined;
+  let selectedShape = arguments.length > 3 ? arguments[3] : undefined;
+
+  if (!shape || shape === selectedShape) {
+    return;
+  }
+
+  if (edit) {
+    drawingManager && drawingManager.setDrawingMode(null);
+    shape.setOptions(_constants__WEBPACK_IMPORTED_MODULE_0__["SHAPE_SETTINGS"].EDIT);
+    selectedShape = shape;
+  } else {
+    shape.setOptions(_constants__WEBPACK_IMPORTED_MODULE_0__["SHAPE_SETTINGS"].DEFAULT);
+    selectedShape = null;
+  }
+};
+const clearEdits = mapShapes => {
+  if (!mapShapes) {
+    return;
+  }
+
+  mapShapes.forEach(shape => {
+    editShape(shape, false);
+  });
+  document.querySelectorAll("[data-action=\"".concat(_constants__WEBPACK_IMPORTED_MODULE_0__["SHAPES_CONTROLS"].CONFIRM_DELETE, "\"]")).forEach(confirmDeleteButton => {
+    confirmDeleteButton.classList.remove("d-block");
+    confirmDeleteButton.classList.add("d-none");
+  });
+  document.querySelectorAll("[data-action=\"".concat(_constants__WEBPACK_IMPORTED_MODULE_0__["SHAPES_CONTROLS"].DELETE, "\"]")).forEach(deleteButton => {
+    deleteButton.classList.remove("d-none");
+    deleteButton.classList.add("d-block");
+  });
+};
+const drawShapeRow = (paddockName, shapeLength, index) => {
+  return "\n    <div class=\"created-fence\" data-action=\"".concat(_constants__WEBPACK_IMPORTED_MODULE_0__["SHAPES_CONTROLS"].HIGHLIGHT, "\" data-shape=\"").concat(index, "\">\n      <div class=\"created-fence__section\">\n        <p class=\"created-fence__section-label\">Name</p>\n        <input id=\"paddock-description-").concat(index, "\" value=\"").concat(paddockName, "\" type=\"test\" data-shape=\"").concat(index, "\" data-action=\"").concat(_constants__WEBPACK_IMPORTED_MODULE_0__["SHAPES_CONTROLS"].EDIT_NAME, "\" data-shape=\"").concat(index, "\"  class=\"created-fence__name\" autocomplete=\"off\"/>\n      </div>\n      <div class=\"created-fence__section\">\n        <p class=\"created-fence__section-label\">Length</p>\n        <p class=\"created-fence__length\">").concat(shapeLength.toFixed(0), "m </p>\n      </div>\n      <div class=\"created-fence__section created-fence__section--actions\">\n        <button type=\"button\" data-action=\"").concat(_constants__WEBPACK_IMPORTED_MODULE_0__["SHAPES_CONTROLS"].DELETE, "\" data-shape=\"").concat(index, "\" class=\"btn-control-icons btn-control-icons--delete d-block created-fence__delete\">\n          <img class=\"created-fence__icon\" src=\"https://staging-stockandnoble.kinsta.cloud/wp-content/themes/astra-stockandnoble/assets/tool-bin.svg\"/>\n        </button>\n      </div>\n    </div>\n  ");
+};
+
+const findAddressDetail = function (address, detail) {
+  let shortVersion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+  if (!address) {
+    return;
+  }
+
+  return address.find(element => element.types.some(type => type === detail))[shortVersion ? "short_name" : "long_name"];
+};
+
+const displayAddressOnMap = (place, map, addressMarker, addressLabel) => {
+  if (!place || !map) {
+    return;
+  } // If the place has a geometry, then present it on a map.
+
+
+  if (place.geometry.viewport) {
+    map.fitBounds(place.geometry.viewport);
+  } else {
+    map.setCenter(place.geometry.location);
+    map.setZoom(16);
+  } // display the marker on map
+
+
+  if (addressMarker) {
+    addressMarker.setPosition(place.geometry.location);
+    addressMarker.setVisible(true);
+  } // show the address on map controllers
+
+
+  const address = place.address_components;
+
+  if (addressLabel) {
+    addressLabel.innerHTML = "\n    <span class=\"address-line-1\">".concat(findAddressDetail(address, "locality"), ", ").concat(findAddressDetail(address, "administrative_area_level_2"), "</span>\n    <span class=\"address-line-2\">").concat(findAddressDetail(address, "postal_code"), " ").concat(findAddressDetail(address, "administrative_area_level_1"), "  ").concat(findAddressDetail(address, "country", true), "</span>");
+    place.adr_address.replace(/\,/g, "");
+  }
+};
 
 /***/ }),
 
@@ -308,7 +780,74 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"setDraggableMapTools\", function() { return setDraggableMapTools; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"setClosableSidebar\", function() { return setClosableSidebar; });\n/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! interactjs */ \"./node_modules/interactjs/dist/interact.min.js\");\n/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_0__);\n\nconst setDraggableMapTools = mapTools => {\n  let x = 0;\n  let y = 0;\n  interactjs__WEBPACK_IMPORTED_MODULE_0___default()(mapTools).draggable({\n    modifiers: [interactjs__WEBPACK_IMPORTED_MODULE_0___default.a.modifiers.snap({\n      targets: [interactjs__WEBPACK_IMPORTED_MODULE_0___default.a.snappers.grid({\n        x: 30,\n        y: 30\n      })],\n      range: Infinity,\n      relativePoints: [{\n        x: 0,\n        y: 0\n      }]\n    }), interactjs__WEBPACK_IMPORTED_MODULE_0___default.a.modifiers.restrict({\n      restriction: mapTools.parentNode,\n      elementRect: {\n        top: 0,\n        left: 0,\n        bottom: 1,\n        right: 1\n      },\n      endOnly: true\n    })],\n    inertia: true\n  }).on(\"dragmove\", function (event) {\n    x += event.dx;\n    y += event.dy;\n    event.target.style.transform = \"translate(\" + x + \"px, \" + y + \"px)\";\n  });\n};\nconst setClosableSidebar = (sidebar, onClick) => {\n  let sidebarX = 0;\n  let sidebarY = 0;\n  interactjs__WEBPACK_IMPORTED_MODULE_0___default()(sidebar).draggable({\n    modifiers: [interactjs__WEBPACK_IMPORTED_MODULE_0___default.a.modifiers.snap({\n      targets: [interactjs__WEBPACK_IMPORTED_MODULE_0___default.a.snappers.grid({\n        x: 30,\n        y: 30\n      })],\n      range: Infinity,\n      relativePoints: [{\n        x: 0,\n        y: 0\n      }]\n    }), interactjs__WEBPACK_IMPORTED_MODULE_0___default.a.modifiers.restrict({\n      restriction: sidebar.parentNode,\n      elementRect: {\n        top: 0,\n        left: 0,\n        bottom: 1,\n        right: 1\n      },\n      endOnly: true\n    })],\n    inertia: true\n  }).on(\"dragmove\", function (event) {\n    sidebarX += event.dx;\n    sidebarY += event.dy;\n    event.target.style.transform = \"translate(\" + sidebarX + \"px, \" + sidebarY + \"px)\";\n  }).on(\"click\", onClick);\n};\n\n//# sourceURL=webpack:///./app/js/helpers/ui.helpers.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setDraggableMapTools", function() { return setDraggableMapTools; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setClosableSidebar", function() { return setClosableSidebar; });
+/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! interactjs */ "./node_modules/interactjs/dist/interact.min.js");
+/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_0__);
+
+const setDraggableMapTools = mapTools => {
+  let x = 0;
+  let y = 0;
+  interactjs__WEBPACK_IMPORTED_MODULE_0___default()(mapTools).draggable({
+    modifiers: [interactjs__WEBPACK_IMPORTED_MODULE_0___default.a.modifiers.snap({
+      targets: [interactjs__WEBPACK_IMPORTED_MODULE_0___default.a.snappers.grid({
+        x: 30,
+        y: 30
+      })],
+      range: Infinity,
+      relativePoints: [{
+        x: 0,
+        y: 0
+      }]
+    }), interactjs__WEBPACK_IMPORTED_MODULE_0___default.a.modifiers.restrict({
+      restriction: mapTools.parentNode,
+      elementRect: {
+        top: 0,
+        left: 0,
+        bottom: 1,
+        right: 1
+      },
+      endOnly: true
+    })],
+    inertia: true
+  }).on("dragmove", function (event) {
+    x += event.dx;
+    y += event.dy;
+    event.target.style.transform = "translate(" + x + "px, " + y + "px)";
+  });
+};
+const setClosableSidebar = (sidebar, onClick) => {
+  let sidebarX = 0;
+  let sidebarY = 0;
+  interactjs__WEBPACK_IMPORTED_MODULE_0___default()(sidebar).draggable({
+    modifiers: [interactjs__WEBPACK_IMPORTED_MODULE_0___default.a.modifiers.snap({
+      targets: [interactjs__WEBPACK_IMPORTED_MODULE_0___default.a.snappers.grid({
+        x: 30,
+        y: 30
+      })],
+      range: Infinity,
+      relativePoints: [{
+        x: 0,
+        y: 0
+      }]
+    }), interactjs__WEBPACK_IMPORTED_MODULE_0___default.a.modifiers.restrict({
+      restriction: sidebar.parentNode,
+      elementRect: {
+        top: 0,
+        left: 0,
+        bottom: 1,
+        right: 1
+      },
+      endOnly: true
+    })],
+    inertia: true
+  }).on("dragmove", function (event) {
+    sidebarX += event.dx;
+    sidebarY += event.dy;
+    event.target.style.transform = "translate(" + sidebarX + "px, " + sidebarY + "px)";
+  }).on("click", onClick);
+};
 
 /***/ }),
 
@@ -320,7 +859,697 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"setMapReadyForPlotting\", function() { return setMapReadyForPlotting; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"createPaddockMapShape\", function() { return createPaddockMapShape; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"createMap\", function() { return createMap; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"setup\", function() { return setup; });\n/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ \"./app/js/constants/index.js\");\n/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers */ \"./app/js/helpers/index.js\");\n/* harmony import */ var _starter_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./starter.module */ \"./app/js/modules/starter.module.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"google\", function() { return _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"]; });\n\n/* harmony import */ var _mapElements_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./mapElements.module */ \"./app/js/modules/mapElements.module.js\");\n\n\n\n\n\nlet map,\n    drawingManager,\n    mapElements = [],\n    mapLengths = [],\n    selectedShape = null,\n    addressMapPlace,\n    hasConfirmedTotal = false,\n    plottingPerimiterTrigger; // flags\n\nlet mapSet = false; // Values\n\nlet addressMarker,\n    mapCanvasAction,\n    plotPerimiter = 0; // ui\n\nconst calculatePlot = function () {\n  let storePlot = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;\n  let totalPerimeter = 0; // re-draw table and recalculate\n  // go through each shape/line and:\n  // 1. add length to total\n  // 2. create row (button handlers have been assigned to table wrapper)\n  // 3. display total\n  // 4. update caching\n\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"plottingShapes\"].innerHTML = \"\";\n  mapElements.forEach((shape, index) => {\n    const shapeLength = _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.geometry.spherical.computeLength(shape.getPath().getArray()); // 1.\n\n    totalPerimeter += shapeLength; // 2.\n\n    _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"plottingShapes\"].innerHTML += _helpers__WEBPACK_IMPORTED_MODULE_1__[\"drawShapeRow\"](shape.paddockName, shapeLength, index);\n  }); // 3.\n\n  plotPerimiter = totalPerimeter.toFixed(0);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"plottingPerimiterLabel\"].innerHTML = \"\".concat(plotPerimiter || 0, \"m\"); // 4.\n\n  storePlot && _helpers__WEBPACK_IMPORTED_MODULE_1__[\"storePaddocks\"](mapElements); // update available action buttons\n\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"deletePlottingBtn\"].setAttribute(\"aria-hidden\", !mapElements.length);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"plottingTooltip\"].setAttribute(\"aria-hidden\", !!mapElements.length);\n\n  if (!mapElements.length) {\n    _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"printBtn\"].setAttribute(\"disabled\", true);\n    _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"downloadBtn\"].setAttribute(\"disabled\", true);\n    _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"setPlottingBtn\"].setAttribute(\"disabled\", true);\n  } else {\n    _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"printBtn\"].removeAttribute(\"disabled\");\n    _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"downloadBtn\"].removeAttribute(\"disabled\");\n    _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"setPlottingBtn\"].removeAttribute(\"disabled\");\n  }\n\n  if (hasConfirmedTotal) {\n    // if the user wants to use the list of shapes/lines created, use it.\n    handleUsePlotting();\n  }\n};\n\nconst clearPlotShape = idx => {\n  if (mapElements.length && mapElements[idx]) {\n    mapElements[idx].setMap(null);\n    mapLengths[idx].setMap(null);\n    _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.event.clearInstanceListeners(mapElements[idx]);\n    mapElements.splice(idx, 1);\n  }\n\n  calculatePlot();\n\n  if (!mapElements.length) {\n    resetMapTools();\n  }\n}; // remove all shapes from the map\n\n\nconst resetFencesTable = () => {\n  // go through all shapes and remove them from the map before clearing the array\n  if (mapElements.length) {\n    mapElements.forEach(shape => {\n      shape.setMap(null);\n    });\n    mapLengths.forEach(length => {\n      length.setMap(null);\n    });\n    mapElements = [];\n    mapLengths = [];\n  }\n\n  plotPerimiter = 0;\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"plottingShapes\"].innerHTML = \"\";\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"plottingPerimiterLabel\"].innerHTML = \"\";\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"deletePlottingBtn\"].setAttribute(\"aria-hidden\", !mapElements.length); // update cache\n\n  _helpers__WEBPACK_IMPORTED_MODULE_1__[\"removeFenceEstimatorData\"]();\n};\n\nconst resetMapTools = () => {\n  drawingManager.setDrawingMode(null);\n}; // this is for when the estimator has an address and\n// the user can start adding fences\n\n\nconst setMapReadyForPlotting = isReady => {\n  const mapIsReady = isReady !== undefined ? !!isReady : !!addressMapPlace;\n\n  if (!addressMapPlace) {\n    return;\n  } // show/hide address and address search field\n\n\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"addressSearchContainer\"].setAttribute(\"aria-hidden\", !!mapIsReady);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"addressContainer\"].setAttribute(\"aria-hidden\", !mapIsReady);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"addressResultsContainer\"].setAttribute(\"aria-hidden\", !mapIsReady); // show/hide search tooltip\n\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"plottingTooltip\"].setAttribute(\"aria-hidden\", !!mapIsReady ? true : false); // show/hide reset button\n\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"newSearchBtn\"].classList.remove(!!mapIsReady ? \"d-none\" : \"d-block\");\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"newSearchBtn\"].classList.add(!!mapIsReady ? \"d-block\" : \"d-none\"); // set the map to drawing state\n\n  drawingManager.setDrawingMode(null);\n};\n\nconst resetEstimator = () => {\n  resetFencesTable();\n  resetMapTools();\n  removePaddockMenu();\n  addressMarker.setVisible(false);\n  map.setZoom(_constants__WEBPACK_IMPORTED_MODULE_0__[\"DEFAULT_ZOOM\"]);\n  map.setCenter({\n    lat: _constants__WEBPACK_IMPORTED_MODULE_0__[\"DEFAULT_COORDINATES\"].lat,\n    lng: _constants__WEBPACK_IMPORTED_MODULE_0__[\"DEFAULT_COORDINATES\"].lng\n  });\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"currentAddressLabel\"].innerHTML = \"\";\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"searchField\"].value = \"\";\n  calculatePlot(false);\n  setMapReadyForPlotting(false);\n}; // caching\n\n\nconst getFenceEstimatorData = () => {\n  const mapStorageData = _helpers__WEBPACK_IMPORTED_MODULE_1__[\"getMapStorageData\"]();\n\n  if (mapStorageData) {\n    var _mapStorageData$fence;\n\n    addressMapPlace = mapStorageData.place; // 1. display stored address\n\n    _helpers__WEBPACK_IMPORTED_MODULE_1__[\"displayAddressOnMap\"](addressMapPlace, map, addressMarker, _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"currentAddressLabel\"]); // 2. create fences on map\n\n    (_mapStorageData$fence = mapStorageData.fences) === null || _mapStorageData$fence === void 0 ? void 0 : _mapStorageData$fence.forEach(shape => {\n      const {\n        type,\n        paddockIdx,\n        paddockName,\n        paths\n      } = shape; // setup paddock and add it to map\n\n      createPaddockMapShape(paddockIdx, paddockName, type, paths);\n    }); // 3. set map ready to draw more fences\n\n    setMapReadyForPlotting();\n  } // update table and total based on current data\n\n\n  calculatePlot(false);\n  mapSet = true;\n}; // paddocks\n\n\nconst removePaddockMenu = () => {\n  map.setOptions({\n    draggable: true\n  });\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"shapeMenuContainer\"].setAttribute(\"aria-hidden\", true);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"shapeMenuContainer\"].innerHTML = \"\";\n};\n\nconst bindPaddockShapeEvents = paddock => {\n  // when the shape is left\n  // (re)calculate the measurements\n  _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.event.addListener(paddock, \"mouseup\", () => {\n    calculatePlot();\n  }); // when hovering over the shape\n\n  _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.event.addListener(paddock, \"mouseover\", () => {\n    if (drawingManager.getDrawingMode() === _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.drawing.OverlayType.POLYLINE || drawingManager.getDrawingMode() === _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.drawing.OverlayType.POLYGON) {\n      _helpers__WEBPACK_IMPORTED_MODULE_1__[\"clearEdits\"](mapElements);\n      _helpers__WEBPACK_IMPORTED_MODULE_1__[\"editShape\"](paddock, true, drawingManager, selectedShape);\n      _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"savePaddockBtn\"].setAttribute(\"aria-hidden\", true);\n    }\n  }); // when clicking on a shape\n\n  _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.event.addListener(paddock, \"click\", () => {\n    if (drawingManager.getDrawingMode() === null) {\n      _helpers__WEBPACK_IMPORTED_MODULE_1__[\"clearEdits\"](mapElements);\n      _helpers__WEBPACK_IMPORTED_MODULE_1__[\"editShape\"](paddock, true, drawingManager, selectedShape);\n      _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"savePaddockBtn\"].setAttribute(\"aria-hidden\", true);\n      removePaddockMenu();\n    }\n  }); // this listener is for right click events\n  // documentation says rightclick has been deprecated\n  // (https://developers.google.com/maps/documentation/javascript/reference/polygon?hl=en#Polyline.rightclick)\n  // NOTE - no sure if other events may call this\n\n  paddock.addListener(\"contextmenu\", event => {\n    const rightClick = new CustomEvent(\"fence-estimator-shape-menu\", {\n      detail: {\n        paddock: {\n          name: paddock.paddockName,\n          index: paddock.paddockIdx,\n          coordinates: event.latLng\n        },\n        top: event.domEvent.clientY,\n        left: event.domEvent.clientX\n      }\n    });\n    window.dispatchEvent(rightClick);\n  });\n};\n\nconst createPaddockMapShape = (paddockIdx, paddockName, type, pathCoordinates) => {\n  /**\n   * Custom overlay for shape menu\n   */\n  class PaddockLengthLabelOverlay extends _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.OverlayView {\n    constructor(coordinates, length) {\n      super();\n      this.length = void 0;\n      this.coordinates = void 0;\n      this.p = void 0;\n      this.length = length;\n      this.coordinates = coordinates;\n    }\n    /**\n     * onAdd is called when the map's panes are ready and the overlay has been\n     * added to the map.\n     */\n\n\n    onAdd() {\n      this.p = document.createElement(\"p\"); // style contents\n\n      this.p.classList.add(\"paddock-length\");\n      this.p.innerHTML = \"\".concat(this.length.toFixed(), \"m\"); // Add the element to the \"overlayLayer\" pane.\n\n      const panes = this.getPanes();\n      panes.overlayLayer.appendChild(this.p);\n    }\n\n    draw() {\n      // We use the south-west and north-east\n      // coordinates of the overlay to peg it to the correct position and size.\n      // To do this, we need to retrieve the projection from the overlay.\n      const overlayProjection = this.getProjection(); // Retrieve the south-west and north-east coordinates of this overlay\n      // in LatLngs and convert them to pixel coordinates.\n      // We'll use these coordinates to resize the div.\n\n      const sw = overlayProjection.fromLatLngToDivPixel(this.coordinates);\n\n      if (this.p) {\n        this.p.style.left = sw.x + 10 + \"px\";\n        this.p.style.top = sw.y + 10 + \"px\";\n      }\n    }\n    /**\n     * The onRemove() method will be called automatically from the API if\n     * we ever set the overlay's map property to 'null'.\n     */\n\n\n    onRemove() {\n      if (this.p) {\n        this.p.parentNode.removeChild(this.p);\n        delete this.p;\n      }\n    }\n    /**\n     *  Set the visibility to 'hidden' or 'visible'.\n     */\n\n\n    hide() {\n      if (this.p) {\n        this.p.style.visibility = \"hidden\";\n      }\n    }\n\n    show() {\n      if (this.p) {\n        this.p.style.visibility = \"visible\";\n      }\n    }\n\n    toggle() {\n      if (this.p) {\n        if (this.p.style.visibility === \"hidden\") {\n          this.show();\n        } else {\n          this.hide();\n        }\n      }\n    }\n\n    toggleDOM(map) {\n      if (this.getMap()) {\n        this.setMap(null);\n      } else {\n        this.setMap(map);\n      }\n    }\n\n    updateLength(length) {\n      this.length = length;\n      this.p.innerHTML = \"\".concat(this.length.toFixed(), \"m\");\n    }\n\n  }\n\n  let currentShape;\n  let path = new _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.MVCArray();\n\n  if (Array.isArray(pathCoordinates)) {\n    pathCoordinates.forEach(segment => {\n      if (typeof segment.lat === \"function\") {\n        path.push(segment);\n      } else {\n        const segmentCoordinates = new _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.LatLng(segment.lat, segment.lng);\n        path.push(segmentCoordinates);\n      }\n    });\n  } else {\n    if (typeof pathCoordinates.lat === \"function\") {\n      path.push(pathCoordinates);\n    } else {\n      const segmentCoordinates = new _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.LatLng(pathCoordinates.lat, pathCoordinates.lng);\n      path.push(segmentCoordinates);\n    }\n  }\n\n  const shapeLength = _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.geometry.spherical.computeLength(path.getArray());\n  const lengthLabel = new PaddockLengthLabelOverlay({\n    lat: path.getArray()[0].lat(),\n    lng: path.getArray()[0].lng()\n  }, shapeLength);\n  _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.event.addListener(path, \"insert_at\", function (vertex) {\n    lengthLabel.updateLength(_starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.geometry.spherical.computeLength(path.getArray()));\n  });\n  _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.event.addListener(path, \"set_at\", function (vertex) {\n    lengthLabel.updateLength(_starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.geometry.spherical.computeLength(path.getArray()));\n  });\n  _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.event.addListener(path, \"mousedown\", function (vertex) {\n    lengthLabel.updateLength(_starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.geometry.spherical.computeLength(path.getArray()));\n  });\n  const shapeDetails = { ..._constants__WEBPACK_IMPORTED_MODULE_0__[\"SHAPE_SETTINGS\"].DEFAULT,\n    paddockIdx,\n    paddockName,\n    type,\n    map,\n    path\n  };\n\n  if (type === _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.drawing.OverlayType.POLYLINE) {\n    currentShape = new _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.Polyline(shapeDetails);\n  }\n\n  if (type === _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.drawing.OverlayType.POLYGON) {\n    currentShape = new _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.Polygon(shapeDetails);\n  } // set up paddock with listening events\n\n\n  bindPaddockShapeEvents(currentShape);\n  lengthLabel.setMap(map);\n  mapElements.push(currentShape);\n  mapLengths.push(lengthLabel);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"plottingTooltip\"].setAttribute(\"aria-hidden\", true);\n}; // adjust map to prepare canvas image\n\nconst exportCanvas = action => {\n  mapCanvasAction = action;\n\n  if (addressMapPlace.geometry.viewport) {\n    map.fitBounds(addressMapPlace.geometry.viewport);\n  } else {\n    map.setCenter(addressMapPlace.geometry.location);\n  }\n\n  map.setZoom(_constants__WEBPACK_IMPORTED_MODULE_0__[\"EXPORT_ZOOM\"]);\n  setTimeout(() => {\n    _helpers__WEBPACK_IMPORTED_MODULE_1__[\"exportMap\"](_mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"mapContainer\"], mapCanvasAction, mapElements);\n  }, 500);\n}; // events\n\n\nconst handleResetSearch = e => {\n  e.preventDefault();\n  resetEstimator();\n};\n\nconst handleDragTool = e => {\n  e.preventDefault();\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"dragMapTool\"].classList.add(\"map-tool--active\");\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"lineMapTool\"].classList.remove(\"map-tool--active\");\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"shapeMapTool\"].classList.remove(\"map-tool--active\");\n  drawingManager.setDrawingMode(null);\n  _helpers__WEBPACK_IMPORTED_MODULE_1__[\"clearEdits\"](mapElements);\n  removePaddockMenu();\n};\n\nconst handleLineTool = e => {\n  e.preventDefault();\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"lineMapTool\"].classList.add(\"map-tool--active\");\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"dragMapTool\"].classList.remove(\"map-tool--active\");\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"shapeMapTool\"].classList.remove(\"map-tool--active\");\n  drawingManager.setDrawingMode(_starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.drawing.OverlayType.POLYLINE);\n  _helpers__WEBPACK_IMPORTED_MODULE_1__[\"clearEdits\"](mapElements);\n  removePaddockMenu();\n};\n\nconst handleShapeTool = e => {\n  e.preventDefault();\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"shapeMapTool\"].classList.add(\"map-tool--active\");\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"dragMapTool\"].classList.remove(\"map-tool--active\");\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"lineMapTool\"].classList.remove(\"map-tool--active\");\n  drawingManager.setDrawingMode(_starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.drawing.OverlayType.POLYGON);\n  _helpers__WEBPACK_IMPORTED_MODULE_1__[\"clearEdits\"](mapElements);\n  removePaddockMenu();\n};\n\nconst handleZoomInTool = e => {\n  e.preventDefault();\n  map.setZoom(map.getZoom() + 1);\n  _helpers__WEBPACK_IMPORTED_MODULE_1__[\"clearEdits\"](mapElements);\n  removePaddockMenu();\n};\n\nconst handleZoomOutTool = e => {\n  e.preventDefault();\n  map.setZoom(map.getZoom() - 1);\n  _helpers__WEBPACK_IMPORTED_MODULE_1__[\"clearEdits\"](mapElements);\n  removePaddockMenu();\n};\n\nconst handleShapesTable = e => {\n  const element = e.target.tagName.toLowerCase() === \"button\" || e.target.tagName.toLowerCase() === \"input\" ? e.target : e.target.parentElement;\n\n  if (element.dataset.shape === undefined || !element.dataset.action) {\n    return;\n  }\n\n  const shapeIndex = parseInt(element.dataset.shape);\n  const shape = mapElements[shapeIndex];\n\n  if (!shape) {\n    return;\n  }\n\n  removePaddockMenu();\n\n  switch (element.dataset.action) {\n    case _constants__WEBPACK_IMPORTED_MODULE_0__[\"SHAPES_CONTROLS\"].HIGHLIGHT:\n      _helpers__WEBPACK_IMPORTED_MODULE_1__[\"highlightShape\"](shape);\n      break;\n\n    case _constants__WEBPACK_IMPORTED_MODULE_0__[\"SHAPES_CONTROLS\"].EDIT:\n    case _constants__WEBPACK_IMPORTED_MODULE_0__[\"SHAPES_CONTROLS\"].EDIT_NAME:\n      _helpers__WEBPACK_IMPORTED_MODULE_1__[\"clearEdits\"](mapElements);\n      _helpers__WEBPACK_IMPORTED_MODULE_1__[\"editShape\"](shape, true, drawingManager, selectedShape);\n      _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"savePaddockBtn\"].setAttribute(\"aria-hidden\", true);\n      break;\n\n    case _constants__WEBPACK_IMPORTED_MODULE_0__[\"SHAPES_CONTROLS\"].DELETE:\n      _helpers__WEBPACK_IMPORTED_MODULE_1__[\"clearEdits\"](mapElements);\n      _helpers__WEBPACK_IMPORTED_MODULE_1__[\"editShape\"](shape, true, drawingManager, selectedShape);\n      _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"savePaddockBtn\"].setAttribute(\"aria-hidden\", true);\n      clearPlotShape(shapeIndex);\n      drawingManager.setDrawingMode(null);\n      break;\n  }\n};\n\nconst handleEditPaddockName = e => {\n  const element = e.target.tagName.toLowerCase() === \"input\" ? e.target : e.target.parentElement;\n\n  if (element.dataset.shape === undefined || !element.dataset.action) {\n    return;\n  }\n\n  const shapeIndex = parseInt(element.dataset.shape);\n  const shape = mapElements[shapeIndex];\n\n  if (!shape) {\n    return;\n  }\n\n  shape.paddockName = element.value; // update local storage\n\n  _helpers__WEBPACK_IMPORTED_MODULE_1__[\"storePaddocks\"](mapElements);\n};\n\nconst handleAddPlotting = e => {\n  e.preventDefault();\n  drawingManager.setDrawingMode(null);\n  _helpers__WEBPACK_IMPORTED_MODULE_1__[\"clearEdits\"](mapElements);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"savePaddockBtn\"].setAttribute(\"aria-hidden\", false);\n};\n\nconst handleUsePlotting = e => {\n  e && e.preventDefault();\n  hasConfirmedTotal = true;\n  plottingPerimiterTrigger = new CustomEvent(\"fence-estimator-results\", {\n    detail: {\n      perimiter: plotPerimiter\n    }\n  });\n  window.dispatchEvent(plottingPerimiterTrigger);\n  plottingPerimiterTrigger = null;\n\n  if (typeof elementorProFrontend !== \"undefined\") {\n    elementorProFrontend.modules.popup.closePopup({}, e);\n  }\n};\n\nconst handleDeleteAllPlotting = e => {\n  e.preventDefault();\n  resetFencesTable();\n  resetMapTools();\n};\n\nconst handlePrintMap = e => {\n  e === null || e === void 0 ? void 0 : e.preventDefault();\n  exportCanvas(\"print\");\n};\n\nconst handleDownloadMap = async e => {\n  e === null || e === void 0 ? void 0 : e.preventDefault();\n  const formIsValid = await Object(_helpers__WEBPACK_IMPORTED_MODULE_1__[\"validateDownloadForm\"])();\n\n  if (formIsValid) {\n    exportCanvas(\"download\");\n  }\n}; // map\n\n\nconst createMap = () => {\n  map = new _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.Map(_mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"mapContainer\"], _constants__WEBPACK_IMPORTED_MODULE_0__[\"MAP_OPTIONS\"]);\n  _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.event.addListenerOnce(map, \"tilesloaded\", function () {\n    // get elements from cache\n    !mapSet && getFenceEstimatorData();\n  });\n  _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.event.addListener(map, \"zoom_changed\", function () {//only wait for zoom change on print\n    // mapCanvasAction === \"print\" &&\n    // HELPERS.exportMap(mapContainer, mapCanvasAction, mapElements);\n  }); // Marker\n\n  addressMarker = new _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.Marker({\n    position: new _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.LatLng(_constants__WEBPACK_IMPORTED_MODULE_0__[\"DEFAULT_COORDINATES\"].lat, _constants__WEBPACK_IMPORTED_MODULE_0__[\"DEFAULT_COORDINATES\"].lng),\n    map: map,\n    animation: _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.Animation.DROP,\n    clickable: false,\n    visible: false\n  }); // Auto complete\n\n  const autocomplete = new _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.places.Autocomplete(_mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"searchField\"]);\n  autocomplete.bindTo(\"bounds\", map);\n  autocomplete.setFields([\"address_components\", \"adr_address\", \"geometry\", \"icon\", \"name\"]);\n  autocomplete.addListener(\"place_changed\", function () {\n    addressMarker.setVisible(false);\n    addressMapPlace = autocomplete.getPlace();\n\n    if (!addressMapPlace.geometry) {\n      window.alert(\"No details available for input: '\" + addressMapPlace.name + \"'\");\n      return;\n    } // 1. add the place to the location storage\n\n\n    _helpers__WEBPACK_IMPORTED_MODULE_1__[\"storeFenceEstimatorData\"]({\n      place: addressMapPlace\n    }); // 2. display location\n\n    _helpers__WEBPACK_IMPORTED_MODULE_1__[\"displayAddressOnMap\"](addressMapPlace, map, addressMarker, _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"currentAddressLabel\"]); // 3. begin drawing fences\n\n    setMapReadyForPlotting();\n  }); // Drawing\n\n  drawingManager = new _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.drawing.DrawingManager({\n    map,\n    drawingMode: null,\n    drawingControl: false,\n    drawingControlOptions: {\n      drawingModes: [_starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.drawing.OverlayType.POLYLINE, _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.drawing.OverlayType.POLYGON]\n    },\n    polylineOptions: { ..._constants__WEBPACK_IMPORTED_MODULE_0__[\"SHAPE_SETTINGS\"].DEFAULT\n    },\n    polygonOptions: { ..._constants__WEBPACK_IMPORTED_MODULE_0__[\"SHAPE_SETTINGS\"].DEFAULT\n    }\n  });\n  _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.event.addListener(drawingManager, \"polylinecomplete\", function (e) {\n    // create polyline and add it to array of elements\n    // to display totals in table as lines are added\n    const path = e.getPath().getArray();\n    createPaddockMapShape(mapElements.length, \"\".concat(mapElements.length + 1, \"--Boundary Fence\"), _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.drawing.OverlayType.POLYLINE, path);\n    drawingManager.setDrawingMode(null);\n    e.setMap(null);\n    calculatePlot();\n  });\n  _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.event.addListener(drawingManager, \"polygoncomplete\", function (e) {\n    // create polygon and add it to array of elements\n    // to display totals in table as lines are added\n    const path = e.getPath().getArray();\n    createPaddockMapShape(mapElements.length, \"\".concat(mapElements.length + 1, \"--Paddock Fence\"), _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.drawing.OverlayType.POLYGON, path);\n    drawingManager.setDrawingMode(null);\n    e.setMap(null);\n    calculatePlot();\n  });\n  _starter_module__WEBPACK_IMPORTED_MODULE_2__[\"google\"].maps.event.addListener(map, \"click\", function (e) {\n    removePaddockMenu();\n  });\n  window.addEventListener(\"fence-estimator-shape-menu\", function (e) {\n    if (!e.detail.paddock) {\n      return false;\n    }\n\n    const paddock = e.detail.paddock;\n    const div = document.createElement(\"div\"); // style contents\n\n    div.classList.add(\"paddock-menu\");\n    div.style.top = e.detail.top;\n    div.style.left = e.detail.left;\n    div.innerHTML = \"\\n        <p class=\\\"paddock-menu__title\\\">\".concat(paddock.name, \"</p>\\n        <button type=\\\"button\\\" data-action=\\\"\").concat(_constants__WEBPACK_IMPORTED_MODULE_0__[\"SHAPES_CONTROLS\"].DELETE, \"\\\" data-shape=\\\"\").concat(paddock.index, \"\\\" class=\\\"paddock-menu__button paddock-menu__button--delete\\\">\\n          Delete fence\\n        </button>\\n      \");\n    _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"shapeMenuContainer\"].appendChild(div);\n    _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"shapeMenuContainer\"].setAttribute(\"aria-hidden\", false);\n    map.setOptions({\n      draggable: false\n    });\n  });\n}; // SETUP\n\nconst bindMapEvents = () => {\n  // bind functions\n  const ignoreKeyPress = e => {\n    if (e.keyCode === 13) {\n      e.preventDefault();\n    }\n  };\n\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"searchField\"].addEventListener(\"keypress\", ignoreKeyPress);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"plottingShapes\"].addEventListener(\"click\", handleShapesTable); // plottingShapes.addEventListener(\"focus\", handleEditSelectPaddockName);\n\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"plottingShapes\"].addEventListener(\"input\", handleEditPaddockName);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"newSearchBtn\"].addEventListener(\"click\", handleResetSearch);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"savePaddockBtn\"].addEventListener(\"click\", handleAddPlotting);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"setPlottingBtn\"].addEventListener(\"click\", handleUsePlotting);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"deletePlottingBtn\"].addEventListener(\"click\", handleDeleteAllPlotting);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"resetBtn\"].forEach(button => {\n    button.addEventListener(\"click\", handleResetSearch);\n  });\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"dragMapTool\"].addEventListener(\"click\", handleDragTool);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"lineMapTool\"].addEventListener(\"click\", handleLineTool);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"shapeMapTool\"].addEventListener(\"click\", handleShapeTool);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"zoomInTool\"].addEventListener(\"click\", handleZoomInTool);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"zoomOutTool\"].addEventListener(\"click\", handleZoomOutTool); // UI\n\n  _helpers__WEBPACK_IMPORTED_MODULE_1__[\"setDraggableMapTools\"](_mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"mapTools\"]);\n  _helpers__WEBPACK_IMPORTED_MODULE_1__[\"setClosableSidebar\"](_mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"sidebar\"], removePaddockMenu);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"shapeMenuContainer\"].addEventListener(\"click\", handleShapesTable); // PRINT\n\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"printBtn\"].addEventListener(\"click\", handlePrintMap);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"downloadBtn\"].addEventListener(\"click\", handleDownloadMap);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"downloadFormName\"].addEventListener(\"change\", _helpers__WEBPACK_IMPORTED_MODULE_1__[\"validateDownloadName\"]);\n  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"downloadFormEmail\"].addEventListener(\"change\", _helpers__WEBPACK_IMPORTED_MODULE_1__[\"validateDownloadEmail\"]);\n};\n\nconst setup = () => {\n  Object(_mapElements_module__WEBPACK_IMPORTED_MODULE_3__[\"assignElements\"])();\n  bindMapEvents();\n};\n\n\n//# sourceURL=webpack:///./app/js/modules/loadedMap.module.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setMapReadyForPlotting", function() { return setMapReadyForPlotting; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPaddockMapShape", function() { return createPaddockMapShape; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createMap", function() { return createMap; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setup", function() { return setup; });
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./app/js/constants/index.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers */ "./app/js/helpers/index.js");
+/* harmony import */ var _starter_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./starter.module */ "./app/js/modules/starter.module.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "google", function() { return _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"]; });
+
+/* harmony import */ var _mapElements_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./mapElements.module */ "./app/js/modules/mapElements.module.js");
+
+
+
+
+
+let map,
+    drawingManager,
+    mapElements = [],
+    mapLengths = [],
+    selectedShape = null,
+    addressMapPlace,
+    hasConfirmedTotal = false,
+    plottingPerimiterTrigger; // flags
+
+let mapSet = false; // Values
+
+let addressMarker,
+    mapCanvasAction,
+    plotPerimiter = 0; // ui
+
+const calculatePlot = function () {
+  let storePlot = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+  let totalPerimeter = 0; // re-draw table and recalculate
+  // go through each shape/line and:
+  // 1. add length to total
+  // 2. create row (button handlers have been assigned to table wrapper)
+  // 3. display total
+  // 4. update caching
+
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["plottingShapes"].innerHTML = "";
+  mapElements.forEach((shape, index) => {
+    const shapeLength = _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.geometry.spherical.computeLength(shape.getPath().getArray()); // 1.
+
+    totalPerimeter += shapeLength; // 2.
+
+    _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["plottingShapes"].innerHTML += _helpers__WEBPACK_IMPORTED_MODULE_1__["drawShapeRow"](shape.paddockName, shapeLength, index);
+  }); // 3.
+
+  plotPerimiter = totalPerimeter.toFixed(0);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["plottingPerimiterLabel"].innerHTML = "".concat(plotPerimiter || 0, "m"); // 4.
+
+  storePlot && _helpers__WEBPACK_IMPORTED_MODULE_1__["storePaddocks"](mapElements); // update available action buttons
+
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["deletePlottingBtn"].setAttribute("aria-hidden", !mapElements.length);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["plottingTooltip"].setAttribute("aria-hidden", !!mapElements.length);
+
+  if (!mapElements.length) {
+    _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["printBtn"].setAttribute("disabled", true);
+    _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["downloadBtn"].setAttribute("disabled", true);
+    _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["setPlottingBtn"].setAttribute("disabled", true);
+  } else {
+    _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["printBtn"].removeAttribute("disabled");
+    _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["downloadBtn"].removeAttribute("disabled");
+    _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["setPlottingBtn"].removeAttribute("disabled");
+  }
+
+  if (hasConfirmedTotal) {
+    // if the user wants to use the list of shapes/lines created, use it.
+    handleUsePlotting();
+  }
+};
+
+const clearPlotShape = idx => {
+  if (mapElements.length && mapElements[idx]) {
+    mapElements[idx].setMap(null);
+    mapLengths[idx].setMap(null);
+    _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.event.clearInstanceListeners(mapElements[idx]);
+    mapElements.splice(idx, 1);
+  }
+
+  calculatePlot();
+
+  if (!mapElements.length) {
+    resetMapTools();
+  }
+}; // remove all shapes from the map
+
+
+const resetFencesTable = () => {
+  // go through all shapes and remove them from the map before clearing the array
+  if (mapElements.length) {
+    mapElements.forEach(shape => {
+      shape.setMap(null);
+    });
+    mapLengths.forEach(length => {
+      length.setMap(null);
+    });
+    mapElements = [];
+    mapLengths = [];
+  }
+
+  plotPerimiter = 0;
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["plottingShapes"].innerHTML = "";
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["plottingPerimiterLabel"].innerHTML = "";
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["deletePlottingBtn"].setAttribute("aria-hidden", !mapElements.length); // update cache
+
+  _helpers__WEBPACK_IMPORTED_MODULE_1__["removeFenceEstimatorData"]();
+};
+
+const resetMapTools = () => {
+  drawingManager.setDrawingMode(null);
+}; // this is for when the estimator has an address and
+// the user can start adding fences
+
+
+const setMapReadyForPlotting = isReady => {
+  const mapIsReady = isReady !== undefined ? !!isReady : !!addressMapPlace;
+
+  if (!addressMapPlace) {
+    return;
+  } // show/hide address and address search field
+
+
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["addressSearchContainer"].setAttribute("aria-hidden", !!mapIsReady);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["addressContainer"].setAttribute("aria-hidden", !mapIsReady);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["addressResultsContainer"].setAttribute("aria-hidden", !mapIsReady); // show/hide search tooltip
+
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["plottingTooltip"].setAttribute("aria-hidden", !!mapIsReady ? true : false); // show/hide reset button
+
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["newSearchBtn"].classList.remove(!!mapIsReady ? "d-none" : "d-block");
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["newSearchBtn"].classList.add(!!mapIsReady ? "d-block" : "d-none"); // set the map to drawing state
+
+  drawingManager.setDrawingMode(null);
+};
+
+const resetEstimator = () => {
+  resetFencesTable();
+  resetMapTools();
+  removePaddockMenu();
+  addressMarker.setVisible(false);
+  map.setZoom(_constants__WEBPACK_IMPORTED_MODULE_0__["DEFAULT_ZOOM"]);
+  map.setCenter({
+    lat: _constants__WEBPACK_IMPORTED_MODULE_0__["DEFAULT_COORDINATES"].lat,
+    lng: _constants__WEBPACK_IMPORTED_MODULE_0__["DEFAULT_COORDINATES"].lng
+  });
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["currentAddressLabel"].innerHTML = "";
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["searchField"].value = "";
+  calculatePlot(false);
+  setMapReadyForPlotting(false);
+}; // caching
+
+
+const getFenceEstimatorData = () => {
+  const mapStorageData = _helpers__WEBPACK_IMPORTED_MODULE_1__["getMapStorageData"]();
+
+  if (mapStorageData) {
+    var _mapStorageData$fence;
+
+    addressMapPlace = mapStorageData.place; // 1. display stored address
+
+    _helpers__WEBPACK_IMPORTED_MODULE_1__["displayAddressOnMap"](addressMapPlace, map, addressMarker, _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["currentAddressLabel"]); // 2. create fences on map
+
+    (_mapStorageData$fence = mapStorageData.fences) === null || _mapStorageData$fence === void 0 ? void 0 : _mapStorageData$fence.forEach(shape => {
+      const {
+        type,
+        paddockIdx,
+        paddockName,
+        paths
+      } = shape; // setup paddock and add it to map
+
+      createPaddockMapShape(paddockIdx, paddockName, type, paths);
+    }); // 3. set map ready to draw more fences
+
+    setMapReadyForPlotting();
+  } // update table and total based on current data
+
+
+  calculatePlot(false);
+  mapSet = true;
+}; // paddocks
+
+
+const removePaddockMenu = () => {
+  map.setOptions({
+    draggable: true
+  });
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["shapeMenuContainer"].setAttribute("aria-hidden", true);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["shapeMenuContainer"].innerHTML = "";
+};
+
+const bindPaddockShapeEvents = paddock => {
+  // when the shape is left
+  // (re)calculate the measurements
+  _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.event.addListener(paddock, "mouseup", () => {
+    calculatePlot();
+  }); // when hovering over the shape
+
+  _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.event.addListener(paddock, "mouseover", () => {
+    if (drawingManager.getDrawingMode() === _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.drawing.OverlayType.POLYLINE || drawingManager.getDrawingMode() === _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.drawing.OverlayType.POLYGON) {
+      _helpers__WEBPACK_IMPORTED_MODULE_1__["clearEdits"](mapElements);
+      _helpers__WEBPACK_IMPORTED_MODULE_1__["editShape"](paddock, true, drawingManager, selectedShape);
+      _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["savePaddockBtn"].setAttribute("aria-hidden", true);
+    }
+  }); // when clicking on a shape
+
+  _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.event.addListener(paddock, "click", () => {
+    if (drawingManager.getDrawingMode() === null) {
+      _helpers__WEBPACK_IMPORTED_MODULE_1__["clearEdits"](mapElements);
+      _helpers__WEBPACK_IMPORTED_MODULE_1__["editShape"](paddock, true, drawingManager, selectedShape);
+      _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["savePaddockBtn"].setAttribute("aria-hidden", true);
+      removePaddockMenu();
+    }
+  }); // this listener is for right click events
+  // documentation says rightclick has been deprecated
+  // (https://developers.google.com/maps/documentation/javascript/reference/polygon?hl=en#Polyline.rightclick)
+  // NOTE - no sure if other events may call this
+
+  paddock.addListener("contextmenu", event => {
+    const rightClick = new CustomEvent("fence-estimator-shape-menu", {
+      detail: {
+        paddock: {
+          name: paddock.paddockName,
+          index: paddock.paddockIdx,
+          coordinates: event.latLng
+        },
+        top: event.domEvent.clientY,
+        left: event.domEvent.clientX
+      }
+    });
+    window.dispatchEvent(rightClick);
+  });
+};
+
+const createPaddockMapShape = (paddockIdx, paddockName, type, pathCoordinates) => {
+  /**
+   * Custom overlay for shape menu
+   */
+  class PaddockLengthLabelOverlay extends _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.OverlayView {
+    constructor(coordinates, length) {
+      super();
+      this.length = void 0;
+      this.coordinates = void 0;
+      this.p = void 0;
+      this.length = length;
+      this.coordinates = coordinates;
+    }
+    /**
+     * onAdd is called when the map's panes are ready and the overlay has been
+     * added to the map.
+     */
+
+
+    onAdd() {
+      this.p = document.createElement("p"); // style contents
+
+      this.p.classList.add("paddock-length");
+      this.p.innerHTML = "".concat(this.length.toFixed(), "m"); // Add the element to the "overlayLayer" pane.
+
+      const panes = this.getPanes();
+      panes.overlayLayer.appendChild(this.p);
+    }
+
+    draw() {
+      // We use the south-west and north-east
+      // coordinates of the overlay to peg it to the correct position and size.
+      // To do this, we need to retrieve the projection from the overlay.
+      const overlayProjection = this.getProjection(); // Retrieve the south-west and north-east coordinates of this overlay
+      // in LatLngs and convert them to pixel coordinates.
+      // We'll use these coordinates to resize the div.
+
+      const sw = overlayProjection.fromLatLngToDivPixel(this.coordinates);
+
+      if (this.p) {
+        this.p.style.left = sw.x + 10 + "px";
+        this.p.style.top = sw.y + 10 + "px";
+      }
+    }
+    /**
+     * The onRemove() method will be called automatically from the API if
+     * we ever set the overlay's map property to 'null'.
+     */
+
+
+    onRemove() {
+      if (this.p) {
+        this.p.parentNode.removeChild(this.p);
+        delete this.p;
+      }
+    }
+    /**
+     *  Set the visibility to 'hidden' or 'visible'.
+     */
+
+
+    hide() {
+      if (this.p) {
+        this.p.style.visibility = "hidden";
+      }
+    }
+
+    show() {
+      if (this.p) {
+        this.p.style.visibility = "visible";
+      }
+    }
+
+    toggle() {
+      if (this.p) {
+        if (this.p.style.visibility === "hidden") {
+          this.show();
+        } else {
+          this.hide();
+        }
+      }
+    }
+
+    toggleDOM(map) {
+      if (this.getMap()) {
+        this.setMap(null);
+      } else {
+        this.setMap(map);
+      }
+    }
+
+    updateLength(length) {
+      this.length = length;
+      this.p.innerHTML = "".concat(this.length.toFixed(), "m");
+    }
+
+  }
+
+  let currentShape;
+  let path = new _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.MVCArray();
+
+  if (Array.isArray(pathCoordinates)) {
+    pathCoordinates.forEach(segment => {
+      if (typeof segment.lat === "function") {
+        path.push(segment);
+      } else {
+        const segmentCoordinates = new _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.LatLng(segment.lat, segment.lng);
+        path.push(segmentCoordinates);
+      }
+    });
+  } else {
+    if (typeof pathCoordinates.lat === "function") {
+      path.push(pathCoordinates);
+    } else {
+      const segmentCoordinates = new _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.LatLng(pathCoordinates.lat, pathCoordinates.lng);
+      path.push(segmentCoordinates);
+    }
+  }
+
+  const shapeLength = _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.geometry.spherical.computeLength(path.getArray());
+  const lengthLabel = new PaddockLengthLabelOverlay({
+    lat: path.getArray()[0].lat(),
+    lng: path.getArray()[0].lng()
+  }, shapeLength);
+  _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.event.addListener(path, "insert_at", function (vertex) {
+    lengthLabel.updateLength(_starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.geometry.spherical.computeLength(path.getArray()));
+  });
+  _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.event.addListener(path, "set_at", function (vertex) {
+    lengthLabel.updateLength(_starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.geometry.spherical.computeLength(path.getArray()));
+  });
+  _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.event.addListener(path, "mousedown", function (vertex) {
+    lengthLabel.updateLength(_starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.geometry.spherical.computeLength(path.getArray()));
+  });
+  const shapeDetails = { ..._constants__WEBPACK_IMPORTED_MODULE_0__["SHAPE_SETTINGS"].DEFAULT,
+    paddockIdx,
+    paddockName,
+    type,
+    map,
+    path
+  };
+
+  if (type === _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.drawing.OverlayType.POLYLINE) {
+    currentShape = new _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.Polyline(shapeDetails);
+  }
+
+  if (type === _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.drawing.OverlayType.POLYGON) {
+    currentShape = new _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.Polygon(shapeDetails);
+  } // set up paddock with listening events
+
+
+  bindPaddockShapeEvents(currentShape);
+  lengthLabel.setMap(map);
+  mapElements.push(currentShape);
+  mapLengths.push(lengthLabel);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["plottingTooltip"].setAttribute("aria-hidden", true);
+}; // adjust map to prepare canvas image
+
+const exportCanvas = action => {
+  mapCanvasAction = action;
+
+  if (addressMapPlace.geometry.viewport) {
+    map.fitBounds(addressMapPlace.geometry.viewport);
+  } else {
+    map.setCenter(addressMapPlace.geometry.location);
+  }
+
+  map.setZoom(_constants__WEBPACK_IMPORTED_MODULE_0__["EXPORT_ZOOM"]);
+  setTimeout(() => {
+    _helpers__WEBPACK_IMPORTED_MODULE_1__["exportMap"](_mapElements_module__WEBPACK_IMPORTED_MODULE_3__["mapContainer"], mapCanvasAction, mapElements);
+  }, 500);
+}; // events
+
+
+const handleResetSearch = e => {
+  e.preventDefault();
+  resetEstimator();
+};
+
+const handleDragTool = e => {
+  e.preventDefault();
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["dragMapTool"].classList.add("map-tool--active");
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["lineMapTool"].classList.remove("map-tool--active");
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["shapeMapTool"].classList.remove("map-tool--active");
+  drawingManager.setDrawingMode(null);
+  _helpers__WEBPACK_IMPORTED_MODULE_1__["clearEdits"](mapElements);
+  removePaddockMenu();
+};
+
+const handleLineTool = e => {
+  e.preventDefault();
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["lineMapTool"].classList.add("map-tool--active");
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["dragMapTool"].classList.remove("map-tool--active");
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["shapeMapTool"].classList.remove("map-tool--active");
+  drawingManager.setDrawingMode(_starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.drawing.OverlayType.POLYLINE);
+  _helpers__WEBPACK_IMPORTED_MODULE_1__["clearEdits"](mapElements);
+  removePaddockMenu();
+};
+
+const handleShapeTool = e => {
+  e.preventDefault();
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["shapeMapTool"].classList.add("map-tool--active");
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["dragMapTool"].classList.remove("map-tool--active");
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["lineMapTool"].classList.remove("map-tool--active");
+  drawingManager.setDrawingMode(_starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.drawing.OverlayType.POLYGON);
+  _helpers__WEBPACK_IMPORTED_MODULE_1__["clearEdits"](mapElements);
+  removePaddockMenu();
+};
+
+const handleZoomInTool = e => {
+  e.preventDefault();
+  map.setZoom(map.getZoom() + 1);
+  _helpers__WEBPACK_IMPORTED_MODULE_1__["clearEdits"](mapElements);
+  removePaddockMenu();
+};
+
+const handleZoomOutTool = e => {
+  e.preventDefault();
+  map.setZoom(map.getZoom() - 1);
+  _helpers__WEBPACK_IMPORTED_MODULE_1__["clearEdits"](mapElements);
+  removePaddockMenu();
+};
+
+const handleShapesTable = e => {
+  const element = e.target.tagName.toLowerCase() === "button" || e.target.tagName.toLowerCase() === "input" ? e.target : e.target.parentElement;
+
+  if (element.dataset.shape === undefined || !element.dataset.action) {
+    return;
+  }
+
+  const shapeIndex = parseInt(element.dataset.shape);
+  const shape = mapElements[shapeIndex];
+
+  if (!shape) {
+    return;
+  }
+
+  removePaddockMenu();
+
+  switch (element.dataset.action) {
+    case _constants__WEBPACK_IMPORTED_MODULE_0__["SHAPES_CONTROLS"].HIGHLIGHT:
+      _helpers__WEBPACK_IMPORTED_MODULE_1__["highlightShape"](shape);
+      break;
+
+    case _constants__WEBPACK_IMPORTED_MODULE_0__["SHAPES_CONTROLS"].EDIT:
+    case _constants__WEBPACK_IMPORTED_MODULE_0__["SHAPES_CONTROLS"].EDIT_NAME:
+      _helpers__WEBPACK_IMPORTED_MODULE_1__["clearEdits"](mapElements);
+      _helpers__WEBPACK_IMPORTED_MODULE_1__["editShape"](shape, true, drawingManager, selectedShape);
+      _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["savePaddockBtn"].setAttribute("aria-hidden", true);
+      break;
+
+    case _constants__WEBPACK_IMPORTED_MODULE_0__["SHAPES_CONTROLS"].DELETE:
+      _helpers__WEBPACK_IMPORTED_MODULE_1__["clearEdits"](mapElements);
+      _helpers__WEBPACK_IMPORTED_MODULE_1__["editShape"](shape, true, drawingManager, selectedShape);
+      _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["savePaddockBtn"].setAttribute("aria-hidden", true);
+      clearPlotShape(shapeIndex);
+      drawingManager.setDrawingMode(null);
+      break;
+  }
+};
+
+const handleEditPaddockName = e => {
+  const element = e.target.tagName.toLowerCase() === "input" ? e.target : e.target.parentElement;
+
+  if (element.dataset.shape === undefined || !element.dataset.action) {
+    return;
+  }
+
+  const shapeIndex = parseInt(element.dataset.shape);
+  const shape = mapElements[shapeIndex];
+
+  if (!shape) {
+    return;
+  }
+
+  shape.paddockName = element.value; // update local storage
+
+  _helpers__WEBPACK_IMPORTED_MODULE_1__["storePaddocks"](mapElements);
+};
+
+const handleAddPlotting = e => {
+  e.preventDefault();
+  drawingManager.setDrawingMode(null);
+  _helpers__WEBPACK_IMPORTED_MODULE_1__["clearEdits"](mapElements);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["savePaddockBtn"].setAttribute("aria-hidden", false);
+};
+
+const handleUsePlotting = e => {
+  e && e.preventDefault();
+  hasConfirmedTotal = true;
+  plottingPerimiterTrigger = new CustomEvent("fence-estimator-results", {
+    detail: {
+      perimiter: plotPerimiter
+    }
+  });
+  window.dispatchEvent(plottingPerimiterTrigger);
+  plottingPerimiterTrigger = null;
+
+  if (typeof elementorProFrontend !== "undefined") {
+    elementorProFrontend.modules.popup.closePopup({}, e);
+  }
+};
+
+const handleDeleteAllPlotting = e => {
+  e.preventDefault();
+  resetFencesTable();
+  resetMapTools();
+};
+
+const handlePrintMap = e => {
+  e === null || e === void 0 ? void 0 : e.preventDefault();
+  exportCanvas("print");
+};
+
+const handleDownloadMap = async e => {
+  e === null || e === void 0 ? void 0 : e.preventDefault();
+  const formIsValid = await Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["validateDownloadForm"])();
+
+  if (formIsValid) {
+    exportCanvas("download");
+  }
+}; // map
+
+
+const createMap = () => {
+  map = new _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.Map(_mapElements_module__WEBPACK_IMPORTED_MODULE_3__["mapContainer"], _constants__WEBPACK_IMPORTED_MODULE_0__["MAP_OPTIONS"]);
+  _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.event.addListenerOnce(map, "tilesloaded", function () {
+    // get elements from cache
+    getFenceEstimatorData();
+  });
+  _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.event.addListener(map, "zoom_changed", function () {//only wait for zoom change on print
+    // mapCanvasAction === "print" &&
+    // HELPERS.exportMap(mapContainer, mapCanvasAction, mapElements);
+  }); // Marker
+
+  addressMarker = new _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.Marker({
+    position: new _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.LatLng(_constants__WEBPACK_IMPORTED_MODULE_0__["DEFAULT_COORDINATES"].lat, _constants__WEBPACK_IMPORTED_MODULE_0__["DEFAULT_COORDINATES"].lng),
+    map: map,
+    animation: _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.Animation.DROP,
+    clickable: false,
+    visible: false
+  }); // Auto complete
+
+  const autocomplete = new _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.places.Autocomplete(_mapElements_module__WEBPACK_IMPORTED_MODULE_3__["searchField"]);
+  autocomplete.bindTo("bounds", map);
+  autocomplete.setFields(["address_components", "adr_address", "geometry", "icon", "name"]);
+  autocomplete.addListener("place_changed", function () {
+    addressMarker.setVisible(false);
+    addressMapPlace = autocomplete.getPlace();
+
+    if (!addressMapPlace.geometry) {
+      window.alert("No details available for input: '" + addressMapPlace.name + "'");
+      return;
+    } // 1. add the place to the location storage
+
+
+    _helpers__WEBPACK_IMPORTED_MODULE_1__["storeFenceEstimatorData"]({
+      place: addressMapPlace
+    }); // 2. display location
+
+    _helpers__WEBPACK_IMPORTED_MODULE_1__["displayAddressOnMap"](addressMapPlace, map, addressMarker, _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["currentAddressLabel"]); // 3. begin drawing fences
+
+    setMapReadyForPlotting();
+  }); // Drawing
+
+  drawingManager = new _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.drawing.DrawingManager({
+    map,
+    drawingMode: null,
+    drawingControl: false,
+    drawingControlOptions: {
+      drawingModes: [_starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.drawing.OverlayType.POLYLINE, _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.drawing.OverlayType.POLYGON]
+    },
+    polylineOptions: { ..._constants__WEBPACK_IMPORTED_MODULE_0__["SHAPE_SETTINGS"].DEFAULT
+    },
+    polygonOptions: { ..._constants__WEBPACK_IMPORTED_MODULE_0__["SHAPE_SETTINGS"].DEFAULT
+    }
+  });
+  _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.event.addListener(drawingManager, "polylinecomplete", function (e) {
+    // create polyline and add it to array of elements
+    // to display totals in table as lines are added
+    const path = e.getPath().getArray();
+    createPaddockMapShape(mapElements.length, "".concat(mapElements.length + 1, "--Boundary Fence"), _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.drawing.OverlayType.POLYLINE, path);
+    drawingManager.setDrawingMode(null);
+    e.setMap(null);
+    calculatePlot();
+  });
+  _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.event.addListener(drawingManager, "polygoncomplete", function (e) {
+    // create polygon and add it to array of elements
+    // to display totals in table as lines are added
+    const path = e.getPath().getArray();
+    createPaddockMapShape(mapElements.length, "".concat(mapElements.length + 1, "--Paddock Fence"), _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.drawing.OverlayType.POLYGON, path);
+    drawingManager.setDrawingMode(null);
+    e.setMap(null);
+    calculatePlot();
+  });
+  _starter_module__WEBPACK_IMPORTED_MODULE_2__["google"].maps.event.addListener(map, "click", function (e) {
+    removePaddockMenu();
+  });
+  window.addEventListener("fence-estimator-shape-menu", function (e) {
+    if (!e.detail.paddock) {
+      return false;
+    }
+
+    const paddock = e.detail.paddock;
+    const div = document.createElement("div"); // style contents
+
+    div.classList.add("paddock-menu");
+    div.style.top = e.detail.top;
+    div.style.left = e.detail.left;
+    div.innerHTML = "\n        <p class=\"paddock-menu__title\">".concat(paddock.name, "</p>\n        <button type=\"button\" data-action=\"").concat(_constants__WEBPACK_IMPORTED_MODULE_0__["SHAPES_CONTROLS"].DELETE, "\" data-shape=\"").concat(paddock.index, "\" class=\"paddock-menu__button paddock-menu__button--delete\">\n          Delete fence\n        </button>\n      ");
+    _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["shapeMenuContainer"].appendChild(div);
+    _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["shapeMenuContainer"].setAttribute("aria-hidden", false);
+    map.setOptions({
+      draggable: false
+    });
+  });
+}; // SETUP
+
+const bindMapEvents = () => {
+  // bind functions
+  const ignoreKeyPress = e => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+    }
+  };
+
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["searchField"].addEventListener("keypress", ignoreKeyPress);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["plottingShapes"].addEventListener("click", handleShapesTable); // plottingShapes.addEventListener("focus", handleEditSelectPaddockName);
+
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["plottingShapes"].addEventListener("input", handleEditPaddockName);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["newSearchBtn"].addEventListener("click", handleResetSearch);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["savePaddockBtn"].addEventListener("click", handleAddPlotting);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["setPlottingBtn"].addEventListener("click", handleUsePlotting);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["deletePlottingBtn"].addEventListener("click", handleDeleteAllPlotting);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["resetBtn"].forEach(button => {
+    button.addEventListener("click", handleResetSearch);
+  });
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["dragMapTool"].addEventListener("click", handleDragTool);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["lineMapTool"].addEventListener("click", handleLineTool);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["shapeMapTool"].addEventListener("click", handleShapeTool);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["zoomInTool"].addEventListener("click", handleZoomInTool);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["zoomOutTool"].addEventListener("click", handleZoomOutTool); // UI
+
+  _helpers__WEBPACK_IMPORTED_MODULE_1__["setDraggableMapTools"](_mapElements_module__WEBPACK_IMPORTED_MODULE_3__["mapTools"]);
+  _helpers__WEBPACK_IMPORTED_MODULE_1__["setClosableSidebar"](_mapElements_module__WEBPACK_IMPORTED_MODULE_3__["sidebar"], removePaddockMenu);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["shapeMenuContainer"].addEventListener("click", handleShapesTable); // PRINT
+
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["printBtn"].addEventListener("click", handlePrintMap);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["downloadBtn"].addEventListener("click", handleDownloadMap);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["downloadFormName"].addEventListener("change", _helpers__WEBPACK_IMPORTED_MODULE_1__["validateDownloadName"]);
+  _mapElements_module__WEBPACK_IMPORTED_MODULE_3__["downloadFormEmail"].addEventListener("change", _helpers__WEBPACK_IMPORTED_MODULE_1__["validateDownloadEmail"]);
+};
+
+const setup = () => {
+  Object(_mapElements_module__WEBPACK_IMPORTED_MODULE_3__["assignElements"])();
+  bindMapEvents();
+};
+
 
 /***/ }),
 
@@ -332,7 +1561,73 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"assignElements\", function() { return assignElements; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"shapeMenuContainer\", function() { return shapeMenuContainer; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"sidebar\", function() { return sidebar; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"mapTools\", function() { return mapTools; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"mapContainer\", function() { return mapContainer; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"addressSearchContainer\", function() { return addressSearchContainer; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"addressContainer\", function() { return addressContainer; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"addressResultsContainer\", function() { return addressResultsContainer; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"plottingResultsContainer\", function() { return plottingResultsContainer; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"plottingTooltip\", function() { return plottingTooltip; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"plottingShapes\", function() { return plottingShapes; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"searchField\", function() { return searchField; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"newSearchBtn\", function() { return newSearchBtn; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"savePaddockBtn\", function() { return savePaddockBtn; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"setPlottingBtn\", function() { return setPlottingBtn; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"deletePlottingBtn\", function() { return deletePlottingBtn; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"resetBtn\", function() { return resetBtn; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"printBtn\", function() { return printBtn; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"downloadBtn\", function() { return downloadBtn; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"closeDownloadBtn\", function() { return closeDownloadBtn; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"dragMapTool\", function() { return dragMapTool; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"lineMapTool\", function() { return lineMapTool; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"shapeMapTool\", function() { return shapeMapTool; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"zoomInTool\", function() { return zoomInTool; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"zoomOutTool\", function() { return zoomOutTool; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"currentAddressLabel\", function() { return currentAddressLabel; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"plottingPerimiterLabel\", function() { return plottingPerimiterLabel; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"downloadFormName\", function() { return downloadFormName; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"downloadFormNameError\", function() { return downloadFormNameError; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"downloadFormEmail\", function() { return downloadFormEmail; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"downloadFormEmailError\", function() { return downloadFormEmailError; });\nlet shapeMenuContainer, sidebar, mapTools, mapContainer, addressSearchContainer, addressContainer, addressResultsContainer, plottingResultsContainer, plottingTooltip, plottingShapes, searchField, newSearchBtn, savePaddockBtn, setPlottingBtn, deletePlottingBtn, resetBtn, printBtn, downloadBtn, closeDownloadBtn, dragMapTool, lineMapTool, shapeMapTool, zoomInTool, zoomOutTool, currentAddressLabel, plottingPerimiterLabel, downloadFormName, downloadFormNameError, downloadFormEmail, downloadFormEmailError;\nconst assignElements = () => {\n  // find elements\n  mapContainer = document.getElementById(\"fence-estimator-map\");\n  addressSearchContainer = document.querySelectorAll(\".map-search-controller__searcher\")[0];\n  addressContainer = document.querySelectorAll(\".map-search-results__step-1\")[0];\n  addressResultsContainer = document.querySelectorAll(\".map-search-results-controller\")[0];\n  plottingResultsContainer = document.querySelectorAll(\".map-plotting-results-controller\")[0];\n  plottingTooltip = document.querySelectorAll(\".map-search-results__shapes-tip\")[0];\n  plottingShapes = document.querySelectorAll(\".map-search-results__shapes-table\")[0];\n  searchField = document.querySelectorAll(\".search-address__field\")[0];\n  newSearchBtn = document.querySelectorAll(\".search-address__new-search-button\")[0];\n  currentAddressLabel = document.querySelectorAll(\".map-search-results__address\")[0];\n  savePaddockBtn = document.querySelectorAll(\".plotting__save-paddock-button\")[0];\n  setPlottingBtn = document.querySelectorAll(\".plotting__accept-button\")[0];\n  deletePlottingBtn = document.querySelectorAll(\".plotting__delete-button\")[0];\n  plottingPerimiterLabel = document.querySelectorAll(\".map-plotting-results__perimiter\")[0];\n  resetBtn = document.querySelectorAll(\".reset-button\");\n  printBtn = document.querySelectorAll(\".plotting__print-button\")[0];\n  downloadBtn = document.querySelectorAll(\".plotting__download-button\")[0];\n  closeDownloadBtn = document.querySelectorAll(\".plotting__close-download-button\")[0];\n  dragMapTool = document.querySelectorAll(\".map-tool-drag\")[0];\n  lineMapTool = document.querySelectorAll(\".map-tool-line\")[0];\n  shapeMapTool = document.querySelectorAll(\".map-tool-shape\")[0];\n  zoomInTool = document.querySelectorAll(\".map-tool-zoomin\")[0];\n  zoomOutTool = document.querySelectorAll(\".map-tool-zoomout\")[0];\n  mapTools = document.querySelectorAll(\".map-search-tools-controller\")[0];\n  sidebar = document.querySelectorAll(\".map-search-sidebar\")[0];\n  shapeMenuContainer = document.querySelectorAll(\".paddock-menu-container\")[0];\n  downloadFormName = document.querySelectorAll(\".plotting__download-name\")[0];\n  downloadFormNameError = document.querySelectorAll(\".download-form__error--name\")[0];\n  downloadFormEmail = document.querySelectorAll(\".plotting__download-email\")[0];\n  downloadFormEmailError = document.querySelectorAll(\".download-form__error--email\")[0];\n};\n\n\n//# sourceURL=webpack:///./app/js/modules/mapElements.module.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "assignElements", function() { return assignElements; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "shapeMenuContainer", function() { return shapeMenuContainer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sidebar", function() { return sidebar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapTools", function() { return mapTools; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapContainer", function() { return mapContainer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addressSearchContainer", function() { return addressSearchContainer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addressContainer", function() { return addressContainer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addressResultsContainer", function() { return addressResultsContainer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "plottingResultsContainer", function() { return plottingResultsContainer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "plottingTooltip", function() { return plottingTooltip; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "plottingShapes", function() { return plottingShapes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchField", function() { return searchField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "newSearchBtn", function() { return newSearchBtn; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "savePaddockBtn", function() { return savePaddockBtn; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPlottingBtn", function() { return setPlottingBtn; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deletePlottingBtn", function() { return deletePlottingBtn; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resetBtn", function() { return resetBtn; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "printBtn", function() { return printBtn; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "downloadBtn", function() { return downloadBtn; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "closeDownloadBtn", function() { return closeDownloadBtn; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dragMapTool", function() { return dragMapTool; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "lineMapTool", function() { return lineMapTool; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "shapeMapTool", function() { return shapeMapTool; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "zoomInTool", function() { return zoomInTool; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "zoomOutTool", function() { return zoomOutTool; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "currentAddressLabel", function() { return currentAddressLabel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "plottingPerimiterLabel", function() { return plottingPerimiterLabel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "downloadFormName", function() { return downloadFormName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "downloadFormNameError", function() { return downloadFormNameError; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "downloadFormEmail", function() { return downloadFormEmail; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "downloadFormEmailError", function() { return downloadFormEmailError; });
+let shapeMenuContainer, sidebar, mapTools, mapContainer, addressSearchContainer, addressContainer, addressResultsContainer, plottingResultsContainer, plottingTooltip, plottingShapes, searchField, newSearchBtn, savePaddockBtn, setPlottingBtn, deletePlottingBtn, resetBtn, printBtn, downloadBtn, closeDownloadBtn, dragMapTool, lineMapTool, shapeMapTool, zoomInTool, zoomOutTool, currentAddressLabel, plottingPerimiterLabel, downloadFormName, downloadFormNameError, downloadFormEmail, downloadFormEmailError;
+const assignElements = () => {
+  // find elements
+  mapContainer = document.getElementById("fence-estimator-map");
+  addressSearchContainer = document.querySelectorAll(".map-search-controller__searcher")[0];
+  addressContainer = document.querySelectorAll(".map-search-results__step-1")[0];
+  addressResultsContainer = document.querySelectorAll(".map-search-results-controller")[0];
+  plottingResultsContainer = document.querySelectorAll(".map-plotting-results-controller")[0];
+  plottingTooltip = document.querySelectorAll(".map-search-results__shapes-tip")[0];
+  plottingShapes = document.querySelectorAll(".map-search-results__shapes-table")[0];
+  searchField = document.querySelectorAll(".search-address__field")[0];
+  newSearchBtn = document.querySelectorAll(".search-address__new-search-button")[0];
+  currentAddressLabel = document.querySelectorAll(".map-search-results__address")[0];
+  savePaddockBtn = document.querySelectorAll(".plotting__save-paddock-button")[0];
+  setPlottingBtn = document.querySelectorAll(".plotting__accept-button")[0];
+  deletePlottingBtn = document.querySelectorAll(".plotting__delete-button")[0];
+  plottingPerimiterLabel = document.querySelectorAll(".map-plotting-results__perimiter")[0];
+  resetBtn = document.querySelectorAll(".reset-button");
+  printBtn = document.querySelectorAll(".plotting__print-button")[0];
+  downloadBtn = document.querySelectorAll(".plotting__download-button")[0];
+  closeDownloadBtn = document.querySelectorAll(".plotting__close-download-button")[0];
+  dragMapTool = document.querySelectorAll(".map-tool-drag")[0];
+  lineMapTool = document.querySelectorAll(".map-tool-line")[0];
+  shapeMapTool = document.querySelectorAll(".map-tool-shape")[0];
+  zoomInTool = document.querySelectorAll(".map-tool-zoomin")[0];
+  zoomOutTool = document.querySelectorAll(".map-tool-zoomout")[0];
+  mapTools = document.querySelectorAll(".map-search-tools-controller")[0];
+  sidebar = document.querySelectorAll(".map-search-sidebar")[0];
+  shapeMenuContainer = document.querySelectorAll(".paddock-menu-container")[0];
+  downloadFormName = document.querySelectorAll(".plotting__download-name")[0];
+  downloadFormNameError = document.querySelectorAll(".download-form__error--name")[0];
+  downloadFormEmail = document.querySelectorAll(".plotting__download-email")[0];
+  downloadFormEmailError = document.querySelectorAll(".download-form__error--email")[0];
+};
+
 
 /***/ }),
 
@@ -344,7 +1639,35 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"init\", function() { return init; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"google\", function() { return google; });\n/* harmony import */ var google_maps__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! google-maps */ \"./node_modules/google-maps/lib/esm/index.js\");\n/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants */ \"./app/js/constants/index.js\");\n/* harmony import */ var _loadedMap_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./loadedMap.module */ \"./app/js/modules/loadedMap.module.js\");\n\n\n\nconst mapLoader = new google_maps__WEBPACK_IMPORTED_MODULE_0__[\"Loader\"](_constants__WEBPACK_IMPORTED_MODULE_1__[\"MAP_SETTINGS\"].key, _constants__WEBPACK_IMPORTED_MODULE_1__[\"MAP_SETTINGS\"].options);\nlet google;\n\nconst start = () => {\n  Object(_loadedMap_module__WEBPACK_IMPORTED_MODULE_2__[\"setup\"])();\n  Object(_loadedMap_module__WEBPACK_IMPORTED_MODULE_2__[\"createMap\"])();\n};\n\nconst init = async () => {\n  if (!document.getElementById(\"fence-estimator-map\")) {\n    return false;\n  }\n\n  if (!google) {\n    google = await mapLoader.load();\n  }\n\n  start();\n};\n\n\n//# sourceURL=webpack:///./app/js/modules/starter.module.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "init", function() { return init; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "google", function() { return google; });
+/* harmony import */ var google_maps__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! google-maps */ "./node_modules/google-maps/lib/esm/index.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants */ "./app/js/constants/index.js");
+/* harmony import */ var _loadedMap_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./loadedMap.module */ "./app/js/modules/loadedMap.module.js");
+
+
+
+const mapLoader = new google_maps__WEBPACK_IMPORTED_MODULE_0__["Loader"](_constants__WEBPACK_IMPORTED_MODULE_1__["MAP_SETTINGS"].key, _constants__WEBPACK_IMPORTED_MODULE_1__["MAP_SETTINGS"].options);
+let google;
+
+const start = () => {
+  Object(_loadedMap_module__WEBPACK_IMPORTED_MODULE_2__["setup"])();
+  Object(_loadedMap_module__WEBPACK_IMPORTED_MODULE_2__["createMap"])();
+};
+
+const init = async () => {
+  if (!document.getElementById("fence-estimator-map")) {
+    return false;
+  }
+
+  if (!google) {
+    google = await mapLoader.load();
+  }
+
+  start();
+};
+
 
 /***/ }),
 
@@ -355,8 +1678,10 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("module.exports = __webpack_require__(/*! /Users/pacienciacanda/Documents/Relashe/git/freelance/fence-estimator/app/index.build.js */\"./app/index.build.js\");\n\n\n//# sourceURL=webpack:///multi_./app/index.build.js?");
+module.exports = __webpack_require__(/*! /Users/pacienciacanda/Documents/Relashe/git/freelance/fence-estimator/app/index.build.js */"./app/index.build.js");
+
 
 /***/ })
 
 /******/ });
+//# sourceMappingURL=main.bundle.js.map

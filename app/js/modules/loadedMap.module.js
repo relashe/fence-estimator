@@ -679,7 +679,7 @@ export const createMap = () => {
 
   google.maps.event.addListenerOnce(map, "tilesloaded", function () {
     // get elements from cache
-    !mapSet && getFenceEstimatorData();
+    getFenceEstimatorData();
   });
 
   google.maps.event.addListener(map, "zoom_changed", function () {

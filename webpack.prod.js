@@ -6,11 +6,11 @@ const common = require("./webpack.common");
 const appPath = path.resolve(__dirname, "./app");
 const distFolder = path.resolve(__dirname, "./dist");
 
-module.exports = env => {
+module.exports = (env) => {
   return merge(common(env, true), {
     mode: "development",
     entry: {
-      main: [path.join(appPath, "/index.build.js")]
+      main: [path.join(appPath, "/index.build.js")],
     },
     optimization: {
       splitChunks: {
@@ -18,22 +18,23 @@ module.exports = env => {
           commons: {
             test: /[\\/]node_modules[\\/]/,
             name: "vendors",
-            chunks: "all"
-          }
-        }
-      }
+            chunks: "all",
+          },
+        },
+      },
     },
     output: {
       path: distFolder,
       filename: "[name].bundle.js",
       chunkFilename: "[name].bundle.js",
-      publicPath: "/"
+      publicPath: "/",
     },
+    devtool: "source-map",
     plugins: [
       ...common(env).plugins,
       new webpack.DefinePlugin({
-        NODE_ENV: "PROD"
-      })
-    ]
+        NODE_ENV: "PROD",
+      }),
+    ],
   });
 };
